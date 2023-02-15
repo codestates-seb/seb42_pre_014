@@ -11,7 +11,7 @@ const HeaderRow = styled.div`
 
 function QuestionsPage() {
     return (
-        <main>
+        <div>
             <HeaderRow>
                 <Header1 style={{ margin: 0 }}>Top Questions</Header1>
                 <BlueButtonLink to="./ask">Ask&nbsp;Question</BlueButtonLink>
@@ -23,7 +23,7 @@ function QuestionsPage() {
             <QuestionRow />
             <QuestionRow />
             <QuestionRow />
-        </main>
+        </div>
     )
 }
 
