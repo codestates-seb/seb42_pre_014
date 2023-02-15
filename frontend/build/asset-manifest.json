@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/static/js/main.e59565a4.js",
-    "index.html": "/index.html",
-    "main.e59565a4.js.map": "/static/js/main.e59565a4.js.map"
+    "main.js": "/seb42_pre_014.git/static/js/main.bdbe9c49.js",
+    "index.html": "/seb42_pre_014.git/index.html",
+    "main.bdbe9c49.js.map": "/seb42_pre_014.git/static/js/main.bdbe9c49.js.map"
   },
   "entrypoints": [
-    "static/js/main.e59565a4.js"
+    "static/js/main.bdbe9c49.js"
   ]
 }
