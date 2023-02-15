@@ -13,7 +13,7 @@ function QuestionsPage() {
     return (
         <main>
             <HeaderRow>
-                <Header1>Top Questions</Header1>
+                <Header1 style={{ margin: 0 }}>Top Questions</Header1>
                 <BlueButtonLink to="./ask">Ask&nbsp;Question</BlueButtonLink>
             </HeaderRow>
             <QuestionRow />
