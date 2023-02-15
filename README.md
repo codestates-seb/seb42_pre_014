@@ -12,9 +12,9 @@
 ## 🖥 Front-end
 |정민상 (FE팀장)|이이수|김기식|
 |:-:|:-:|:-:|
-|<img src="https://user-images.githubusercontent.com/101001956/218988032-7170993f-400b-4b92-8fd2-8f02ae6ab4ed.png" width=150>|:-:|:-:|
+|<img src="https://user-images.githubusercontent.com/101001956/218988032-7170993f-400b-4b92-8fd2-8f02ae6ab4ed.png" width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg " width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|
 
 ## ⚙️ Back-end
 |김성회 (BE팀장)|김석진|김진수|
 |:-:|:-:|:-:|
-|:-:|:-:|:-:|
+|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|
