@@ -8,6 +8,6 @@ import pre14.stackoverflow.questions.entity.Question;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface QuestionMapper {
-//    @Mapping(source = "memberId", target = "member.memberId")
+    @Mapping(source = "memberId", target = "member.memberId")
     Question questionPostDtoToQuestion(QuestionDto.Post requestBody);
 }
