@@ -1,9 +1,11 @@
-package pre14.stackoverflow.questions;
+package pre14.stackoverflow.questions.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pre14.stackoverflow.questions.dto.QuestionDto;
+import pre14.stackoverflow.questions.service.QuestionService;
 
 import javax.validation.Valid;
 import java.net.URI;
