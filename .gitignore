@@ -26,5 +26,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+<<<<<<< HEAD
 # server
+=======
+#server
+>>>>>>> 089387aa2c178c6433f20392c87eef2173a12550
 /server/.gitignore
