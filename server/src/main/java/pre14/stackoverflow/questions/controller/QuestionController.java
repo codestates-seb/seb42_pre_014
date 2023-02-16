@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pre14.stackoverflow.questions.dto.QuestionDto;
+import pre14.stackoverflow.questions.entity.Question;
+import pre14.stackoverflow.questions.mapper.QuestionMapper;
 import pre14.stackoverflow.questions.service.QuestionService;
 
 import javax.validation.Valid;
@@ -16,37 +18,39 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionService questionService;
-
-    public QuestionController(QuestionService questionService) {
+    private final QuestionMapper questionMapper;
+    //    private final AnswerService answerService;
+    //    private final AnswerMapper answerMapper;
+    public QuestionController(QuestionService questionService, QuestionMapper questionMapper) {
         this.questionService = questionService;
+        this.questionMapper = questionMapper;
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<QuestionDto>> getAllQuestions() {
-//        List<QuestionDto> questions = questionService.getAllQuestions();
-//        return new ResponseEntity<>(questions, HttpStatus.OK);
-//    }
-
-//    @GetMapping("/{member-id}")
-//    public ResponseEntity<QuestionDto> getQuestionById(@PathVariable Long memberId) {
-//        QuestionDto question = questionService.getQuestionById(memberId);
-//        return new ResponseEntity<>(question, HttpStatus.OK);
-//    }
-
-//    @PostMapping
-//    public ResponseEntity<Void> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
-////        Long id = questionService.createQuestion(questionDto);
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(id).toUri();
-//        return ResponseEntity.created(location).build();
-//    }
+    @PostMapping
+    public ResponseEntity<Void> createQuestion(@Valid @RequestBody QuestionDto.Post questionPostDto) {
+        Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(questionPostDto));
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/questions/{question-id}")
+                .buildAndExpand(question.getQuestionId()).toUri(); //questionid인가 memberid인가?
+        return ResponseEntity.created(location).build();
+    }
 
     @PatchMapping("/{member-id}")
     public ResponseEntity<Void> updateQuestion(@PathVariable Long memberId,
                                                @Valid @RequestBody QuestionDto questionDto) {
-//        questionService.updateQuestion(memberId, questionDto);
+        questionService.updateQuestion(memberId, questionDto);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping
+    public ResponseEntity<List<QuestionDto>> getAllQuestions() {
+        List<QuestionDto> questions = questionService.getAllQuestions();
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    @GetMapping("/{member-id}")
+    public ResponseEntity<QuestionDto> getQuestionById(@PathVariable Long memberId) {
+        QuestionDto question = questionService.getQuestionById(memberId);
+        return new ResponseEntity<>(question, HttpStatus.OK);
     }
 
     @DeleteMapping("/{member-id}")

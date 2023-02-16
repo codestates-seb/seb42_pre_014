@@ -1,6 +1,7 @@
 package pre14.stackoverflow.questions.service;
 
 import org.springframework.stereotype.Service;
+import pre14.stackoverflow.member.MemberResponseDto;
 import pre14.stackoverflow.questions.dto.QuestionDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.repository.QuestionRepository;
