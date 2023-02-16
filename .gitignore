@@ -27,8 +27,11 @@ yarn-debug.log*
 yarn-error.log*
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # server
 =======
 #server
 >>>>>>> 089387aa2c178c6433f20392c87eef2173a12550
 /server/.gitignore
+=======
+>>>>>>> 13c341dc22eda22413e6a9f78de13f2225054b5e
