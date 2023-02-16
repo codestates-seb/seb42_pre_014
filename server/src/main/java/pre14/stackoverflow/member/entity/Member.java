@@ -1,4 +1,4 @@
-package pre14.stackoverflow.member;
+package pre14.stackoverflow.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

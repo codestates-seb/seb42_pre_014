@@ -1,6 +1,10 @@
-package pre14.stackoverflow.member;
+package pre14.stackoverflow.member.mapper;
 
 import org.mapstruct.Mapper;
+import pre14.stackoverflow.member.dto.MemberResponseDto;
+import pre14.stackoverflow.member.entity.Member;
+import pre14.stackoverflow.member.dto.MemberPatchDto;
+import pre14.stackoverflow.member.dto.MemberPostDto;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {

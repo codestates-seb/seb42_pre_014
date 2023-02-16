@@ -1,15 +1,14 @@
-package pre14.stackoverflow.member;
+package pre14.stackoverflow.member.controller;
 
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pre14.stackoverflow.member.Member;
-import pre14.stackoverflow.member.MemberPatchDto;
-import pre14.stackoverflow.member.MemberPostDto;
-import pre14.stackoverflow.member.MemberService;
-import pre14.stackoverflow.member.MemberMapper;
+import pre14.stackoverflow.member.entity.Member;
+import pre14.stackoverflow.member.dto.MemberPatchDto;
+import pre14.stackoverflow.member.dto.MemberPostDto;
+import pre14.stackoverflow.member.service.MemberService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;

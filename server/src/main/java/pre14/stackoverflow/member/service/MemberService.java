@@ -1,6 +1,6 @@
-package pre14.stackoverflow.member;
+package pre14.stackoverflow.member.service;
 
-import pre14.stackoverflow.member.Member;
+import pre14.stackoverflow.member.entity.Member;
 
 import java.util.List;
 
