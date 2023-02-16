@@ -12,7 +12,9 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public Question createQuestion(QuestionDto questionDto) {
+    public Question createQuestion(Question question) { //질문 생성
+
+        return questionRepository.save(question);
     }
 
     public void deleteQuestion(Long id) {
