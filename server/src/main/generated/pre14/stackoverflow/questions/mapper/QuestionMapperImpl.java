@@ -7,8 +7,8 @@ import pre14.stackoverflow.questions.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-16T15:57:50+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-02-16T16:00:41+0900",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class QuestionMapperImpl implements QuestionMapper {
