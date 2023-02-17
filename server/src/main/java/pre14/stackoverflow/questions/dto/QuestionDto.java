@@ -1,12 +1,6 @@
 package pre14.stackoverflow.questions.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import org.mapstruct.Mapper;
-import org.springframework.util.Assert;
-import pre14.stackoverflow.member.entity.Member;
+import lombok.*;
 import pre14.stackoverflow.questions.entity.Question;
 
 import javax.validation.constraints.NotBlank;
@@ -18,41 +12,32 @@ public class QuestionDto {
 
     @Getter
     @AllArgsConstructor
+    @ToString
+    @RequiredArgsConstructor
     public static class Post{
+        private Long questionId;
         @NotBlank(message = "제목을 비워두지 마세요")
         private String title;
-
         @NotBlank(message = "내용을 비워두지 마세요")
-        private String body;
-
-        private long memberId;
-
-        public void addMemberId(long memberId){
-            Assert.notNull(memberId, "member id must not be null");
-            this.memberId = memberId;
-        }
+        private String content;
     }
 
     public static class Patch{
-        private long questionId;
-        private Question.QuestionStatus questionStatus;
-
-        public void setQuestionId(long questionId){this.questionId = questionId;}
+        private Long questionId;
+        @NotBlank(message = "제목을 비워두지 마세요")
+        private String title;
+        @NotBlank(message = "내용을 비워두지 마세요")
+        private String content;
     }
     @Getter
     @Setter
     public static class QuestionResponseDto{
         private long questionId;
-
-        @Setter(AccessLevel.NONE)
-        private long memberId;
-
+        private String title;
+        private String contents;
         private Question.QuestionStatus questionStatus;
         private LocalDateTime createAt;
-
-        public void setMemberId(Member member) {
-            this.memberId = member.getMemberId();
-        }
+        private LocalDateTime modifiedAt;
     }
 
 }

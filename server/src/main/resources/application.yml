@@ -18,3 +18,4 @@ spring:
         springframework:
           orm:
             jpa: DEBUG
+

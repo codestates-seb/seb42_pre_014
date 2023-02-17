@@ -1,11 +1,11 @@
-package pre14.stackoverflow.dto;
+package pre14.stackoverflow.globaldto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class pageInfo {
+public class PageInfo {
     private int page;
     private int size;
     private long totalElements;

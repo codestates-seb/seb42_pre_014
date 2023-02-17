@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pre14.stackoverflow.answer.entity.Answer;
-import pre14.stackoverflow.member.entity.Member;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,54 +21,37 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
-
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String body;
-
-    @ElementCollection
-    private List<String> tags;
+    @Column(nullable = false, length = 5000)
+    private String contents;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-
-//    @OneToOne(mappedBy = "question")
-//    private Answer answer;
-
-//    @Setter(AccessLevel.NONE)  // 투표관련 부분 추가 예정
-//    @OneToMany(mappedBy = "question")
-//    private List<Vote> votes = new ArrayList<>();
-
+    @CreatedDate
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(nullable = false, name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt = LocalDateTime.now();
-
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
 
 
     public enum QuestionStatus {
-        QUESTION_REGISTRATION("질문 등록"),
-        QUESTION_ANSWERED("답변 완료"),
-        QUESTION_DELETE("질문 삭제");
+        QUESTION_REGISTRATION(1,"질문 등록"),
+        QUESTION_ANSWERED(2,"답변 완료"),
+        QUESTION_DELETE(3,"질문 삭제");
 
-        @Getter
-        private String string;
+        private int num;
+        private String message;
 
-        QuestionStatus(String string) {
-            this.string = string;
+        QuestionStatus(int num, String message) {
+            this.num = num;
+            this.message = message;
         }
     }
 
-//    public void setAnswer(Answer answer){
-//        this.answer = answer;
-//
-//    }
+
+
 }

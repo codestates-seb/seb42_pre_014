@@ -1,4 +1,4 @@
-package pre14.stackoverflow.member.repository;
+package pre14.stackoverflow.globaldto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,4 +8,3 @@ import lombok.Getter;
 public class SingleResponseDto<T> {
     private T data;
 }
-

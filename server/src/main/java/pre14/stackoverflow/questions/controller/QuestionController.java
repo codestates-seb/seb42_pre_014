@@ -1,15 +1,13 @@
 package pre14.stackoverflow.questions.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pre14.stackoverflow.answer.mapper.AnswerMapper;
-import pre14.stackoverflow.answer.service.AnswerService;
-import pre14.stackoverflow.dto.MultiResponseDto;
-import pre14.stackoverflow.dto.SingleResponseDto;
-import pre14.stackoverflow.member.utils.UriCreator;
+import pre14.stackoverflow.globaldto.MultiResponseDto;
+import pre14.stackoverflow.globaldto.SingleResponseDto;
 import pre14.stackoverflow.questions.dto.QuestionDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.mapper.QuestionMapper;
@@ -22,42 +20,39 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
+@Slf4j
 public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
-    private final AnswerService answerService;
-    private final AnswerMapper answerMapper;
 
     public QuestionController(QuestionService questionService,
-                              QuestionMapper questionMapper,
-                              AnswerService answerService,
-                              AnswerMapper answerMapper) {
+                              QuestionMapper questionMapper) {
         this.questionService = questionService;
         this.questionMapper = questionMapper;
-        this.answerService = answerService;
-        this.answerMapper = answerMapper;
     }
 
     @PostMapping
-    public ResponseEntity createQuestion(@Valid @RequestBody QuestionDto.Post requestBody) {
-        Question question = questionMapper.questionPostDtoToQuestion(requestBody);
+    public ResponseEntity createQuestion(@Valid @RequestBody QuestionDto.Post questionPostDto) {
+        log.info("시발왜안돼");
+        Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
         Question createQuestion = questionService.createQuestion(question);
+        QuestionDto.QuestionResponseDto response = questionMapper.questionToQuestionResponseDto(createQuestion);
 
-        URI location = UriCreator.createUri("/question",createQuestion.getQuestionId());
-        return ResponseEntity.created(location).build();
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
-    public ResponseEntity updateQuestion(@PathVariable("question-id")@Positive Long questionId,
+    public ResponseEntity updateQuestion(@PathVariable("question-id")@Positive long questionId,
                                                @Valid @RequestBody QuestionDto.Patch questionPatchDto) {
-    questionPatchDto.setQuestionId(questionId);
-    Question question = questionService.
+    Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
+    question.setQuestionId(questionId);
+
+    Question updateQuestion = questionService.
             updateQuestion(questionMapper.questionPatchDtoToQuestion(questionPatchDto));
 
-    return new ResponseEntity<>(
-        new SingleResponseDto<>(questionMapper.questionToQuestionResponseDto(question))
-            ,HttpStatus.OK);
+    return new ResponseEntity<>(updateQuestion, HttpStatus.OK);
     }
 
     @GetMapping
@@ -72,7 +67,7 @@ public class QuestionController {
     }
 
     @GetMapping("/{question-id}")
-    public ResponseEntity getQuestionById(@PathVariable("question-id") @Positive Long questionId) {
+    public ResponseEntity getQuestionById(@PathVariable("question-id") @Positive long questionId) {
     Question question = questionService.findQuestion(questionId);
 
     return new ResponseEntity<>(
@@ -81,7 +76,7 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{question-id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Long questionId) {
+    public ResponseEntity<Void> deleteQuestion(@PathVariable long questionId) {
         questionService.deleteQuestion(questionId);
         return ResponseEntity.noContent().build();
     }

@@ -9,22 +9,22 @@ import pre14.stackoverflow.questions.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-17T14:17:45+0900",
+    date = "2023-02-17T16:45:51+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class QuestionMapperImpl implements QuestionMapper {
 
     @Override
-    public Question questionPostDtoToQuestion(QuestionDto.Post requestBody) {
-        if ( requestBody == null ) {
+    public Question questionPostDtoToQuestion(QuestionDto.Post questionPostDto) {
+        if ( questionPostDto == null ) {
             return null;
         }
 
         Question question = new Question();
 
-        question.setTitle( requestBody.getTitle() );
-        question.setBody( requestBody.getBody() );
+        question.setQuestionId( questionPostDto.getQuestionId() );
+        question.setTitle( questionPostDto.getTitle() );
 
         return question;
     }
@@ -51,7 +51,10 @@ public class QuestionMapperImpl implements QuestionMapper {
         if ( question.getQuestionId() != null ) {
             questionResponseDto.setQuestionId( question.getQuestionId() );
         }
+        questionResponseDto.setTitle( question.getTitle() );
+        questionResponseDto.setContents( question.getContents() );
         questionResponseDto.setQuestionStatus( question.getQuestionStatus() );
+        questionResponseDto.setModifiedAt( question.getModifiedAt() );
 
         return questionResponseDto;
     }
