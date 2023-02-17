@@ -4,7 +4,6 @@ import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';
 import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
     background-color: #393939;
     box-shadow: 0 3px 3px rgba(0, 0, 0, .2);
     display: grid;
