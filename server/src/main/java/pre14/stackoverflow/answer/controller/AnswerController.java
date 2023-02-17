@@ -25,10 +25,13 @@ public class AnswerController {
     //post
     @PostMapping
     public ResponseEntity<AnswerResponseDto> postAnswer(@RequestBody AnswerPostDto answerPostDto) {
+        System.out.println(answerPostDto.toString());
         Answer answer = mapper.answerPostToAnswer(answerPostDto);
+        System.out.println(answer.toString());
         Answer saveAnswer = answerService.createAnswer(answer);
-
+        System.out.println(saveAnswer.toString());
         AnswerResponseDto response = mapper.answerToAnswerResponse(saveAnswer);
+        System.out.println(response.toString());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

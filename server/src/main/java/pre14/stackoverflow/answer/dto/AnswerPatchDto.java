@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class AnswerPatchDto {
-    private long patchId;
+    private Long answerId;
     private String userName;
     private String title;
     private String contents;
