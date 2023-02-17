@@ -21,16 +21,13 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false, length = 5000)
     private String contents;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
-
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt;

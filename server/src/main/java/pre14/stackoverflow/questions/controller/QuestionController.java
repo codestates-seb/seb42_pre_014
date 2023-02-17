@@ -22,7 +22,6 @@ import java.util.List;
 @RequestMapping("/questions")
 @Slf4j
 public class QuestionController {
-
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
 
@@ -34,11 +33,9 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity createQuestion(@Valid @RequestBody QuestionDto.Post questionPostDto) {
-        log.info("시발왜안돼");
         Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
         Question createQuestion = questionService.createQuestion(question);
         QuestionDto.QuestionResponseDto response = questionMapper.questionToQuestionResponseDto(createQuestion);
-
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

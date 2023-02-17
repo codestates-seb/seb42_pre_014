@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class QuestionDto {
 
     @Getter
-    @AllArgsConstructor
     @ToString
     @RequiredArgsConstructor
     public static class Post{
@@ -19,15 +18,17 @@ public class QuestionDto {
         @NotBlank(message = "제목을 비워두지 마세요")
         private String title;
         @NotBlank(message = "내용을 비워두지 마세요")
-        private String content;
+        private String contents;
     }
 
+    @Getter
+    @RequiredArgsConstructor
     public static class Patch{
         private Long questionId;
         @NotBlank(message = "제목을 비워두지 마세요")
         private String title;
         @NotBlank(message = "내용을 비워두지 마세요")
-        private String content;
+        private String contents;
     }
     @Getter
     @Setter
