@@ -22,4 +22,3 @@ public class QuestionService {
         questionRepository.deleteById(id);
     }
 }
-
