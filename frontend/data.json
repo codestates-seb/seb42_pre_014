@@ -1,0 +1,78 @@
+
+{
+  "questions": [
+    {
+      "id": 1,
+      "votes": 0,
+      "answers": 1,
+      "views": 9,
+      "tags": ["c++", "dictionary", "if-statement"],
+      "title": "Why is this if statement not working while iterating the map?",
+      "body": "comment 1",
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "votes": 0,
+      "answers": 1,
+      "views": 6,
+      "tags": ["javascript", "parsing", "quetes"],
+      "title": "title 2 ",
+      "body": "comment 2",
+      "postId": 2
+    },
+    {
+      "id": 3,
+      "votes": 0,
+      "answers": 0,
+      "views": 6,
+      "tags": ["python", "parsing", "quetes"],
+      "title": "title 3 ",
+      "body": "comment 3",
+      "postId": 3
+    },
+    {
+      "id": 4,
+      "votes": 0,
+      "answers": 0,
+      "views": 6,
+      "tags": ["python", "parsing", "quetes"],
+      "title": "title 3 ",
+      "body": "comment 3",
+      "postId": 3
+    },
+    {
+      "id": 5,
+      "votes": 0,
+      "answers": 0,
+      "views": 6,
+      "tags": ["python", "parsing", "quetes"],
+      "title": "title 3 ",
+      "body": "comment 3",
+      "postId": 3
+    },
+    {
+      "id": 6,
+      "votes": 0,
+      "answers": 0,
+      "views": 6,
+      "tags": ["python", "parsing", "quetes"],
+      "title": "title 3 ",
+      "body": "comment 3",
+      "postId": 3
+    },
+    {
+      "id": 7,
+      "votes": 0,
+      "answers": 0,
+      "views": 6,
+      "tags": ["python", "parsing", "quetes"],
+      "title": "title 3 ",
+      "body": "comment 3",
+      "postId": 3
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
