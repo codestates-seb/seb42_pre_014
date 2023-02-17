@@ -1,11 +1,15 @@
-package pre14.stackoverflow.member;
+package pre14.stackoverflow.member.mapper;
 
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
+import pre14.stackoverflow.member.dto.MemberPatchDto;
+import pre14.stackoverflow.member.dto.MemberPostDto;
+import pre14.stackoverflow.member.dto.MemberResponseDto;
+import pre14.stackoverflow.member.entity.Member;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-16T16:00:41+0900",
+    date = "2023-02-17T14:17:45+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component

@@ -6,8 +6,16 @@ import org.mapstruct.MappingConstants;
 import pre14.stackoverflow.questions.dto.QuestionDto;
 import pre14.stackoverflow.questions.entity.Question;
 
+import java.util.List;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface QuestionMapper {
-    @Mapping(source = "memberId", target = "member.memberId")
     Question questionPostDtoToQuestion(QuestionDto.Post requestBody);
+
+    Question questionPatchDtoToQuestion(QuestionDto.Patch questionPatchDto);
+
+    QuestionDto.QuestionResponseDto questionToQuestionResponseDto(Question question);
+
+    List<QuestionDto.QuestionResponseDto> questionToQuestionResponseDtos(List<Question> questions);
+
 }
