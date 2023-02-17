@@ -17,14 +17,11 @@ import java.util.Optional;
 import java.util.function.ToDoubleBiFunction;
 
 @Service
-@RequiredArgsConstructor //생성자 없어도 되게하는거
+@RequiredArgsConstructor // 필수요소 생성자만 생성 final , @notnull
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
     public Question createQuestion(Question question) { //질문 생성
-//게시글 작성자가 회원이 맞는지 확인
-//        memberService.findMember(question.getMember().getMemberId());
-        
         return questionRepository.save(question); // 게시글 생성
     }
 

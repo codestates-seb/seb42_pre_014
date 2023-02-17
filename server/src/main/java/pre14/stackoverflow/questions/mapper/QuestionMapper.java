@@ -11,11 +11,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionMapper {
-    Question questionPostDtoToQuestion(QuestionDto.Post questionPostDto);
+    Question questionPostToQuestion(QuestionDto.Post questionPostDto);
 
     Question questionPatchDtoToQuestion(QuestionDto.Patch questionPatchDto);
 
-    QuestionDto.QuestionResponseDto questionToQuestionResponseDto(Question question);
+    QuestionDto.QuestionResponseDto questionToQuestionResponse(Question question);
 
     List<QuestionDto.QuestionResponseDto> questionToQuestionResponseDtos(List<Question> questions);
 

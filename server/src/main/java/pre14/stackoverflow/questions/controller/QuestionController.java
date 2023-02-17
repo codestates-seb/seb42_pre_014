@@ -20,29 +20,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
+@RequiredArgsConstructor
 @Slf4j
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
 
-    public QuestionController(QuestionService questionService,
-                              QuestionMapper questionMapper) {
-        this.questionService = questionService;
-        this.questionMapper = questionMapper;
-    }
-
     @PostMapping
     public ResponseEntity createQuestion(@RequestBody QuestionDto.Post questionPostDto) {
-        Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
+        Question question = questionMapper.questionPostToQuestion(questionPostDto);
+        System.out.println(question.toString());
         Question createQuestion = questionService.createQuestion(question);
-        QuestionDto.QuestionResponseDto response = questionMapper.questionToQuestionResponseDto(createQuestion);
+        System.out.println(createQuestion.toString());
+        QuestionDto.QuestionResponseDto response = questionMapper.questionToQuestionResponse(createQuestion);
+        System.out.println(response.toString());
 
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
     public ResponseEntity updateQuestion(@PathVariable("question-id")@Positive long questionId,
-                                               @Valid @RequestBody QuestionDto.Patch questionPatchDto) {
+                                         @RequestBody QuestionDto.Patch questionPatchDto) {
     Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
     question.setQuestionId(questionId);
 
@@ -68,7 +66,7 @@ public class QuestionController {
     Question question = questionService.findQuestion(questionId);
 
     return new ResponseEntity<>(
-            new SingleResponseDto<>(questionMapper.questionToQuestionResponseDto(question)),
+            new SingleResponseDto<>(questionMapper.questionToQuestionResponse(question)),
             HttpStatus.OK);
     }
 

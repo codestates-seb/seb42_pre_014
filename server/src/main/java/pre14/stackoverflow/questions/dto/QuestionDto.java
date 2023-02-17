@@ -22,22 +22,22 @@ public class QuestionDto {
 
     @Getter
     @RequiredArgsConstructor
+    @ToString
     public static class Patch{
         private Long questionId;
-        @NotBlank(message = "제목을 비워두지 마세요")
         private String title;
-        @NotBlank(message = "내용을 비워두지 마세요")
         private String contents;
     }
     @Getter
     @Setter
     @RequiredArgsConstructor
+    @ToString
     public static class QuestionResponseDto{
-        private long questionId;
+        private Long questionId;
         private String title;
         private String contents;
         private Question.QuestionStatus questionStatus;
-        private LocalDateTime createAt;
+        private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
 

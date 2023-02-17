@@ -4,11 +4,11 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -27,12 +27,18 @@ public class Question {
     private String contents;
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
+
     @CreatedDate
-    //@Column(nullable = false)
-    private LocalDateTime createdAt;
+    @Column//(nullable = false)
+    private LocalDateTime createdAt ;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+    public Question(String title, String contents, LocalDateTime createdAt) {
+        this.title = title;
+        this.contents = contents;
+        this.createdAt = createdAt;
+    }
 
     public enum QuestionStatus {
         QUESTION_REGISTRATION(1, "질문 등록"),
@@ -47,6 +53,4 @@ public class Question {
             this.message = message;
         }
     }
-
-
 }

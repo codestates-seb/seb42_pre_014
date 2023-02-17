@@ -9,14 +9,14 @@ import pre14.stackoverflow.questions.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-17T16:45:20+0900",
+    date = "2023-02-18T01:18:12+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class QuestionMapperImpl implements QuestionMapper {
 
     @Override
-    public Question questionPostDtoToQuestion(QuestionDto.Post questionPostDto) {
+    public Question questionPostToQuestion(QuestionDto.Post questionPostDto) {
         if ( questionPostDto == null ) {
             return null;
         }
@@ -25,6 +25,7 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         question.setQuestionId( questionPostDto.getQuestionId() );
         question.setTitle( questionPostDto.getTitle() );
+        question.setContents( questionPostDto.getContents() );
 
         return question;
     }
@@ -37,23 +38,26 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         Question question = new Question();
 
+        question.setQuestionId( questionPatchDto.getQuestionId() );
+        question.setTitle( questionPatchDto.getTitle() );
+        question.setContents( questionPatchDto.getContents() );
+
         return question;
     }
 
     @Override
-    public QuestionDto.QuestionResponseDto questionToQuestionResponseDto(Question question) {
+    public QuestionDto.QuestionResponseDto questionToQuestionResponse(Question question) {
         if ( question == null ) {
             return null;
         }
 
         QuestionDto.QuestionResponseDto questionResponseDto = new QuestionDto.QuestionResponseDto();
 
-        if ( question.getQuestionId() != null ) {
-            questionResponseDto.setQuestionId( question.getQuestionId() );
-        }
+        questionResponseDto.setQuestionId( question.getQuestionId() );
         questionResponseDto.setTitle( question.getTitle() );
         questionResponseDto.setContents( question.getContents() );
         questionResponseDto.setQuestionStatus( question.getQuestionStatus() );
+        questionResponseDto.setCreatedAt( question.getCreatedAt() );
         questionResponseDto.setModifiedAt( question.getModifiedAt() );
 
         return questionResponseDto;
@@ -67,7 +71,7 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         List<QuestionDto.QuestionResponseDto> list = new ArrayList<QuestionDto.QuestionResponseDto>( questions.size() );
         for ( Question question : questions ) {
-            list.add( questionToQuestionResponseDto( question ) );
+            list.add( questionToQuestionResponse( question ) );
         }
 
         return list;
