@@ -32,12 +32,12 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity createQuestion(@Valid @RequestBody QuestionDto.Post questionPostDto) {
+    public ResponseEntity createQuestion(@RequestBody QuestionDto.Post questionPostDto) {
         Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
         Question createQuestion = questionService.createQuestion(question);
         QuestionDto.QuestionResponseDto response = questionMapper.questionToQuestionResponseDto(createQuestion);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")

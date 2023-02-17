@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 
 public class QuestionDto {
-
     @Getter
     @ToString
     @RequiredArgsConstructor
@@ -32,6 +31,7 @@ public class QuestionDto {
     }
     @Getter
     @Setter
+    @RequiredArgsConstructor
     public static class QuestionResponseDto{
         private long questionId;
         private String title;

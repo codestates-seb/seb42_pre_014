@@ -9,7 +9,7 @@ import pre14.stackoverflow.questions.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-17T18:15:37+0900",
+    date = "2023-02-18T00:30:57+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -25,6 +25,7 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         question.setQuestionId( questionPostDto.getQuestionId() );
         question.setTitle( questionPostDto.getTitle() );
+        question.setContents( questionPostDto.getContents() );
 
         return question;
     }
@@ -36,6 +37,10 @@ public class QuestionMapperImpl implements QuestionMapper {
         }
 
         Question question = new Question();
+
+        question.setQuestionId( questionPatchDto.getQuestionId() );
+        question.setTitle( questionPatchDto.getTitle() );
+        question.setContents( questionPatchDto.getContents() );
 
         return question;
     }
