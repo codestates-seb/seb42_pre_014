@@ -4,6 +4,7 @@ import Header1 from "./Header1"
 import ReactMarkdown from "react-markdown"
 import gfm from "remark-gfm"
 import { useState } from "react"
+import { fetchCreate } from "./json-server/api"
 
 const Container = styled.div`
     padding: 30px 20px;
@@ -46,6 +47,11 @@ export default function AskPage() {
     const [questionTitle, setQuestionTitle] = useState('');
     const [questionBody, setQuestionBody] = useState('');
 
+    const handleSubmit = () => {
+        const data = {questionTitle, questionBody}
+        fetchCreate("http://localhost:3001/test/", data)
+    }
+
     return (
         <Container>
             <Header1 style={{ marginBottom: '20px' }}>Ask a public question</Header1>
@@ -59,7 +65,7 @@ export default function AskPage() {
             <QuestionBodyTextarea
                 onChange={e => setQuestionBody(e.target.value)}
                 placeholder="More info about your question. You can use markdown here">{questionBody}</QuestionBodyTextarea>
-            <BlueButton>Post question</BlueButton>
+            <BlueButton onClick={handleSubmit}>Post question</BlueButton>
             <PreviewArea>
                 <ReactMarkdown plugins={[gfm]} children={questionBody} />
             </PreviewArea>
