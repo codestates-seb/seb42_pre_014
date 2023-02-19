@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const QuestionStat = styled.div`
     text-align: center;
@@ -25,7 +26,7 @@ const Tag = styled.span`
     border-radius: 4px;
     font-size: .9rem;
 `;
-const QuestionLink = styled.a`
+const QuestionLink = styled(Link)`
     text-decoration: none;
     color: #3ca4ff;
     font-size: 1.1rem;
@@ -57,7 +58,7 @@ function QuestionRow() {
             <QuestionStat>1<span>answers</span></QuestionStat>
             <QuestionStat>6<span>views</span></QuestionStat>
             <QuestionTitleArea>
-                <QuestionLink>Getting string in quotes in javascript</QuestionLink>
+                <QuestionLink to="./1">Getting string in quotes in javascript</QuestionLink>
                 <Tag>javascript</Tag>
                 <WhoAndWhen>
                     asked 2mins ago <UserLink></UserLink>

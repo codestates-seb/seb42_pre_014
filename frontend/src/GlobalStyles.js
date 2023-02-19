@@ -15,8 +15,8 @@ const GlobalStyles = createGlobalStyle`
     margin: 10px 0;
     line-height: 1.5rem;
   }
-  h1,h2{
-    margin-top: 20px;
+  h1,h2,h3{
+    margin-top: 10px;
     margin-bottom: 10px;
   }
   h1{
