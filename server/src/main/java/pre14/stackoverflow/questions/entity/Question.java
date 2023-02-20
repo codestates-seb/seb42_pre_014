@@ -34,12 +34,6 @@ public class Question {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public Question(String title, String contents, LocalDateTime createdAt) {
-        this.title = title;
-        this.contents = contents;
-        this.createdAt = createdAt;
-    }
-
     public enum QuestionStatus {
         QUESTION_REGISTRATION(1, "질문 등록"),
         QUESTION_ANSWERED(2, "답변 완료"),

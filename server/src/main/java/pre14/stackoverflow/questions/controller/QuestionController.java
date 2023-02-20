@@ -44,9 +44,7 @@ public class QuestionController {
     Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
     question.setQuestionId(questionId);
 
-    Question updateQuestion = questionService.
-            updateQuestion(question);
-
+    Question updateQuestion = questionService.updateQuestion(question);
     return new ResponseEntity<>(updateQuestion, HttpStatus.OK);
     }
 
