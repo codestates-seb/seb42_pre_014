@@ -1,4 +1,3 @@
-
 package pre14.stackoverflow.globaldto;
 
 import lombok.Getter;
@@ -17,4 +16,3 @@ public class MultiResponseDto<T>{
                 page.getSize(), page.getTotalElements(), page.getTotalPages());
     }
 }
-

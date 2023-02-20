@@ -1,4 +1,3 @@
-
 package pre14.stackoverflow.globaldto;
 
 import lombok.AllArgsConstructor;
