@@ -8,6 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class AnswerPatchDto {
     private Long answerId;
     private String userName;
-    private String title;
     private String contents;
 }

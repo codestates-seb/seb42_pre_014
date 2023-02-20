@@ -10,6 +10,5 @@ import lombok.ToString;
 public class AnswerPostDto {
     private Long answerId;
     private String userName;
-    private String title;
     private String contents;
 }
