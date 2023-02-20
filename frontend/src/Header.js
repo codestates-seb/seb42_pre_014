@@ -78,10 +78,10 @@ function Header() {
                 </ProfileLink>
             )}
             {!user && (
-                <>
+                <div>
                     <ProfileLink to={'/login'} className="profile">Log in</ProfileLink>
                     <ProfileLink to={'/register'} className="profile">Register</ProfileLink>
-                </>
+                </div>
             )}
         </StyledHeader>
     )
