@@ -14,9 +14,9 @@ public class QuestionDto {
     @RequiredArgsConstructor
     public static class Post{
         private Long questionId;
-        @NotBlank(message = "제목을 비워두지 마세요")
+        @NotBlank(message = "제목을 작성해주세요")
         private String title;
-        @NotBlank(message = "내용을 비워두지 마세요")
+        @NotBlank(message = "본문을 작성해주세요")
         private String contents;
     }
 
@@ -40,5 +40,4 @@ public class QuestionDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
-
 }

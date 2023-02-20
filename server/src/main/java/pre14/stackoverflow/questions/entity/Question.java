@@ -29,7 +29,7 @@ public class Question {
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
 
     @CreatedDate
-    @Column//(nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt ;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
