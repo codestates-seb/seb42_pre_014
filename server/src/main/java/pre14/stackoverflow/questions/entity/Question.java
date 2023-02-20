@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor //?
-@EntityListeners(AuditingEntityListener.class)//?
-@ToString //?
+@RequiredArgsConstructor //아무것도 없이 만들어줌/ 편안
+@EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime함께사용
+@ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
 @Table(name = "question")
 public class Question {
     @Id
