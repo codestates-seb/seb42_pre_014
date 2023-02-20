@@ -8,18 +8,25 @@ import { Routes, Route } from 'react-router-dom';
 import UserContext from './UserContext';
 import LoginPage from './LoginPage';
 import axios from 'axios';
+import RegisterPage from './RegisterPage';
 
 function App() {
   const [user, setUser] = useState(null);
+
   function checkAuth() {
-    axios.get('http://localhost:4000/profile', { withCredentials: true })
-      .then(response => {
-        setUser({ email: response.data });
-      })
-      .catch(() => {
-        setUser(null);
-      })
+    return new Promise(((resolve, reject) => {
+      axios.get('http://localhost:4000/profile', { withCredentials: true })
+        .then(response => {
+          setUser({ email: response.data });
+          resolve(response.data);
+        })
+        .catch(() => {
+          setUser(null);
+          reject(null);
+        })
+    }))
   }
+
   useEffect(() => {
     checkAuth();
   }, []);
@@ -31,9 +38,10 @@ function App() {
       <UserContext.Provider value={{ user, checkAuth }}>
         <Header />
         <Routes>
-          <Route path='/' element={<QuestionsPage />} />
-          <Route path='/login' element={<LoginPage />} />
           <Route path='/ask' element={<AskPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/' element={<QuestionsPage />} />
         </Routes>
       </UserContext.Provider>
     </div>

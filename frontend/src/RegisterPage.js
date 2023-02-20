@@ -10,7 +10,7 @@ import { Navigate } from "react-router-dom";
 const Container = styled.div`
     padding: 30px 20px;
 `;
-class LoginPage extends Component {
+class RegisterPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,15 +19,12 @@ class LoginPage extends Component {
             redirectToHomePage: false,
         }
     }
-    login() {
-        axios.post('http://localhost:4000/login', {
+    register() {
+        axios.post('http://localhost:4000/register', {
             email: this.state.email,
             password: this.state.password,
         }, { withCredentials: true })
             .then(() => {
-                this.context.checkAuth().then(() => {
-                    this.setState({ redirectToHomePage: true });
-                });
             });
     }
 
@@ -37,7 +34,7 @@ class LoginPage extends Component {
                 <Navigate to="/" />
             )}
             <Container>
-                <Header1 style={{ marginBottom: '20px' }}>Log in</Header1>
+                <Header1 style={{ marginBottom: '20px' }}>Register</Header1>
                 <Input
                     placeholder={'email'}
                     type="email"
@@ -47,13 +44,14 @@ class LoginPage extends Component {
                     placeholder={'password'}
                     type="password"
                     value={this.state.password}
+                    autoComplete={'new-password'}
                     onChange={e => this.setState({ password: e.target.value })} />
-                <BlueButton onClick={() => this.login()}>Login</BlueButton>
+                <BlueButton onClick={() => this.register()}>Register</BlueButton>
             </Container>
         </>);
     }
 }
 
-LoginPage.contextType = UserContext;
+RegisterPage.contextType = UserContext;
 
-export default LoginPage;
+export default RegisterPage;

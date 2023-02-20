@@ -52,6 +52,7 @@ const SearchInput = styled.input`
 
 const ProfileLink = styled(Link)`
     color: #fff;
+    padding: 0 10px;
     text-decoration: none;
     line-height: 50px;
 `
@@ -65,13 +66,22 @@ function Header() {
                 <span>Stack<b>overflow</b></span>
             </LogoLink>
             <form action="" className="search">
-                <SearchInput type="text" placeholder="Search..."></SearchInput>
+                <SearchInput
+                    type="text"
+                    placeholder="Search...">
+                </SearchInput>
             </form>
             {user && (
-                <ProfileLink to={'./profile'} className="profile">{user.email}</ProfileLink>
+                <ProfileLink
+                    to={'./profile'}
+                    className="profile">{user.email}
+                </ProfileLink>
             )}
             {!user && (
-                <ProfileLink to={'/login'} className="profile">Log in</ProfileLink>
+                <>
+                    <ProfileLink to={'/login'} className="profile">Log in</ProfileLink>
+                    <ProfileLink to={'/register'} className="profile">Register</ProfileLink>
+                </>
             )}
         </StyledHeader>
     )
