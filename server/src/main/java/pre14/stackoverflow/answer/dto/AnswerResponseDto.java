@@ -20,7 +20,6 @@ public class AnswerResponseDto {
     private String userName;
     private String title;
     private String contents;
-    private Answer.AnswerStatus status;                           // 대답 응답
     private LocalDateTime createdAt;                              // 작성시간
     private LocalDateTime modifiedAt;                             // 수정시간
 }

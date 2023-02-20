@@ -25,7 +25,6 @@ public class AnswerService {
         Answer update = searchAnswerById(answer.getAnswerId());
 
         Optional.ofNullable(answer.getUserName()).ifPresent(update :: setUserName);
-        Optional.ofNullable(answer.getTitle()).ifPresent(update :: setTitle);
         Optional.ofNullable(answer.getContents()).ifPresent(update :: setContents);
 
         Answer updatedAnswer = answerRepository.save(update);
