@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/project?serverTimezone=Asia/Seoul
     username: root
-    password: 
+    password: 123456789
     ### 내컴퓨터에서 mysql 하나임
   jpa:
     hibernate:

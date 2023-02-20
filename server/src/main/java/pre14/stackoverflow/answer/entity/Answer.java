@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Table(name = "answer")
 @ToString
 @EntityListeners(AuditingEntityListener.class)
-public class Answer {
+public class    Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerId;
