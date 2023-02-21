@@ -5,13 +5,11 @@ import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import pre14.stackoverflow.questions.dto.QuestionDto;
-import pre14.stackoverflow.questions.dto.QuestionTagDto;
 import pre14.stackoverflow.questions.entity.Question;
-import pre14.stackoverflow.questions.entity.QuestionTag;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-21T17:20:04+0900",
+    date = "2023-02-21T16:54:48+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -28,7 +26,6 @@ public class QuestionMapperImpl implements QuestionMapper {
         question.setQuestionId( questionPostDto.getQuestionId() );
         question.setTitle( questionPostDto.getTitle() );
         question.setContents( questionPostDto.getContents() );
-        question.setQuestionTags( questionTagDtoListToQuestionTagList( questionPostDto.getQuestionTags() ) );
 
         return question;
     }
@@ -78,28 +75,5 @@ public class QuestionMapperImpl implements QuestionMapper {
         }
 
         return list;
-    }
-
-    protected QuestionTag questionTagDtoToQuestionTag(QuestionTagDto questionTagDto) {
-        if ( questionTagDto == null ) {
-            return null;
-        }
-
-        QuestionTag questionTag = new QuestionTag();
-
-        return questionTag;
-    }
-
-    protected List<QuestionTag> questionTagDtoListToQuestionTagList(List<QuestionTagDto> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<QuestionTag> list1 = new ArrayList<QuestionTag>( list.size() );
-        for ( QuestionTagDto questionTagDto : list ) {
-            list1.add( questionTagDtoToQuestionTag( questionTagDto ) );
-        }
-
-        return list1;
     }
 }

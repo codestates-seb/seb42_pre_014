@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive;
 public class QuestionTagDto {
         private Long tagId; //필수
         private String tagName;
-
+}
 
 //    private long memberId;
 //
@@ -19,4 +19,3 @@ public class QuestionTagDto {
 //        Assert.notNull(memberId, "member id must not be null");
 //        this.memberId = memberId;
 //    }
-}
