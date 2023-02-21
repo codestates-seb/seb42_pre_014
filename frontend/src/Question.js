@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import{ useParams } from "react-router-dom";
 import useFetch from "./json-server/useFetch"
-import { fetchCreate } from "./json-server/api"
+import { fetchCreate, fetchPatch } from "./json-server/api"
 import styled from "styled-components";
 import BlueButton from "./BlueButton"
 import BlueButtonLink from "./BlueButtonLink";
 import Answers from "./Answers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faBookmark as farBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -68,7 +69,7 @@ const QuestionStatcontainer = styled.div`
   margin-left: 10px;
 `;
 const Leftbuttons = styled.div`
-  display: flex;
+    display: flex;
   flex-direction: column;
   text-align: center;
 `;
@@ -80,14 +81,39 @@ const Question = () => {
     const [answer, setAnswer] = useState('');
     const [quest, setQuest] = useState([]);
 
-    const handleSubmit = (e) => {
+    // const handleSubmit = (e) => {
+    //     // e.preventDefault(); //새로고침 막기
+    //     const data = {answer}
+    //     fetchCreate("http://localhost:3001/test/?id=1", data)
+    // }
+    const handleSubmit = () => {
         // e.preventDefault(); //새로고침 막기
         const data = {answer}
-        fetchCreate("http://localhost:3001/test/", data)
+        fetchPatch("http://localhost:3001/test/", id, data)
+        console.log(answer)
+    }
+    const voteUp = () => {
+        const votes = {"vote" : data.vote + 1}
+        fetchPatch("http://localhost:3001/test/", id, votes)
+    }
+    const voteDown = () => {
+        const votes = {"vote" : data.vote - 1}
+        fetchPatch("http://localhost:3001/test/", id, votes)
+    }
+    const bookMarkClick = () => {
+        // setBookmark(!bookmark);
+        if(data.save === "false"){
+            const saves = {"save" : data.save = "true"}
+            fetchPatch("http://localhost:3001/test/", id, saves)
+        }
+        else{
+            const saves = {"save" : data.save = "false"}
+            fetchPatch("http://localhost:3001/test/", id, saves)
+        }
     }
 
     useEffect(() => {
-        fetch("http://localhost:3001/test/")
+        fetch("http://localhost:3001/test/?id=1")
           .then((res) => res.json())
           .then((json) => setQuest(json))
           .catch((err) => console.err(err));
@@ -112,14 +138,14 @@ const Question = () => {
                     <StyledQuestionRow>
                     <Leftbuttons>
                         <QuestionStat>
-                            <FontAwesomeIcon icon={faCaretUp} size="4x"/>
+                            <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
                         </QuestionStat>
-                            <div>0</div>
+                            <div>{ data.vote }</div>
                         <QuestionStat>
-                            <FontAwesomeIcon icon={faCaretDown} size="4x"/>
+                            <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
                         </QuestionStat>
                         <QuestionStat>
-                            <FontAwesomeIcon icon={faBookmark} size="2x"/>
+                            {data.save === "false" ? <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick}/> : <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick}/>}
                         </QuestionStat>
                         <QuestionStat>
                             <FontAwesomeIcon icon={faClockRotateLeft} size="2x"/>
@@ -138,12 +164,12 @@ const Question = () => {
 
             )}
             <Questionarticle>
-            <h2>4 Answer</h2>
+            <h2>1 Answer</h2>
             {quest.map((el) => {
                 return (
                     <Answers
                         title={el.answer.answerBody}
-                        key={el.answer.number}
+                        // key={el.answer.number}
                     />
                 
                 );
@@ -151,8 +177,12 @@ const Question = () => {
             <div>
                 <h2>Your Answer</h2>
                 <QuestionBodyTextarea
-                    onChange={e => setAnswer(e.target.value)}>
-                </QuestionBodyTextarea>
+                    onChange={e => 
+                        setAnswer({
+                            "answerBody": e.target.value,
+                            "vote": 0,
+                            "save": "false",
+                        })}></QuestionBodyTextarea>
                 <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
             </div>
             <h3>Not the answer you're looking for? Browse other questions tagged r&nbsp;string&nbsp;stringr or ask your own question.</h3>

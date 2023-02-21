@@ -9,3 +9,16 @@ export const fetchCreate = (url, data) => {
         console.error('Error', error);
     })
 }
+export const fetchPatch = (url, id, data) => {
+    fetch(`${url}${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'Application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error', error);
+      });
+};
