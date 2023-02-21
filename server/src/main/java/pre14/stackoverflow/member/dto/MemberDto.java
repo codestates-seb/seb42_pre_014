@@ -2,6 +2,8 @@ package pre14.stackoverflow.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import pre14.stackoverflow.member.entity.Member;
 
 import javax.validation.constraints.Email;
@@ -12,7 +14,8 @@ import java.time.LocalDateTime;
 public class MemberDto {
 
     @Getter
-    @AllArgsConstructor
+    @RequiredArgsConstructor
+    @ToString
     public static class Post{
         @NotBlank
         @Email

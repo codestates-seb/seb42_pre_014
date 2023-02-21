@@ -11,8 +11,8 @@ import pre14.stackoverflow.answer.entity.Answer;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-17T14:32:29+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-02-21T17:20:19+0900",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class AnswerMapperImpl implements AnswerMapper {
@@ -25,8 +25,10 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         Answer answer = new Answer();
 
+        if ( answerPostDto.getAnswerId() != null ) {
+            answer.setAnswerId( answerPostDto.getAnswerId() );
+        }
         answer.setUserName( answerPostDto.getUserName() );
-        answer.setTitle( answerPostDto.getTitle() );
         answer.setContents( answerPostDto.getContents() );
 
         return answer;
@@ -40,8 +42,10 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         Answer answer = new Answer();
 
+        if ( answerPatchDto.getAnswerId() != null ) {
+            answer.setAnswerId( answerPatchDto.getAnswerId() );
+        }
         answer.setUserName( answerPatchDto.getUserName() );
-        answer.setTitle( answerPatchDto.getTitle() );
         answer.setContents( answerPatchDto.getContents() );
 
         return answer;
@@ -57,8 +61,9 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         answerResponseDto.setAnswerId( answer.getAnswerId() );
         answerResponseDto.setUserName( answer.getUserName() );
-        answerResponseDto.setTitle( answer.getTitle() );
         answerResponseDto.setContents( answer.getContents() );
+        answerResponseDto.setCreatedAt( answer.getCreatedAt() );
+        answerResponseDto.setModifiedAt( answer.getModifiedAt() );
 
         return answerResponseDto;
     }

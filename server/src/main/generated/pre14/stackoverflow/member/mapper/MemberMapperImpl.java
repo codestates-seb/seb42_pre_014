@@ -1,50 +1,54 @@
 package pre14.stackoverflow.member.mapper;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
-import pre14.stackoverflow.member.dto.MemberPatchDto;
-import pre14.stackoverflow.member.dto.MemberPostDto;
-import pre14.stackoverflow.member.dto.MemberResponseDto;
+import pre14.stackoverflow.member.dto.MemberDto;
 import pre14.stackoverflow.member.entity.Member;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-17T14:32:29+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-02-21T17:20:19+0900",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class MemberMapperImpl implements MemberMapper {
 
     @Override
-    public Member memberPostDtoToMember(MemberPostDto memberPostDto) {
-        if ( memberPostDto == null ) {
+    public Member memberPostToMember(MemberDto.Post requestBody) {
+        if ( requestBody == null ) {
             return null;
         }
 
         Member member = new Member();
 
-        member.setName( memberPostDto.getName() );
-        member.setEmail( memberPostDto.getEmail() );
-        member.setPhone( memberPostDto.getPhone() );
+        member.setName( requestBody.getName() );
+        member.setEmail( requestBody.getEmail() );
+        member.setPhone( requestBody.getPhone() );
 
         return member;
     }
 
     @Override
-    public Member memberPatchDtoToMember(MemberPatchDto memberPatchDto) {
-        if ( memberPatchDto == null ) {
+    public Member memberPatchToMember(MemberDto.Patch requestBody) {
+        if ( requestBody == null ) {
             return null;
         }
 
         Member member = new Member();
 
-        member.setMemberId( memberPatchDto.getMemberId() );
+        member.setMemberId( requestBody.getMemberId() );
+        member.setMemberStatus( requestBody.getMemberStatus() );
+        member.setName( requestBody.getName() );
+        member.setPhone( requestBody.getPhone() );
 
         return member;
     }
 
     @Override
-    public MemberResponseDto memberToMemberResponseDto(Member member) {
+    public MemberDto.Response memberToMemberResponse(Member member) {
         if ( member == null ) {
             return null;
         }
@@ -53,6 +57,9 @@ public class MemberMapperImpl implements MemberMapper {
         String email = null;
         String name = null;
         String phone = null;
+        LocalDateTime createdAt = null;
+        LocalDateTime modifiedAt = null;
+        Member.MemberStatus memberStatus = null;
 
         if ( member.getMemberId() != null ) {
             memberId = member.getMemberId();
@@ -60,9 +67,26 @@ public class MemberMapperImpl implements MemberMapper {
         email = member.getEmail();
         name = member.getName();
         phone = member.getPhone();
+        createdAt = member.getCreatedAt();
+        modifiedAt = member.getModifiedAt();
+        memberStatus = member.getMemberStatus();
 
-        MemberResponseDto memberResponseDto = new MemberResponseDto( memberId, email, name, phone );
+        MemberDto.Response response = new MemberDto.Response( memberId, email, name, phone, createdAt, modifiedAt, memberStatus );
 
-        return memberResponseDto;
+        return response;
+    }
+
+    @Override
+    public List<MemberDto.Response> membersToMemberResponses(List<Member> members) {
+        if ( members == null ) {
+            return null;
+        }
+
+        List<MemberDto.Response> list = new ArrayList<MemberDto.Response>( members.size() );
+        for ( Member member : members ) {
+            list.add( memberToMemberResponse( member ) );
+        }
+
+        return list;
     }
 }

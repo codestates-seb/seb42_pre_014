@@ -1,6 +1,7 @@
 package pre14.stackoverflow.member.controller;
 
 
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,11 @@ import java.util.List;
 @RequestMapping("/members")
 @RestController
 @Validated
+@ToString
 @Slf4j
 public class MemberController {
     private final String MEMBER_DEFAULT_URL="members";
+
     private final MemberService memberService;
     private final MemberMapper mapper;
 
@@ -35,9 +38,11 @@ public class MemberController {
     }
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){
+        System.out.println(requestBody.toString());
         Member member=mapper.memberPostToMember(requestBody);
-
+        System.out.println(member.toString());
         Member createdMember=memberService.createMember(member);
+        System.out.println(createdMember.toString());
         MemberDto.Response response=mapper.memberToMemberResponse(createdMember);
 //        URI location= UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
