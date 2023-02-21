@@ -80,7 +80,6 @@ const Question = () => {
     const [data, isPending, error ] = useFetch(`http://localhost:3001/test/${id}`)
     const [answer, setAnswer] = useState('');
     const [quest, setQuest] = useState([]);
-
     // const handleSubmit = (e) => {
     //     // e.preventDefault(); //새로고침 막기
     //     const data = {answer}
@@ -111,12 +110,35 @@ const Question = () => {
             fetchPatch("http://localhost:3001/test/", id, saves)
         }
     }
-
+    const elapsedTime = (date) => {
+        const start = new Date(date);
+        const end = new Date();
+      
+        const diff = (end - start) / 1000;
+        
+        const times = [
+          { name: 'years', milliSeconds: 60 * 60 * 24 * 365 },
+          { name: 'weeks', milliSeconds: 60 * 60 * 24 * 30 },
+          { name: 'days', milliSeconds: 60 * 60 * 24 },
+          { name: 'times', milliSeconds: 60 * 60 },
+          { name: 'mins', milliSeconds: 60 },
+        ];
+      
+        for (const value of times) {
+          const betweenTime = Math.floor(diff / value.milliSeconds);
+      
+          if (betweenTime > 0) {
+            return `${betweenTime}${value.name} ago`;
+          }
+        }
+        return 'now';
+      }
     useEffect(() => {
         fetch("http://localhost:3001/test/?id=1")
           .then((res) => res.json())
           .then((json) => setQuest(json))
           .catch((err) => console.err(err));
+          
       }, []);
     //   console.log(quest);
     return (
@@ -131,8 +153,8 @@ const Question = () => {
                         <BlueButtonLink to="../ask">Ask&nbsp;Question</BlueButtonLink>
                     </HeaderRow>
                     <Buttondiv>
-                        <Divfont>Asked&nbsp;</Divfont>{ data.askday }
-                        <Divfont>&nbsp;&nbsp;Modified&nbsp;</Divfont>{ data.modifyday }
+                        <Divfont>Asked&nbsp;</Divfont>{ elapsedTime(data.askday) }
+                        <Divfont>&nbsp;&nbsp;Modified&nbsp;</Divfont>{ elapsedTime(data.modifyday) }
                         <Divfont>&nbsp;&nbsp;Viewed&nbsp;</Divfont>{ data.viewed }
                     </Buttondiv>
                     <StyledQuestionRow>
@@ -169,7 +191,8 @@ const Question = () => {
                 return (
                     <Answers
                         title={el.answer.answerBody}
-                        // key={el.answer.number}
+                        number={el.answer.number}
+                        // id={id}
                     />
                 
                 );
@@ -182,6 +205,7 @@ const Question = () => {
                             "answerBody": e.target.value,
                             "vote": 0,
                             "save": "false",
+                            "number": 2
                         })}></QuestionBodyTextarea>
                 <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
             </div>
