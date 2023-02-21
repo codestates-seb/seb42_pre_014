@@ -21,4 +21,7 @@ public class AnswerResponseDto {
     private String contents;
     private LocalDateTime createdAt;                              // 작성시간
     private LocalDateTime modifiedAt;                             // 수정시간
+    private Long questionId;
+    private Long memberId;
+
 }

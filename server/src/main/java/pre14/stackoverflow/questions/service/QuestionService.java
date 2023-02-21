@@ -5,16 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import pre14.stackoverflow.exception.BusinessLogicException;
 import pre14.stackoverflow.exception.ExceptionCode;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.repository.QuestionRepository;
 
-import javax.swing.text.html.Option;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.function.ToDoubleBiFunction;
 
 @Service
 @RequiredArgsConstructor // 필수요소 생성자만 생성 final , @notnull
@@ -51,7 +49,7 @@ public class QuestionService {
             Sort.by("questionId").descending()));
     }
 
-    private Question findQuestionById(long questionId) {
+    public Question findQuestionById(long questionId) {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question findQuestion =
                 optionalQuestion.orElseThrow(() ->

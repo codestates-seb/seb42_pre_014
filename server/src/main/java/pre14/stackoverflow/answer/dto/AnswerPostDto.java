@@ -11,4 +11,6 @@ public class AnswerPostDto {
     private Long answerId;
     private String userName;
     private String contents;
+    private Long questionId;
+    private Long memberId;
 }

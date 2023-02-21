@@ -45,7 +45,7 @@ public class AnswerService {
         answerRepository.deleteById(answerId);
     }
 
-    private Answer searchAnswerById(long answerId) {
+    public Answer searchAnswerById(long answerId) {
         Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
         Answer answer = optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return answer;

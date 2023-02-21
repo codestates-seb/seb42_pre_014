@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pre14.stackoverflow.globaldto.MultiResponseDto;
 import pre14.stackoverflow.globaldto.SingleResponseDto;
+import pre14.stackoverflow.member.entity.Member;
+import pre14.stackoverflow.member.repository.MemberRepository;
+import pre14.stackoverflow.member.service.MemberService;
 import pre14.stackoverflow.questions.dto.QuestionDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.mapper.QuestionMapper;
@@ -23,17 +26,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class QuestionController {
+    private final MemberRepository memberRepository;
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
+    private final MemberService memberService;
 
     @PostMapping
     public ResponseEntity createQuestion(@RequestBody QuestionDto.Post questionPostDto) {
+        Member Member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
+
         Question question = questionMapper.questionPostToQuestion(questionPostDto);
-        System.out.println(question.toString());
+        question.setMember(Member);
         Question createQuestion = questionService.createQuestion(question);
-        System.out.println(createQuestion.toString());
+
         QuestionDto.QuestionResponseDto response = questionMapper.questionToQuestionResponse(createQuestion);
-        System.out.println(response.toString());
+
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
