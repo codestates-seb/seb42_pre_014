@@ -2,6 +2,7 @@ package pre14.stackoverflow.globaldto;
 
 import lombok.Getter;
 import org.springframework.data.domain.Page;
+import pre14.stackoverflow.globaldto.PageInfo;
 
 import java.util.List;
 

@@ -29,7 +29,7 @@ public class QuestionService {
         Question findQuestion = findQuestionById(question.getQuestionId());
 
         Optional.ofNullable(question.getTitle()).ifPresent(findQuestion :: setTitle);
-        Optional.ofNullable(question.getContents()).ifPresent(findQuestion :: setContents);
+        Optional.ofNullable(question.getTitle()).ifPresent(findQuestion :: setContents);
 
         return questionRepository.save(findQuestion);
     }
