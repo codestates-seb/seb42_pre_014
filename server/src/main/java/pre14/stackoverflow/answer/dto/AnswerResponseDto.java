@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class AnswerResponseDto {
     private Long answerId;
     private String userName;
-    private String title;
     private String contents;
     private LocalDateTime createdAt;                              // 작성시간
     private LocalDateTime modifiedAt;                             // 수정시간
