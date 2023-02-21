@@ -1,15 +1,23 @@
 import styled from "styled-components";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+dayjs.locale("ko");
 
 const QuestionStat_container = styled.div`
-  margin-left: 30px;
+  margin-left: 20px;
 `;
-const QuestionStat = styled.span`
+const QuestionStat = styled.div`
   align-self: stretch;
   text-align: center;
   display: inline-block;
   font-size: 0.8rem;
-  color: #aaa;
-  margin: 3px 0 3px 0;
+  color: ${(props) => (props.answers ? "#89ca9f" : props.votes ? "#fff" : "#aaa")};
+  border: ${(props) => (props.answers ? "1px solid #3a8251" : "")};
+  border-radius: 5%;
+  border-width: 10%;
+  padding: 3px 2px 3px 2px;
+
   span {
     font-size: 0.7rem;
     font-weight: 300;
@@ -45,7 +53,7 @@ const StyledQuestionRow = styled.div`
   border-top: 1px solid #555;
 `;
 const WhoAndWhen = styled.div`
-  display: inline-block;
+  /* display: inline-block; */
   color: #aaa;
   font-size: 0.8rem;
   float: right;
@@ -55,30 +63,31 @@ const UserLink = styled.a`
   color: #3ca4ff;
 `;
 
-function QuestionRow({ votes, answers, tags, title, views }) {
+function QuestionRow({ db }) {
+  const timeString = dayjs(db.writetime).fromNow();
   return (
     <StyledQuestionRow>
       <QuestionStat_container>
-        <QuestionStat>
-          {votes}
-          <span> votes</span>
+        <QuestionStat votes>
+          {db.votes}
+          <span> {db.votes === 1 ? "vote" : "votes"}</span>
+        </QuestionStat>
+        <QuestionStat answers={db.answers}>
+          {db.answers}
+          <span> {db.answers === 1 ? "answer" : "answers"}</span>
         </QuestionStat>
         <QuestionStat>
-          {answers}
-          <span> answers</span>
-        </QuestionStat>
-        <QuestionStat>
-          {views}
-          <span> views</span>
+          {db.views}
+          <span> {db.views === 1 ? "view" : "views"}</span>
         </QuestionStat>
       </QuestionStat_container>
 
       <QuestionTitleArea>
-        <QuestionLink>{title}</QuestionLink>
+        <QuestionLink>{db.title}</QuestionLink>
         <WhoAndWhen>
-          asked 2mins ago <UserLink></UserLink>
+          {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
         </WhoAndWhen>
-        {tags.map((el) => {
+        {db.tags.map((el) => {
           return <Tag>{el}</Tag>;
         })}
       </QuestionTitleArea>

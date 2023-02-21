@@ -1,0 +1,10 @@
+#App {
+  display: grid;
+  grid-template-rows: 50px 3fr 200px auto;
+  /* grid-template-columns: 1fr 1fr auto; */
+  min-height: 100vh;
+}
+footer {
+  height: auto;
+  width: 100%;
+}
