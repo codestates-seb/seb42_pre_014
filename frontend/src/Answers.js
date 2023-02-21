@@ -8,6 +8,7 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { fetchPatch } from "./json-server/api"
 import useFetch from "./json-server/useFetch"
 import{ useParams } from "react-router-dom";
+import { useState } from "react";
 
 const QuestionStatcontainer = styled.div`
   grid-template-columns: 1fr min-content;
@@ -58,47 +59,78 @@ const Leftbuttons = styled.div`
 
 const Answers = ({ title }) => {
   const { id } = useParams();
-  const [data, isPending, error ] = useFetch(`http://localhost:3001/test/${id}`)
+  const [data, isPending, error ] = useFetch(`http://localhost:3001/test/${id}`);
+  const [number, setNumber] = useState(1);
 
   const voteUp = () => {
-    const votes = {"vote" : data.answer.vote + 1}
+    const votes = {
+      "answer": 
+        {
+          "answerBody": data.answer.answerBody,
+          "vote": data.answer.vote + 1,
+          "save": data.answer.save,
+          "number": number
+        }
+      
+    }
     fetchPatch("http://localhost:3001/test/", id, votes)
-    // console.log(data.answer.vote)
+    // console.log(data.answer[0].answerBody)
     // console.log(id)
   }
   const voteDown = () => {
-    const votes = {"vote" : data.answer.vote - 1}
+    const votes = {
+      "answer": {
+        "answerBody": data.answer.answerBody,
+        "vote": data.answer.vote - 1,
+        "save": data.answer.save,
+        "number": number
+      }
+    }
     fetchPatch("http://localhost:3001/test/", id, votes)
   }
-  // const bookMarkClick = () => {
-  //   // setBookmark(!bookmark);
-  //   if(data.save === "false"){
-  //       const saves = {"save" : data.save = "true"}
-  //       fetchPatch("http://localhost:3001/test/", id, saves)
-  //   }
-  //   else{
-  //       const saves = {"save" : data.save = "false"}
-  //       fetchPatch("http://localhost:3001/test/", id, saves)
-  //   }
-  // }
+  const bookMarkClick = () => {
+    // setBookmark(!bookmark);
+    if(data.answer.save === "false"){
+        const saves = {
+          "answer": {
+            "answerBody": data.answer.answerBody,
+            "vote": data.answer.vote,
+            "save": "true",
+            "number": number
+          }
+      }
+        fetchPatch("http://localhost:3001/test/", id, saves)
+    }
+    else{
+        const saves = {
+          "answer": {
+            "answerBody": data.answer.answerBody,
+            "vote": data.answer.vote,
+            "save": "false",
+            "number": number
+          }
+        }
+        fetchPatch("http://localhost:3001/test/", id, saves)
+    }
+  }
 
   return (
     <>
     { isPending }
     { error && <div>{ error }</div> }
+    { data && (
     <StyledQuestionRow>
       <QuestionStatcontainer>
       <Leftbuttons>
         <QuestionStat>
             <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
         </QuestionStat>
-            <div>{ title.asvote }</div>
+            <div>{ data.answer.vote }</div>
         <QuestionStat>
             <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
         </QuestionStat>
         <QuestionStat>
-            <FontAwesomeIcon icon={farBookmark} size="2x"/>
-            <FontAwesomeIcon icon={fasBookmark} size="2x"/>
+            {data.answer.save === "false" ? <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick}/> : <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick}/>}
         </QuestionStat>
         <QuestionStat>
             <FontAwesomeIcon icon={faClockRotateLeft} size="2x"/>
@@ -114,7 +146,7 @@ const Answers = ({ title }) => {
         </Buttondiv>
       </QuestionTitleArea>
     </StyledQuestionRow>
-    
+    )}
     </>
   );
 }

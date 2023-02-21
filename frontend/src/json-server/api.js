@@ -22,3 +22,16 @@ export const fetchPatch = (url, id, data) => {
         console.error('Error', error);
       });
 };
+export const fetchPut = (url, id, data) => {
+    fetch(`${url}${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'Application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error', error);
+      });
+  };
