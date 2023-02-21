@@ -1,5 +1,6 @@
 package pre14.stackoverflow.member.service;
 
+import lombok.ToString;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@ToString
 public class MemberService {
     private final MemberRepository memberRepository;
 

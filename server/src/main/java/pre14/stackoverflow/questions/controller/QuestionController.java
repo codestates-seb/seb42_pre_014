@@ -43,9 +43,7 @@ public class QuestionController {
                                          @RequestBody QuestionDto.Patch questionPatchDto) {
     Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
     question.setQuestionId(questionId);
-
-    Question updateQuestion = questionService.
-            updateQuestion(questionMapper.questionPatchDtoToQuestion(questionPatchDto));
+    Question updateQuestion = questionService.updateQuestion(question);
 
     return new ResponseEntity<>(updateQuestion, HttpStatus.OK);
     }
@@ -71,7 +69,7 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{question-id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable long questionId) {
+    public ResponseEntity<Void> deleteQuestion(@PathVariable("question-id") long questionId) {
         questionService.deleteQuestion(questionId);
         return ResponseEntity.noContent().build();
     }

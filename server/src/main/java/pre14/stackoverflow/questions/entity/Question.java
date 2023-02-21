@@ -5,34 +5,43 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.lang.Nullable;
+import pre14.stackoverflow.member.entity.Member;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @RequiredArgsConstructor //아무것도 없이 만들어줌/ 편안
 @EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime함께사용
-@ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
+//@ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
 @Table(name = "question")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String title;
     @Column(nullable = false, length = 5000)
     private String contents;
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
+    private List<QuestionTag> questionTags = new ArrayList<>();
 
     @CreatedDate
-    @Column//(nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt ;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     public Question(String title, String contents, LocalDateTime createdAt) {
         this.title = title;
