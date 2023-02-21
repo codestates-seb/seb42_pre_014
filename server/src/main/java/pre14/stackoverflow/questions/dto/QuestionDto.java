@@ -22,7 +22,6 @@ public class QuestionDto {
         @Size(min = 10, max = 5000, message = "10자 이상, 5000자 이내로 작성해 주세요.")
         @NotBlank(message = "본문을 작성해주세요")
         private String contents;
-
         private List<QuestionTagDto> questionTags;
     }
 
