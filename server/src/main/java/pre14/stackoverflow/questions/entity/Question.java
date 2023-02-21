@@ -4,10 +4,9 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.lang.Nullable;
+import pre14.stackoverflow.member.entity.Member;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor //아무것도 없이 만들어줌/ 편안
 @EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime함께사용
 @ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
-@Table(name = "question")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +25,10 @@ public class Question {
     private String contents;
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @CreatedDate
     @Column//(nullable = false)

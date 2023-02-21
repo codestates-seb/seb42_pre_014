@@ -18,6 +18,7 @@ public class QuestionDto {
         private String title;
         @NotBlank(message = "내용을 비워두지 마세요")
         private String contents;
+        private Long memberId;
     }
 
     @Getter
@@ -39,6 +40,8 @@ public class QuestionDto {
         private Question.QuestionStatus questionStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
+        private Long memberId;
     }
 
 }

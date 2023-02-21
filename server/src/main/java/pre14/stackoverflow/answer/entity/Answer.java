@@ -7,6 +7,8 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import pre14.stackoverflow.member.entity.Member;
+import pre14.stackoverflow.questions.entity.Question;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +17,6 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "answer")
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Answer {
@@ -31,5 +32,13 @@ public class Answer {
     private LocalDateTime createdAt;                              // 작성시간
     @LastModifiedDate
     private LocalDateTime modifiedAt;                            // 수정시간
+
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }
