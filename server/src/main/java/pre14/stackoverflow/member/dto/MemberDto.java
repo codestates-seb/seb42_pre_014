@@ -7,6 +7,7 @@ import pre14.stackoverflow.member.entity.Member;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
 
 public class MemberDto {
 
