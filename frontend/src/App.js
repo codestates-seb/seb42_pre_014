@@ -7,11 +7,11 @@ import AskPage from "./AskPage";
 import Header from "./Header";
 import Footer from "./Footer";
 import Leftsidebar from "./Leftsidebar";
-import "./App.css";
 import UserContext from "./UserContext";
 import LoginPage from "./LoginPage";
 import axios from "axios";
 import RegisterPage from "./RegisterPage";
+import "./App.css";
 
 const userContext = createContext(null);
 
