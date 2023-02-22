@@ -77,7 +77,7 @@ const Leftbuttons = styled.div`
 
 const Question = () => {
     const { id } = useParams();
-    const [data, isPending, error ] = useFetch(`http://localhost:3001/test/${id}`)
+    const [data, isPending, error ] = useFetch(`http://localhost:3001/questions/${id}`)
     const [answer, setAnswer] = useState('');
     const [quest, setQuest] = useState([]);
     // const handleSubmit = (e) => {
@@ -88,26 +88,26 @@ const Question = () => {
     const handleSubmit = () => {
         // e.preventDefault(); //새로고침 막기
         const data = {answer}
-        fetchPatch("http://localhost:3001/test/", id, data)
+        fetchPatch("http://localhost:3001/questions/", id, data)
         console.log(answer)
     }
     const voteUp = () => {
-        const votes = {"vote" : data.vote + 1}
-        fetchPatch("http://localhost:3001/test/", id, votes)
+        const votes = {"votes" : data.votes + 1}
+        fetchPatch("http://localhost:3001/questions/", id, votes)
     }
     const voteDown = () => {
-        const votes = {"vote" : data.vote - 1}
-        fetchPatch("http://localhost:3001/test/", id, votes)
+        const votes = {"votes" : data.votes - 1}
+        fetchPatch("http://localhost:3001/questions/", id, votes)
     }
     const bookMarkClick = () => {
         // setBookmark(!bookmark);
         if(data.save === "false"){
             const saves = {"save" : data.save = "true"}
-            fetchPatch("http://localhost:3001/test/", id, saves)
+            fetchPatch("http://localhost:3001/questions/", id, saves)
         }
         else{
             const saves = {"save" : data.save = "false"}
-            fetchPatch("http://localhost:3001/test/", id, saves)
+            fetchPatch("http://localhost:3001/questions/", id, saves)
         }
     }
     const elapsedTime = (date) => {
@@ -134,7 +134,7 @@ const Question = () => {
         return 'now';
       }
     useEffect(() => {
-        fetch("http://localhost:3001/test/?id=1")
+        fetch("http://localhost:3001/questions/?id=1")
           .then((res) => res.json())
           .then((json) => setQuest(json))
           .catch((err) => console.err(err));
@@ -149,20 +149,20 @@ const Question = () => {
                 
                 <Questionarticle>
                     <HeaderRow>
-                        <h1>{ data.questionTitle }</h1>
+                        <h1>{ data.title }</h1>
                         <BlueButtonLink to="../ask">Ask&nbsp;Question</BlueButtonLink>
                     </HeaderRow>
                     <Buttondiv>
-                        <Divfont>Asked&nbsp;</Divfont>{ elapsedTime(data.askday) }
+                        <Divfont>Asked&nbsp;</Divfont>{ elapsedTime(data.writetime) }
                         <Divfont>&nbsp;&nbsp;Modified&nbsp;</Divfont>{ elapsedTime(data.modifyday) }
-                        <Divfont>&nbsp;&nbsp;Viewed&nbsp;</Divfont>{ data.viewed }
+                        <Divfont>&nbsp;&nbsp;Viewed&nbsp;</Divfont>{ data.views + " times" }
                     </Buttondiv>
                     <StyledQuestionRow>
                     <Leftbuttons>
                         <QuestionStat>
                             <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
                         </QuestionStat>
-                            <div>{ data.vote }</div>
+                            <div>{ data.votes }</div>
                         <QuestionStat>
                             <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
                         </QuestionStat>
@@ -174,7 +174,7 @@ const Question = () => {
                         </QuestionStat>
                     </Leftbuttons>
                     <QuestionStatcontainer>
-                        <div>{ data.questionBody }</div>
+                        <div>{ data.body }</div>
                         <Buttondiv>
                             <Answerbutton>Share</Answerbutton>
                             <Answerbutton>Edit&nbsp;</Answerbutton>
@@ -203,7 +203,7 @@ const Question = () => {
                     onChange={e => 
                         setAnswer({
                             "answerBody": e.target.value,
-                            "vote": 0,
+                            "votes": 0,
                             "save": "false",
                             "number": 2
                         })}></QuestionBodyTextarea>

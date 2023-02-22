@@ -32,17 +32,17 @@ const PreviewArea = styled.div`
 `;
 
 export default function AskPage() {
-  const [questionTitle, setQuestionTitle] = useState("");
-  const [questionBody, setQuestionBody] = useState("");
-  const [askday, setAskday] = useState(new Date());
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [writetime, setWritetime] = useState(new Date());
   const [modifyday, setModifyday] = useState(new Date());
-  const [viewed, setViewed] = useState("0 times");
-  const [vote, setVote] = useState(0);
+  const [views, setViews] = useState("0 times");
+  const [votes, setVotes] = useState(0);
   const [save, setSave] = useState("false");
 
   const handleSubmit = () => {
-    const data = { questionTitle, questionBody, askday, modifyday, viewed, vote, save };
-    fetchCreate("http://localhost:3001/test/", data);
+    const data = { title, body, writetime, modifyday, views, votes, save };
+    fetchCreate("http://localhost:3001/questions/", data);
   };
 
   return (
@@ -51,20 +51,20 @@ export default function AskPage() {
 
       <Input
         type="text"
-        value={questionTitle}
-        onChange={(e) => setQuestionTitle(e.target.value)}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         placeholder="Title of your question"
       />
       <div>{}</div>
       <QuestionBodyTextarea
-        onChange={(e) => setQuestionBody(e.target.value)}
+        onChange={(e) => setBody(e.target.value)}
         placeholder="More info about your question. You can use markdown here"
       >
-        {questionBody}
+        {body}
       </QuestionBodyTextarea>
       <BlueButton onClick={handleSubmit}>Post question</BlueButton>
       <PreviewArea>
-        <ReactMarkdown plugins={[gfm]} children={questionBody} />
+        <ReactMarkdown plugins={[gfm]} children={body} />
       </PreviewArea>
     </Container>
   );

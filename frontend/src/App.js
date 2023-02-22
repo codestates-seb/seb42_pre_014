@@ -16,7 +16,7 @@ import Footer from "./Footer";
 import "./App.css";
 
 function App() {
-  const [data, isPending, error] = useFetch(`http://localhost:3001/test/1`);
+  const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
   const [user, setUser] = useState(null);
 
   function checkAuth() {
