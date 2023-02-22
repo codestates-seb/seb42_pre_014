@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const BlueButtonLink = styled(Link)`
+    height: 16px;
     background-color: #378ad3;
     color: #fff;
     border: 0;

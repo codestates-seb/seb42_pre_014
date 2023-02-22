@@ -5,12 +5,15 @@ import QuestionsPage from './QuestionPage';
 import AskPage from './AskPage';
 import Header from './Header';
 import { Routes, Route } from 'react-router-dom';
+import Question from './Question';
+import useFetch from "./json-server/useFetch";
 import UserContext from './UserContext';
 import LoginPage from './LoginPage';
 import axios from 'axios';
 import RegisterPage from './RegisterPage';
 
 function App() {
+  const [data, isPending, error ] = useFetch(`http://localhost:3001/test/1`)
   const [user, setUser] = useState(null);
 
   function checkAuth() {
@@ -35,14 +38,16 @@ function App() {
     <div>
       <Reset />
       <GlobalStyles />
+      { error && <div>{ error }</div> }
       <UserContext.Provider value={{ user, checkAuth }}>
         <Header />
         <Routes>
-          <Route path='/ask' element={<AskPage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/' element={<QuestionsPage />} />
-        </Routes>
+        <Route path='/' element={<QuestionsPage data={data} isPending={isPending}/>} />
+        <Route path='/ask' element={<AskPage data={data}/>} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/:id' element={<Question />} />
+      </Routes>
       </UserContext.Provider>
     </div>
   );
