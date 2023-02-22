@@ -1,32 +1,54 @@
 import GlobalStyles from './GlobalStyles';
 import { Reset } from 'styled-reset';
-import { createContext, useState } from 'react';
+import { useState, useEffect } from 'react';
 import QuestionsPage from './QuestionPage';
 import AskPage from './AskPage';
 import Header from './Header';
 import { Routes, Route } from 'react-router-dom';
 import Question from './Question';
-import useFetch from "./json-server/useFetch"
-
-const userContext = createContext(null);
+import useFetch from "./json-server/useFetch";
+import UserContext from './UserContext';
+import LoginPage from './LoginPage';
+import axios from 'axios';
+import RegisterPage from './RegisterPage';
 
 function App() {
   const [data, isPending, error ] = useFetch(`http://localhost:3001/test/1`)
   const [user, setUser] = useState(null);
+
+  function checkAuth() {
+    return new Promise(((resolve, reject) => {
+      axios.get('http://localhost:4000/profile', { withCredentials: true })
+        .then(response => {
+          setUser({ email: response.data });
+          resolve(response.data);
+        })
+        .catch(() => {
+          setUser(null);
+          reject(null);
+        })
+    }))
+  }
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <div>
       <Reset />
       <GlobalStyles />
       { error && <div>{ error }</div> }
-      <userContext.Provider value={{ user }}>
+      <UserContext.Provider value={{ user, checkAuth }}>
         <Header />
         <Routes>
         <Route path='/' element={<QuestionsPage data={data} isPending={isPending}/>} />
         <Route path='/ask' element={<AskPage data={data}/>} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
         <Route path='/:id' element={<Question />} />
       </Routes>
-      </userContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 }

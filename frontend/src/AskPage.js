@@ -5,21 +5,10 @@ import ReactMarkdown from "react-markdown"
 import gfm from "remark-gfm"
 import { useState } from "react"
 import { fetchCreate } from "./json-server/api"
+import Input from "./Input"
 
 const Container = styled.div`
     padding: 30px 20px;
-`
-const QuestionTitleInput = styled.input`
-    background: none;
-    border: 1px solid #777;
-    border-radius: 3px;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-    margin-bottom: 20px;
-    color: #fff;
-    font-family: inherit;
 `
 const QuestionBodyTextarea = styled.textarea`
     background: none;
@@ -62,7 +51,7 @@ export default function AskPage() {
         <Container>
             <Header1 style={{ marginBottom: '20px' }}>Ask a public question</Header1>
 
-            <QuestionTitleInput
+            <Input
                 type="text"
                 value={questionTitle}
                 onChange={e => setQuestionTitle(e.target.value)}
