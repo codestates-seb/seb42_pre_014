@@ -1,21 +1,22 @@
 import GlobalStyles from "./GlobalStyles";
 import { Reset } from "styled-reset";
-import { createContext, useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import QuestionsPage from "./QuestionPage";
 import AskPage from "./AskPage";
 import Header from "./Header";
-import Footer from "./Footer";
-import Leftsidebar from "./Leftsidebar";
+import { Routes, Route } from "react-router-dom";
+import Question from "./Question";
+import useFetch from "./json-server/useFetch";
 import UserContext from "./UserContext";
 import LoginPage from "./LoginPage";
 import axios from "axios";
 import RegisterPage from "./RegisterPage";
+import Leftsidebar from "./Leftsidebar";
+import Footer from "./Footer";
 import "./App.css";
 
-const userContext = createContext(null);
-
 function App() {
+  const [data, isPending, error] = useFetch(`http://localhost:3001/test/1`);
   const [user, setUser] = useState(null);
 
   function checkAuth() {
@@ -41,15 +42,17 @@ function App() {
     <div id="App">
       <Reset />
       <GlobalStyles />
+      {error && <div>{error}</div>}
       <UserContext.Provider value={{ user, checkAuth }}>
         <Header />
         <div className="Main-container">
           <Leftsidebar></Leftsidebar>
           <Routes>
-            <Route path="/ask" element={<AskPage />} />
+            <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
+            <Route path="/ask" element={<AskPage data={data} />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/" element={<QuestionsPage />} />
+            <Route path="/:id" element={<Question />} />
           </Routes>
         </div>
 
