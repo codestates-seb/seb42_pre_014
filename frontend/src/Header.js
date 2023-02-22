@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';
+import { Link } from 'react-router-dom';
+import UserContext from "./UserContext";
 
 const StyledHeader = styled.header`
   background-color: #393939;
@@ -48,29 +50,41 @@ const SearchInput = styled.input`
   margin-top: 9px;
 `;
 
-const ProfileLink = styled.a`
-  color: #fff;
-  text-decoration: none;
-  line-height: 50px;
-`;
+const ProfileLink = styled(Link)`
+    color: #fff;
+    padding: 0 10px;
+    text-decoration: none;
+    line-height: 50px;
+`
 
 function Header() {
-  return (
-    <StyledHeader>
-      <LogoLink to="./" className="logo">
-        <FontAwesomeIcon icon={faStackOverflow} size="2x" />
-        <span>
-          Stack<b>overflow</b>
-        </span>
-      </LogoLink>
-      <form action="" className="search">
-        <SearchInput type="text" placeholder="Search..."></SearchInput>
-      </form>
-      <ProfileLink href="" className="profile">
-        kimkisic
-      </ProfileLink>
-    </StyledHeader>
-  );
+    const { user } = useContext(UserContext);
+    return (
+        <StyledHeader>
+            <LogoLink to='./' className="logo">
+                <FontAwesomeIcon icon={faStackOverflow} size="2x" />
+                <span>Stack<b>overflow</b></span>
+            </LogoLink>
+            <form action="" className="search">
+                <SearchInput
+                    type="text"
+                    placeholder="Search...">
+                </SearchInput>
+            </form>
+            {user && (
+                <ProfileLink
+                    to={'./profile'}
+                    className="profile">{user.email}
+                </ProfileLink>
+            )}
+            {!user && (
+                <div>
+                    <ProfileLink to={'/login'} className="profile">Log in</ProfileLink>
+                    <ProfileLink to={'/register'} className="profile">Register</ProfileLink>
+                </div>
+            )}
+        </StyledHeader>
+    )
 }
 
 export default Header;
