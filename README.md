@@ -5,7 +5,7 @@
 ## 🖥 Front-end
 |정민상 (FE팀장)|이이수|김기식|
 |:-:|:-:|:-:|
-|<img src="https://user-images.githubusercontent.com/101001956/218988032-7170993f-400b-4b92-8fd2-8f02ae6ab4ed.png" width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg " width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|
+|<img src="https://user-images.githubusercontent.com/101001956/218988032-7170993f-400b-4b92-8fd2-8f02ae6ab4ed.png" width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg " width=150>|<img src="https://user-images.githubusercontent.com/101001956/220564310-111188b1-9114-4895-9805-468587d6fe97.jpg" width=150>|
 |[@jeongminsang](https://github.com/jeongminsang)|[@ok-soosoo](https://github.com/ok-soosoo)|[@kimkisic](https://github.com/kimkisic)|
 
 ## ⚙️ Back-end
