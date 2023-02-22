@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Link } from "react-router-dom";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -36,7 +37,7 @@ const Tag = styled.span`
   border-radius: 4px;
   font-size: 0.7rem;
 `;
-const QuestionLink = styled.a`
+const QuestionLink = styled(Link)`
   text-decoration: none;
   color: #3ca4ff;
   font-size: 1.1rem;
@@ -83,7 +84,8 @@ function QuestionRow({ db }) {
       </QuestionStat_container>
 
       <QuestionTitleArea>
-        <QuestionLink>{db.title}</QuestionLink>
+        <QuestionLink to={`./${db.id}`}>{db.title}</QuestionLink>
+        {/* <Link to={`/blogs/${blog.id}`}></Link> */}
         <WhoAndWhen>
           {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
         </WhoAndWhen>

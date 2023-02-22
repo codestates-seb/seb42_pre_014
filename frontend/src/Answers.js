@@ -59,7 +59,7 @@ const Leftbuttons = styled.div`
 
 const Answers = ({ title }) => {
   const { id } = useParams();
-  const [data, isPending, error ] = useFetch(`http://localhost:3001/test/${id}`);
+  const [data, isPending, error ] = useFetch(`http://localhost:3001/questions/${id}`);
   const [number, setNumber] = useState(1);
 
   const voteUp = () => {
@@ -67,13 +67,13 @@ const Answers = ({ title }) => {
       "answer": 
         {
           "answerBody": data.answer.answerBody,
-          "vote": data.answer.vote + 1,
+          "votes": data.answer.votes + 1,
           "save": data.answer.save,
           "number": number
         }
       
     }
-    fetchPatch("http://localhost:3001/test/", id, votes)
+    fetchPatch("http://localhost:3001/questions/", id, votes)
     // console.log(data.answer[0].answerBody)
     // console.log(id)
   }
@@ -81,12 +81,12 @@ const Answers = ({ title }) => {
     const votes = {
       "answer": {
         "answerBody": data.answer.answerBody,
-        "vote": data.answer.vote - 1,
+        "votes": data.answer.votes - 1,
         "save": data.answer.save,
         "number": number
       }
     }
-    fetchPatch("http://localhost:3001/test/", id, votes)
+    fetchPatch("http://localhost:3001/questions/", id, votes)
   }
   const bookMarkClick = () => {
     // setBookmark(!bookmark);
@@ -94,23 +94,23 @@ const Answers = ({ title }) => {
         const saves = {
           "answer": {
             "answerBody": data.answer.answerBody,
-            "vote": data.answer.vote,
+            "votes": data.answer.votes,
             "save": "true",
             "number": number
           }
       }
-        fetchPatch("http://localhost:3001/test/", id, saves)
+        fetchPatch("http://localhost:3001/questions/", id, saves)
     }
     else{
         const saves = {
           "answer": {
             "answerBody": data.answer.answerBody,
-            "vote": data.answer.vote,
+            "votes": data.answer.votes,
             "save": "false",
             "number": number
           }
         }
-        fetchPatch("http://localhost:3001/test/", id, saves)
+        fetchPatch("http://localhost:3001/questions/", id, saves)
     }
   }
 
@@ -125,7 +125,7 @@ const Answers = ({ title }) => {
         <QuestionStat>
             <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
         </QuestionStat>
-            <div>{ data.answer.vote }</div>
+            <div>{ data.answer.votes }</div>
         <QuestionStat>
             <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
         </QuestionStat>
