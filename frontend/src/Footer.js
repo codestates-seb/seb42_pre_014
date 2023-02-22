@@ -2,6 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
+
+const styledFooter = styled.footer`
+  height: auto;
+  width: 100%;
+`;
 const Footer_container = styled.div`
   box-sizing: border-box;
   display: grid;
@@ -47,7 +52,7 @@ const Footer_copyright_container = styled.div`
 `;
 function Footer() {
   return (
-    <footer>
+    <styledFooter>
       <Footer_container>
         <Footer_logo>
           <FontAwesomeIcon icon={faStackOverflow} size="2x" />
@@ -64,8 +69,10 @@ function Footer() {
           <Footer_sitemap>
             <h5>PRODUCTS</h5>
             <ul>
-              <li>Questions</li>
-              <li>Help</li>
+              <li>Teams</li>
+              <li>Advertising</li>
+              <li>Collectives</li>
+              <li>Talent</li>
             </ul>
           </Footer_sitemap>
           <Footer_sitemap>
@@ -112,7 +119,7 @@ function Footer() {
           <span>rev 2023.2.17.43248</span>
         </Footer_copyright_container>
       </Footer_container>
-    </footer>
+    </styledFooter>
   );
 }
 

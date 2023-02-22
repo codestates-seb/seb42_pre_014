@@ -6,8 +6,8 @@ import QuestionsPage from "./QuestionPage";
 import AskPage from "./AskPage";
 import Header from "./Header";
 import Footer from "./Footer";
+import Leftsidebar from "./Leftsidebar";
 import "./App.css";
-
 const userContext = createContext(null);
 
 function App() {
@@ -19,10 +19,14 @@ function App() {
       <GlobalStyles />
       <userContext.Provider value={{ user }}>
         <Header />
-        <Routes>
-          <Route path="/" element={<QuestionsPage />} />
-          <Route path="/ask" element={<AskPage />} />
-        </Routes>
+        <div className="Main-container">
+          <Leftsidebar></Leftsidebar>
+          <Routes>
+            <Route path="/" element={<QuestionsPage />} />
+            <Route path="/ask" element={<AskPage />} />
+          </Routes>
+        </div>
+
         <Footer />
       </userContext.Provider>
     </div>
