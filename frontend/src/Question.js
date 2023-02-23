@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import{ useParams } from "react-router-dom";
 import useFetch from "./json-server/useFetch"
 import { fetchCreate, fetchPatch } from "./json-server/api"
@@ -12,6 +12,13 @@ import { faBookmark as fasBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faDev } from "@fortawesome/free-brands-svg-icons";
+import useDetectClose from "./hooks/useDetectClose";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+
 
 const QuestionBodyTextarea = styled.textarea`
     background: none;
@@ -69,10 +76,95 @@ const QuestionStatcontainer = styled.div`
   margin-left: 10px;
 `;
 const Leftbuttons = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: column;
   text-align: center;
 `;
+const Tag = styled.span`
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #3e4a52;
+  color: #9cc3db;
+  padding: 7px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+`;
+const Dropdown = styled.div`
+  background-color: rgba(255, 255, 255, 0.05);
+  width: 350px;
+  height: 100px;
+  /* position: absolute; */
+  /* margin: 10px; */
+  padding: 15px 15px 0px 15px;
+  border: 10px;
+  border-radius: 5px;
+`;
+const Sharetext = styled.div`
+  font-size: 14px;
+  padding: 0px 0px 10px 0px;
+`;
+const Dropinput = styled.input`
+  cursor: not-allowed;
+  width: 96%;
+  height: 35px;
+  border: 10px;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 0px 0px 0px 10px;
+  background-color: grey;
+`;
+const Copybutton = styled.div`
+  color: #3ca4ff;
+  cursor: pointer;
+  padding: 10px 0px 0px 0px;
+  font: caption;
+  font-size: 15px;
+`;
+const LicenseLink = styled.a`
+  font: caption;
+  color: #3ca4ff;
+  cursor: pointer;
+  padding: 10px 0px 0px 0px;
+  font-size: 15px;
+`;
+const Dropbuttons = styled.a`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const Sharebuttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 0px 0px 0px;
+`;
+const Sharebtn = styled.div`
+  padding: 5px;
+  cursor: pointer;
+`;
+const Alert = styled.div`
+  background-color: rgb(219,240,226);
+  border: 2px solid rgba(255, 127, 80, 0.1);
+  border-color: rgba(47, 197, 34, 0.4);
+  border-radius: 5px;
+  /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
+  height: 40px;
+  width: 500px;
+  padding: 5px 5px 5px 10px;
+  text-align: center;
+  font-size: 1rem;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  position: fixed;
+  top: 20px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  
+`;
+
 
 
 const Question = () => {
@@ -80,6 +172,11 @@ const Question = () => {
     const [data, isPending, error ] = useFetch(`http://localhost:3001/questions/${id}`)
     const [answer, setAnswer] = useState('');
     const [quest, setQuest] = useState([]);
+    const dropDownRef = useRef();
+    const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
+    const [copyText, setCopyText] = useState(`http://localhost:3000/${id}`);
+    const [copied, setCopied] = useState(false);
+
     // const handleSubmit = (e) => {
     //     // e.preventDefault(); //새로고침 막기
     //     const data = {answer}
@@ -132,7 +229,12 @@ const Question = () => {
           }
         }
         return 'now';
-      }
+    }
+    const handleChange = (e) => {
+        setCopyText(e.target.value);
+    };
+    
+
     useEffect(() => {
         fetch("http://localhost:3001/questions/?id=1")
           .then((res) => res.json())
@@ -140,6 +242,17 @@ const Question = () => {
           .catch((err) => console.err(err));
           
       }, []);
+
+    useEffect(() => {
+        let timer = setTimeout(() => {
+            setCopied(false);
+            console.log("복사완료!")
+        }, 1500);
+        return () => {
+          clearTimeout(timer);
+        };
+      }, [copied]);
+
     //   console.log(quest);
     return (
         <>
@@ -175,42 +288,66 @@ const Question = () => {
                     </Leftbuttons>
                     <QuestionStatcontainer>
                         <div>{ data.body }</div>
-                        <Buttondiv>
-                            <Answerbutton>Share</Answerbutton>
-                            <Answerbutton>Edit&nbsp;</Answerbutton>
-                            <Answerbutton>Follow</Answerbutton>
-                        </Buttondiv>
+                        {data.tags.map((el) => {
+                        return <Tag>{el}</Tag>;
+                        })}
+                        <div ref={dropDownRef}>
+                            <Buttondiv>
+                                <Answerbutton onClick={() => setIsOpen(!isOpen)}>Share</Answerbutton>
+                                <Answerbutton onClick={() => setIsOpen(false)}>Edit&nbsp;</Answerbutton>
+                                <Answerbutton onClick={() => setIsOpen(false)}>Follow</Answerbutton>
+                            </Buttondiv>
+                            {isOpen && 
+                            <Dropdown>
+                                <Sharetext><b>Share a link to this question</b> (Includes your user id)</Sharetext>
+                                <Dropinput
+                                    value={copyText}
+                                    onChange={handleChange}
+                                />
+                                <Dropbuttons>
+                                    <CopyToClipboard text={copyText}
+                                        onCopy={() => setCopied(true)}>
+                                        <Copybutton type="button">Copy link</Copybutton>
+                                    </CopyToClipboard>
+                                    {copied ? <Alert>Link copied to clipboard.</Alert> : null}
+                                    <LicenseLink href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</LicenseLink>
+                                    <Sharebuttons>
+                                        <Sharebtn onClick={() => window.open('https://www.facebook.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faFacebookSquare} size="lg"/></Sharebtn>
+                                        <Sharebtn onClick={() => window.open('https://www.twitter.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faTwitter} size="lg"/></Sharebtn>
+                                        <Sharebtn onClick={() => window.open('https://dev.to/new?prefill=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faDev} size="lg"/></Sharebtn>
+                                    </Sharebuttons>
+                                </Dropbuttons>
+                            </Dropdown>}
+                        </div>
                     </QuestionStatcontainer>
                     </StyledQuestionRow>
+                    <h2>1 Answer</h2>
+                    {quest.map((el) => {
+                        return (
+                            <Answers
+                                title={el.answer.answerBody}
+                                number={el.answer.number}
+                                // id={id}
+                            />
+                        
+                        );
+                    })}
+                    <div>
+                        <h2>Your Answer</h2>
+                        <QuestionBodyTextarea
+                            onChange={e => 
+                                setAnswer({
+                                    "answerBody": e.target.value,
+                                    "votes": 0,
+                                    "save": "false",
+                                    "number": 2
+                                })}></QuestionBodyTextarea>
+                        <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
+                    </div>
+                    <h3>Not the answer you're looking for? Browse other questions tagged r&nbsp;string&nbsp;stringr or ask your own question.</h3>
                 </Questionarticle>
 
             )}
-            <Questionarticle>
-            <h2>1 Answer</h2>
-            {quest.map((el) => {
-                return (
-                    <Answers
-                        title={el.answer.answerBody}
-                        number={el.answer.number}
-                        // id={id}
-                    />
-                
-                );
-            })}
-            <div>
-                <h2>Your Answer</h2>
-                <QuestionBodyTextarea
-                    onChange={e => 
-                        setAnswer({
-                            "answerBody": e.target.value,
-                            "votes": 0,
-                            "save": "false",
-                            "number": 2
-                        })}></QuestionBodyTextarea>
-                <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
-            </div>
-            <h3>Not the answer you're looking for? Browse other questions tagged r&nbsp;string&nbsp;stringr or ask your own question.</h3>
-            </Questionarticle>
         </>
     )
 }

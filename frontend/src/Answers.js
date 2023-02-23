@@ -8,7 +8,12 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { fetchPatch } from "./json-server/api"
 import useFetch from "./json-server/useFetch"
 import{ useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faDev } from "@fortawesome/free-brands-svg-icons";
+import useDetectClose from "./hooks/useDetectClose";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const QuestionStatcontainer = styled.div`
   grid-template-columns: 1fr min-content;
@@ -55,12 +60,91 @@ const Leftbuttons = styled.div`
   flex-direction: column;
   text-align: center;
 `;
+const Dropdown = styled.div`
+  background-color: rgba(255, 255, 255, 0.05);
+  width: 350px;
+  height: 100px;
+  /* position: absolute; */
+  /* margin: 10px; */
+  padding: 15px 15px 0px 15px;
+  border: 10px;
+  border-radius: 5px;
+`;
+const Sharetext = styled.div`
+  font-size: 14px;
+  padding: 0px 0px 10px 0px;
+`;
+const Dropinput = styled.input`
+  cursor: not-allowed;
+  width: 96%;
+  height: 35px;
+  border: 10px;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 0px 0px 0px 10px;
+  background-color: grey;
+`;
+const Copybutton = styled.div`
+  color: #3ca4ff;
+  cursor: pointer;
+  padding: 10px 0px 0px 0px;
+  font: caption;
+  font-size: 15px;
+`;
+const LicenseLink = styled.a`
+  font: caption;
+  color: #3ca4ff;
+  cursor: pointer;
+  padding: 10px 0px 0px 0px;
+  font-size: 15px;
+`;
+const Dropbuttons = styled.a`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const Sharebuttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 0px 0px 0px;
+`;
+const Sharebtn = styled.div`
+  padding: 5px;
+  cursor: pointer;
+`;
+const Alert = styled.div`
+  background-color: rgb(219,240,226);
+  border: 2px solid rgba(255, 127, 80, 0.1);
+  border-color: rgba(47, 197, 34, 0.4);
+  border-radius: 5px;
+  /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
+  height: 40px;
+  width: 500px;
+  padding: 5px 5px 5px 10px;
+  text-align: center;
+  font-size: 1rem;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  position: fixed;
+  top: 20px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  
+`;
 
 
 const Answers = ({ title }) => {
   const { id } = useParams();
   const [data, isPending, error ] = useFetch(`http://localhost:3001/questions/${id}`);
   const [number, setNumber] = useState(1);
+  const dropDownRef = useRef();
+    const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
+    const [copyText, setCopyText] = useState(`http://localhost:3000/${id}`);
+    const [copied, setCopied] = useState(false);
 
   const voteUp = () => {
     const votes = {
@@ -113,6 +197,18 @@ const Answers = ({ title }) => {
         fetchPatch("http://localhost:3001/questions/", id, saves)
     }
   }
+  const handleChange = (e) => {
+    setCopyText(e.target.value);
+  };
+  useEffect(() => {
+    let timer = setTimeout(() => {
+        setCopied(false);
+        console.log("복사완료!")
+    }, 1500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [copied]);
 
   return (
     <>
@@ -139,11 +235,34 @@ const Answers = ({ title }) => {
       </QuestionStatcontainer>
       <QuestionTitleArea>
         <QuestionLink>{title}</QuestionLink>
-        <Buttondiv>
-          <Answerbutton>Share</Answerbutton>
-          <Answerbutton>Edit&nbsp;</Answerbutton>
-          <Answerbutton>Follow</Answerbutton>
-        </Buttondiv>
+        <div ref={dropDownRef}>
+                            <Buttondiv>
+                                <Answerbutton onClick={() => setIsOpen(!isOpen)}>Share</Answerbutton>
+                                <Answerbutton onClick={() => setIsOpen(false)}>Edit&nbsp;</Answerbutton>
+                                <Answerbutton onClick={() => setIsOpen(false)}>Follow</Answerbutton>
+                            </Buttondiv>
+                            {isOpen && 
+                            <Dropdown>
+                                <Sharetext><b>Share a link to this question</b> (Includes your user id)</Sharetext>
+                                <Dropinput
+                                    value={copyText}
+                                    onChange={handleChange}
+                                />
+                                <Dropbuttons>
+                                    <CopyToClipboard text={copyText}
+                                        onCopy={() => setCopied(true)}>
+                                        <Copybutton type="button">Copy link</Copybutton>
+                                    </CopyToClipboard>
+                                    {copied ? <Alert>Link copied to clipboard.</Alert> : null}
+                                    <LicenseLink href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</LicenseLink>
+                                    <Sharebuttons>
+                                        <Sharebtn onClick={() => window.open('https://www.facebook.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faFacebookSquare} size="lg"/></Sharebtn>
+                                        <Sharebtn onClick={() => window.open('https://www.twitter.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faTwitter} size="lg"/></Sharebtn>
+                                        <Sharebtn onClick={() => window.open('https://dev.to/new?prefill=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faDev} size="lg"/></Sharebtn>
+                                    </Sharebuttons>
+                                </Dropbuttons>
+                            </Dropdown>}
+                        </div>
       </QuestionTitleArea>
     </StyledQuestionRow>
     )}
