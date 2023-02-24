@@ -6,14 +6,23 @@ import pre14.stackoverflow.answer.dto.AnswerPatchDto;
 import pre14.stackoverflow.answer.dto.AnswerPostDto;
 import pre14.stackoverflow.answer.dto.AnswerResponseDto;
 import pre14.stackoverflow.answer.entity.Answer;
+import pre14.stackoverflow.member.mapper.MemberMapper;
+import pre14.stackoverflow.member.service.MemberService;
+import pre14.stackoverflow.questions.dto.QuestionDto;
+import pre14.stackoverflow.questions.entity.Question;
+import pre14.stackoverflow.questions.service.QuestionService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface AnswerMapper{
-    Answer answerPostToAnswer(AnswerPostDto answerPostDto);
-    Answer answerPatchToAnswer(AnswerPatchDto answerPatchDto);
+    Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto);
+
+    Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
+
     AnswerResponseDto answerToAnswerResponse(Answer answer);
 
-    List<AnswerResponseDto> answersToAnswerResponseDto(List<Answer> answer);
+    List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answers);
+
 }

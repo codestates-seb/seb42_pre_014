@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "answer")
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Answer {
@@ -33,17 +32,22 @@ public class Answer {
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt;                              // 작성시간
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;                            // 수정시간
+    @Column(name = "LAST_MODIFIED_AT")
+    private LocalDateTime modifiedAt = LocalDateTime.now();
     @ManyToOne
     @JoinColumn(name = "member_id")
-    @JsonIgnore//JPA 무한 참조순환으로 인한 어노테이션 추가
     private Member member;
+    public void setMember(Member member){
+        this.member = member;
+    }
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    @JsonIgnore//JPA 무한 참조순환으로 인한 어노테이션 추가
     private Question question;
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
 
     public enum AnswerStatus {
         ANSWER_WAITING("응답 대기"),
