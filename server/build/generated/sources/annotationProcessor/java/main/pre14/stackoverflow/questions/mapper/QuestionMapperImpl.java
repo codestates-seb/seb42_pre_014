@@ -9,7 +9,7 @@ import pre14.stackoverflow.questions.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-22T15:41:07+0900",
+    date = "2023-02-24T13:16:56+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -46,30 +46,30 @@ public class QuestionMapperImpl implements QuestionMapper {
     }
 
     @Override
-    public QuestionDto.QuestionResponseDto questionToQuestionResponse(Question question) {
+    public QuestionDto.Response questionToQuestionResponse(Question question) {
         if ( question == null ) {
             return null;
         }
 
-        QuestionDto.QuestionResponseDto questionResponseDto = new QuestionDto.QuestionResponseDto();
+        QuestionDto.Response response = new QuestionDto.Response();
 
-        questionResponseDto.setQuestionId( question.getQuestionId() );
-        questionResponseDto.setTitle( question.getTitle() );
-        questionResponseDto.setContents( question.getContents() );
-        questionResponseDto.setQuestionStatus( question.getQuestionStatus() );
-        questionResponseDto.setCreatedAt( question.getCreatedAt() );
-        questionResponseDto.setModifiedAt( question.getModifiedAt() );
+        response.setQuestionId( question.getQuestionId() );
+        response.setTitle( question.getTitle() );
+        response.setContents( question.getContents() );
+        response.setQuestionStatus( question.getQuestionStatus() );
+        response.setCreatedAt( question.getCreatedAt() );
+        response.setModifiedAt( question.getModifiedAt() );
 
-        return questionResponseDto;
+        return response;
     }
 
     @Override
-    public List<QuestionDto.QuestionResponseDto> questionToQuestionResponseDtos(List<Question> questions) {
+    public List<QuestionDto.Response> questionToQuestionResponseDtos(List<Question> questions) {
         if ( questions == null ) {
             return null;
         }
 
-        List<QuestionDto.QuestionResponseDto> list = new ArrayList<QuestionDto.QuestionResponseDto>( questions.size() );
+        List<QuestionDto.Response> list = new ArrayList<QuestionDto.Response>( questions.size() );
         for ( Question question : questions ) {
             list.add( questionToQuestionResponse( question ) );
         }
