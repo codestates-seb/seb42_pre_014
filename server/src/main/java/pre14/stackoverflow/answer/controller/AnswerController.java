@@ -11,10 +11,6 @@ import pre14.stackoverflow.answer.entity.Answer;
 import pre14.stackoverflow.answer.mapper.AnswerMapper;
 import pre14.stackoverflow.answer.repository.AnswerRepository;
 import pre14.stackoverflow.answer.service.AnswerService;
-import pre14.stackoverflow.member.entity.Member;
-import pre14.stackoverflow.member.service.MemberService;
-import pre14.stackoverflow.questions.entity.Question;
-import pre14.stackoverflow.questions.service.QuestionService;
 
 import java.util.List;
 
@@ -25,21 +21,12 @@ public class AnswerController {
     private final AnswerMapper mapper;
     private final AnswerService answerService;
     private final AnswerRepository answerRepository;
-    private final QuestionService questionService;
-    private final MemberService memberService;
 
     //post
     @PostMapping
     public ResponseEntity<AnswerResponseDto> postAnswer(@RequestBody AnswerPostDto answerPostDto) {
-        Question questionById = questionService.findQuestionById(answerPostDto.getQuestionId());
-        Member memberById = memberService.findVerifiedMember(answerPostDto.getMemberId());
-
         System.out.println(answerPostDto.toString());
         Answer answer = mapper.answerPostToAnswer(answerPostDto);
-
-        answer.setQuestion(questionById);
-        answer.setMember(memberById);
-
         System.out.println(answer.toString());
         Answer saveAnswer = answerService.createAnswer(answer);
         System.out.println(saveAnswer.toString());
