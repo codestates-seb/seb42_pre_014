@@ -31,11 +31,10 @@ public class QuestionController {
     private final MemberService memberService;
     @PostMapping
     public ResponseEntity postQuestion(@RequestBody @Valid QuestionDto.Post questionPostDto) {
-        Member Member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
         Question question = questionMapper.questionPostToQuestion(questionPostDto);
+        Member Member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
         question.setMember(Member); // 서비스로 옮기려했지만 실패
         Question createQuestion = questionService.createQuestion(question);
-
         QuestionDto.Response response = questionMapper.questionToQuestionResponse(createQuestion);
         
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -77,4 +76,3 @@ public class QuestionController {
         return ResponseEntity.noContent().build();
     }
 }
-

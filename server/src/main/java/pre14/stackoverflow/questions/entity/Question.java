@@ -49,16 +49,13 @@ public class Question{
     }
 
     public enum QuestionStatus {
-        QUESTION_REGISTRATION(1, "미해결"),
-        QUESTION_ANSWERED(2, "답변 완료"),
-        QUESTION_DELETE(3, "질문 삭제");
+        QUESTION_REGISTRATION("질문 등록"),
+        QUESTION_ANSWERED("답변 완료"),
+        QUESTION_DELETE("질문 삭제");
 
-        private int num;
-        private String message;
+        @Getter
+        private String status;
 
-        QuestionStatus(int num, String message) {
-            this.num = num;
-            this.message = message;
-        }
+        QuestionStatus(String status) {this.status = status;}
     }
 }
