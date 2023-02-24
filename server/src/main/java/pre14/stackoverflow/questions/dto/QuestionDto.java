@@ -1,6 +1,7 @@
 package pre14.stackoverflow.questions.dto;
 
 import lombok.*;
+import pre14.stackoverflow.member.dto.MemberDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.tag.QuestionTag;
 
@@ -41,7 +42,7 @@ public class QuestionDto {
     public static class Response {
         private Long questionId;
 
-        private Long memberId;
+        private MemberDto.Response member; //멤버 정보 부분
         private String title;
 
         private String contents;
