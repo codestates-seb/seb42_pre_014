@@ -83,7 +83,7 @@ function QuestionRow({ db }) {
       </QuestionStat_container>
 
       <QuestionTitleArea>
-        <QuestionLink>{db.title}</QuestionLink>
+        <QuestionLink href={`http://localhost:3001/${db.id}`}>{db.title}</QuestionLink>
         <WhoAndWhen>
           {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
         </WhoAndWhen>
