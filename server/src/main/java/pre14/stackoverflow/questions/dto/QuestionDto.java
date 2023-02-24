@@ -20,7 +20,7 @@ public class QuestionDto {
         @NotBlank(message = "본문을 작성해주세요")
         private String contents;
         private Long memberId;
-        private List<QuestionTag> tagList;
+       // private List<QuestionTag> tagList;
     }
 
     @Getter

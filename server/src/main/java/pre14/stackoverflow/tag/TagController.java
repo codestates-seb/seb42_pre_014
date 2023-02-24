@@ -23,5 +23,4 @@ public class TagController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
 }

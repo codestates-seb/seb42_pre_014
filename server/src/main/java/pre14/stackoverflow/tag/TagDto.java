@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.slf4j.impl.StaticMDCBinder;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 
 public class TagDto {
@@ -21,6 +22,6 @@ public class TagDto {
     @ToString
     public static class Response{
         private Long tagId;
-        private String tagName;
+        private List<Tag> tagList;
     }
 }
