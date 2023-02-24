@@ -1,11 +1,15 @@
 package pre14.stackoverflow.answer.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pre14.stackoverflow.answer.entity.Answer;
 import pre14.stackoverflow.answer.repository.AnswerRepository;
 import pre14.stackoverflow.exception.BusinessLogicException;
 import pre14.stackoverflow.exception.ExceptionCode;
+import pre14.stackoverflow.questions.entity.Question;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +47,10 @@ public class AnswerService {
 
     public void deleteAnswer(long answerId) {
         answerRepository.deleteById(answerId);
+    }
+    public Page<Answer> findAnswers(int page, int size) {
+        return answerRepository.findAll(PageRequest.of(page, size,
+                Sort.by("questionId").descending()));
     }
 
     private Answer searchAnswerById(long answerId) {

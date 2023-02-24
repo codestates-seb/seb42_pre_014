@@ -19,4 +19,6 @@ public class AnswerResponseDto {
     private Answer.AnswerStatus status;                           // 대답 응답
     private LocalDateTime createdAt;                              // 작성시간
     private LocalDateTime modifiedAt;                             // 수정시간
+    private Long memberId; //sungstii
+    private Long questionId;
 }

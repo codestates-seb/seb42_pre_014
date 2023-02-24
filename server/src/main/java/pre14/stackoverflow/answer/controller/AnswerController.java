@@ -1,6 +1,7 @@
 package pre14.stackoverflow.answer.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,8 @@ import pre14.stackoverflow.answer.entity.Answer;
 import pre14.stackoverflow.answer.mapper.AnswerMapper;
 import pre14.stackoverflow.answer.repository.AnswerRepository;
 import pre14.stackoverflow.answer.service.AnswerService;
+import pre14.stackoverflow.globaldto.MultiResponseDto;
+import pre14.stackoverflow.questions.entity.Question;
 
 import java.util.List;
 
@@ -25,13 +28,12 @@ public class AnswerController {
     //post
     @PostMapping
     public ResponseEntity<AnswerResponseDto> postAnswer(@RequestBody AnswerPostDto answerPostDto) {
-        System.out.println(answerPostDto.toString());
+
         Answer answer = mapper.answerPostToAnswer(answerPostDto);
-        System.out.println(answer.toString());
         Answer saveAnswer = answerService.createAnswer(answer);
-        System.out.println(saveAnswer.toString());
+
         AnswerResponseDto response = mapper.answerToAnswerResponse(saveAnswer);
-        System.out.println(response.toString());
+
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -58,12 +60,15 @@ public class AnswerController {
     }
     //finds
     @GetMapping
-    public ResponseEntity<List<AnswerResponseDto>> getAnswers() {
-        List<Answer> answers = answerService.findAnswers();
+    public ResponseEntity getAnswers(@RequestParam("page") int page,
+                                                              @RequestParam("size") int size) {
+        Page<Answer> answerPages = answerService.findAnswers(page -1, size);
 
-        List<AnswerResponseDto> response = mapper.answersToAnswerResponseDto(answers);
+        List<Answer> answers = answerPages.getContent();
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.answersToAnswerResponseDto(answers), answerPages),
+                HttpStatus.OK);
     }
 
     //delete
