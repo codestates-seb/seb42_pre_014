@@ -49,6 +49,7 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);//.created(location).build();
     }
 
+
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
