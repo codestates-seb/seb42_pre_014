@@ -14,6 +14,7 @@ import RegisterPage from "./RegisterPage";
 import Leftsidebar from "./Leftsidebar";
 import Footer from "./Footer";
 import "./App.css";
+import ProfilePage from "./ProfilePage";
 
 function App() {
   const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
@@ -51,6 +52,7 @@ function App() {
             <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
             <Route path="/ask" element={<AskPage data={data} />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/:id" element={<Question />} />
           </Routes>
