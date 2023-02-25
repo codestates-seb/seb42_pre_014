@@ -2,6 +2,7 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
+import { fetchPatch } from "./json-server/api"
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -66,6 +67,12 @@ const UserLink = styled.a`
 
 function QuestionRow({ db }) {
   const timeString = dayjs(db.writetime).fromNow();
+
+  const viewsUp = () => {
+    const views = {"views" : db.views + 1}
+    fetchPatch("http://localhost:3001/questions/", db.id, views)
+  }
+
   return (
     <StyledQuestionRow>
       <QuestionStat_container>
@@ -83,9 +90,8 @@ function QuestionRow({ db }) {
         </QuestionStat>
       </QuestionStat_container>
 
-      <QuestionTitleArea>
+      <QuestionTitleArea onClick={viewsUp}>
         <QuestionLink to={`./${db.id}`}>{db.title}</QuestionLink>
-        {/* <Link to={`/blogs/${blog.id}`}></Link> */}
         <WhoAndWhen>
           {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
         </WhoAndWhen>

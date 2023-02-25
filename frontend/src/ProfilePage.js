@@ -11,7 +11,7 @@ const Container = styled.div`
 `
 
 function ProfilePage() {
-    const { checkAuth } = useContext(UserContext);
+    const { checkAuth, user } = useContext(UserContext);
     const [redirectToHomePage, setRedirectToHomePage] = useState(false);
     function logout() {
         axios.post('http://localhost:4000/logout', {}, { withCredentials: true })
@@ -28,7 +28,15 @@ function ProfilePage() {
             )}
             <Container>
                 <Header1>Profile</Header1>
-                <BlueButton onClick={() => logout()}>Logout</BlueButton>
+                {user && (
+                    <>
+                        <p>Hello {user.email}</p>
+                        <BlueButton onClick={() => logout()}>Logout</BlueButton>
+                    </>
+                )}
+                {!user && (
+                    <p>You are not logged in</p>
+                )}
             </Container>
         </>
     )
