@@ -12,32 +12,33 @@ import LoginPage from "./LoginPage";
 import axios from "axios";
 import RegisterPage from "./RegisterPage";
 import Leftsidebar from "./Leftsidebar";
+import RightSidebar from "./Rightsidebar";
 import Footer from "./Footer";
 import "./App.css";
 import ProfilePage from "./ProfilePage";
 
 function App() {
-  const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
-  const [user, setUser] = useState(null);
+    const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
+    const [user, setUser] = useState(null);
 
-  function checkAuth() {
-    return new Promise((resolve, reject) => {
-      axios
-        .get("http://localhost:4000/profile", { withCredentials: true })
-        .then((response) => {
-          setUser({ email: response.data });
-          resolve(response.data);
-        })
-        .catch(() => {
-          setUser(null);
-          reject(null);
+    function checkAuth() {
+        return new Promise((resolve, reject) => {
+            axios
+                .get("http://localhost:4000/profile", { withCredentials: true })
+                .then((response) => {
+                    setUser({ email: response.data });
+                    resolve(response.data);
+                })
+                .catch(() => {
+                    setUser(null);
+                    reject(null);
+                });
         });
-    });
-  }
+    }
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+    useEffect(() => {
+        checkAuth();
+    }, []);
 
   return (
     <div id="App">
@@ -56,11 +57,11 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/:id" element={<Question />} />
           </Routes>
+          <RightSidebar></RightSidebar>
         </div>
-
         <Footer />
       </UserContext.Provider>
-    </div>
-  );
+  </div>
+    );
 }
 export default App;
