@@ -7,8 +7,6 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import pre14.stackoverflow.member.entity.Member;
-import pre14.stackoverflow.questions.entity.Question;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @RequiredArgsConstructor
+@Table(name = "answer")
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Answer {
@@ -27,18 +26,25 @@ public class Answer {
     private String userName;                                     // 유저 이름
     @Column(nullable = false, length = 99999)
     private String contents;                                      // 대답 내용
+    private AnswerStatus status = AnswerStatus.ANSWER_WAITING;    // 대답 응답
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt;                              // 작성시간
     @LastModifiedDate
     private LocalDateTime modifiedAt;                            // 수정시간
 
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
+    public enum AnswerStatus {
+        ANSWER_WAITING(1, "응답 대기"),
+        ANSWER_REPLYING(2,"응답 중"),
+        ANSWER_COMPLETED(3, "응답 완료");
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
 
+        private int num;
+        private String message;
+
+        AnswerStatus(int num, String message) {
+            this.num = num;
+            this.message = message;
+        }
+    }
 }

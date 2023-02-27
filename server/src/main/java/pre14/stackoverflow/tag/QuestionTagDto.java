@@ -1,4 +1,4 @@
-package pre14.stackoverflow.questions.dto;
+package pre14.stackoverflow.tag;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +12,3 @@ public class QuestionTagDto {
         private Long tagId; //필수
         private String tagName;
 }
-
-//    private long memberId;
-//
-//    public void addMemberId(long memberId){
-//        Assert.notNull(memberId, "member id must not be null");
-//        this.memberId = memberId;
-//    }

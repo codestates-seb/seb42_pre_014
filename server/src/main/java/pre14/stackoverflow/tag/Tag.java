@@ -1,9 +1,8 @@
-package pre14.stackoverflow.questions.entity;
+package pre14.stackoverflow.tag;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import pre14.stackoverflow.member.entity.Member;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class Tag {
     @Column(length = 20)
     private String tagName;
 
-
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST)
-    private List<QuestionTag> questionTags = new ArrayList<>();
+    @OneToMany(mappedBy = "tag")
+    private List<QuestionTag> questions = new ArrayList<>();
 }
