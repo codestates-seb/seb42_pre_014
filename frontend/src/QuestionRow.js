@@ -2,6 +2,7 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
+import { fetchPatch } from "./json-server/api"
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -65,36 +66,41 @@ const UserLink = styled.a`
 `;
 
 function QuestionRow({ db }) {
-    const timeString = dayjs(db.writetime).fromNow();
-    return (
-        <StyledQuestionRow>
-            <QuestionStat_container>
-                <QuestionStat votes>
-                    {db.votes}
-                    <span> {db.votes === 1 ? "vote" : "votes"}</span>
-                </QuestionStat>
-                <QuestionStat answers={db.answers}>
-                    {db.answers}
-                    <span> {db.answers === 1 ? "answer" : "answers"}</span>
-                </QuestionStat>
-                <QuestionStat>
-                    {db.views}
-                    <span> {db.views === 1 ? "view" : "views"}</span>
-                </QuestionStat>
-            </QuestionStat_container>
+  const timeString = dayjs(db.writetime).fromNow();
 
-            <QuestionTitleArea>
-                <QuestionLink to={`./${db.id}`}>{db.title}</QuestionLink>
-                {/* <Link to={`/blogs/${blog.id}`}></Link> */}
-                <WhoAndWhen>
-                    {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
-                </WhoAndWhen>
-                {db.tags.map((el) => {
-                    return <Tag>{el}</Tag>;
-                })}
-            </QuestionTitleArea>
-        </StyledQuestionRow>
-    );
+  const viewsUp = () => {
+    const views = {"views" : db.views + 1}
+    fetchPatch("http://localhost:3001/questions/", db.id, views)
+  }
+
+  return (
+    <StyledQuestionRow>
+      <QuestionStat_container>
+        <QuestionStat votes>
+          {db.votes}
+          <span> {db.votes === 1 ? "vote" : "votes"}</span>
+        </QuestionStat>
+        <QuestionStat answers={db.answers}>
+          {db.answers}
+          <span> {db.answers === 1 ? "answer" : "answers"}</span>
+        </QuestionStat>
+        <QuestionStat>
+          {db.views}
+          <span> {db.views === 1 ? "view" : "views"}</span>
+        </QuestionStat>
+      </QuestionStat_container>
+
+      <QuestionTitleArea onClick={viewsUp}>
+        <QuestionLink to={`./${db.id}`}>{db.title}</QuestionLink>
+        <WhoAndWhen>
+          {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
+        </WhoAndWhen>
+        {db.tags.map((el) => {
+          return <Tag>{el}</Tag>;
+        })}
+      </QuestionTitleArea>
+    </StyledQuestionRow>
+  );
 }
 
 export default QuestionRow;

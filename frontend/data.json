@@ -4,9 +4,9 @@
       "id": 1,
       "writer": "Eriksparta",
       "answerer": "minsangjung",
-      "votes": 2,
+      "votes": 5,
       "answers": 1,
-      "views": 9,
+      "views": 16,
       "tags": [
         "c++",
         "dictionary",
@@ -31,7 +31,7 @@
       "answerer": "sunghoikim",
       "votes": 0,
       "answers": 1,
-      "views": 6,
+      "views": 8,
       "tags": [
         "javascript",
         "parsing",
@@ -341,5 +341,17 @@
   ],
   "profile": {
     "name": "typicode"
-  }
+  },
+  "users": [
+    {
+      "id": 1,
+      "email": "rlarltlr123@naver.com",
+      "password": "test123"
+    },
+    {
+      "email": "rlarltlr123@naver.com",
+      "password": "test123",
+      "id": 2
+    }
+  ]
 }
