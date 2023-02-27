@@ -27,7 +27,6 @@ import java.util.List;
 @ToString
 @Slf4j
 public class MemberController {
-    private final String MEMBER_DEFAULT_URL="members";
 
     private final MemberService memberService;
     private final MemberMapper mapper;
@@ -43,10 +42,11 @@ public class MemberController {
         System.out.println(member.toString());
         Member createdMember=memberService.createMember(member);
         System.out.println(createdMember.toString());
-        MemberDto.Response response=mapper.memberToMemberResponse(createdMember);
+//        MemberDto.Response response=mapper.memberToMemberResponse(createdMember);
 //        URI location= UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);//.created(location).build();
+//        return new ResponseEntity<>(response, HttpStatus.CREATED);//.created(location).build();
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToMemberResponse(createdMember)), HttpStatus.CREATED);
     }
 
 

@@ -14,6 +14,7 @@ public enum ExceptionCode {
     @Getter
     private final int status;
 
+
     @Getter
     private final String message;
 

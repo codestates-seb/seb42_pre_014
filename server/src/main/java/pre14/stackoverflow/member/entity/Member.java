@@ -1,13 +1,12 @@
 package pre14.stackoverflow.member.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,15 +34,19 @@ public class Member {
     private String phone;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt=LocalDateTime.now();
 
     @Column(nullable = false, name="LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt=LocalDateTime.now();
 
-    public Member(String email,String name, String phone){
+    public Member(String email,String name, String phone,String password){
         this.email=email;
         this.name=name;
         this.phone=phone;
+        this.password=password;
     }
 
     public enum MemberStatus{
@@ -57,4 +60,8 @@ public class Member {
             this.status=status;
         }
     }
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
 }
