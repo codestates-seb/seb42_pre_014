@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
+import { useLocation } from "react-router-dom";
 
 const StyledFooter = styled.footer`
     height: auto;
@@ -51,6 +52,7 @@ const Footer_copyright_container = styled.div`
     }
 `;
 function Footer() {
+    if (useLocation().pathname === '/login') return null;
     return (
         <StyledFooter>
             <Footer_container>
