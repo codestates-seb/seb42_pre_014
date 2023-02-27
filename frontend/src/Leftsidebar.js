@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import HideLeftSidebar from "./HideLeftSidebar";
 // import { IconFaceMindBlown } from "@stackoverflow/stacks-icons/icons";
 // import { SpotWave } from "@stackoverflow/stacks-icons/spots";
 
@@ -63,7 +64,7 @@ const Sidebar_items_link = styled.a`
 
 function Leftsidebar() {
 
-    if (useLocation().pathname === '/login') return null;
+    if (HideLeftSidebar()) return null;
     return (
         <Sidebar_container>
             <Sidebar_items_container>
@@ -73,10 +74,10 @@ function Leftsidebar() {
                 <Sidebar_items_list>
                     <Sidebar_items_link eleven>PUBLIC</Sidebar_items_link>
                     <Sidebar_items>
-                        <Sidebar_items_link>Questions</Sidebar_items_link>
+                        <Sidebar_items_link href="/">Questions</Sidebar_items_link>
                     </Sidebar_items>
                     <Sidebar_items>
-                        <Sidebar_items_link>Tags</Sidebar_items_link>
+                        <Sidebar_items_link href="/tags">Tags</Sidebar_items_link>
                     </Sidebar_items>
                     <Sidebar_items>
                         <Sidebar_items_link>Users</Sidebar_items_link>

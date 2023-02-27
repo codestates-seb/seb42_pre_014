@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
 import { useLocation } from "react-router-dom";
+import HideSidebar from "./HideLeftSidebar";
 
 const StyledFooter = styled.footer`
     height: auto;
@@ -52,7 +53,7 @@ const Footer_copyright_container = styled.div`
     }
 `;
 function Footer() {
-    if (useLocation().pathname === '/login') return null;
+    if (HideSidebar()) return null;
     return (
         <StyledFooter>
             <Footer_container>
