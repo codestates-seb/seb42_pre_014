@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { IconFaceMindBlown } from "@stackoverflow/stacks-icons/icons";
-import { SpotWave } from "@stackoverflow/stacks-icons/spots";
+// import { IconFaceMindBlown } from "@stackoverflow/stacks-icons/icons";
+// import { SpotWave } from "@stackoverflow/stacks-icons/spots";
 
 const Sidebar_container = styled.div`
     box-sizing: border-box;
