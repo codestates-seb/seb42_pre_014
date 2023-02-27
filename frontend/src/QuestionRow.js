@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
 import { fetchPatch } from "./json-server/api"
+import Tag from "./Tag";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
@@ -28,15 +29,6 @@ const QuestionStat = styled.div`
 `;
 const QuestionTitleArea = styled.div`
     padding: 0 10px;
-`;
-const Tag = styled.span`
-    display: inline-block;
-    margin-right: 5px;
-    background-color: #3e4a52;
-    color: #9cc3db;
-    padding: 7px;
-    border-radius: 4px;
-    font-size: 0.7rem;
 `;
 const QuestionLink = styled(Link)`
     text-decoration: none;
@@ -69,7 +61,7 @@ function QuestionRow({ db }) {
   const timeString = dayjs(db.writetime).fromNow();
 
   const viewsUp = () => {
-    const views = {"views" : db.views + 1}
+    const views = { "views": db.views + 1 }
     fetchPatch("http://localhost:3001/questions/", db.id, views)
   }
 

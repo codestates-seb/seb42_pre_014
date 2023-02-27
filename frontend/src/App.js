@@ -16,6 +16,7 @@ import RightSidebar from "./Rightsidebar";
 import Footer from "./Footer";
 import "./App.css";
 import ProfilePage from "./ProfilePage";
+import TagsPage from "./TagsPage";
 
 function App() {
   const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
@@ -56,6 +57,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/:id" element={<Question />} />
+            <Route path="/tags" element={<TagsPage />} />
           </Routes>
           <RightSidebar></RightSidebar>
         </div>
