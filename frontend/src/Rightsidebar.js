@@ -1,5 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+
+const FaMagnifyingGlassicon = <FontAwesomeIcon icon={faMagnifyingGlass} />;
+const faEyeicon = <FontAwesomeIcon icon={faEye} />;
 
 const Sidebar_container = styled.div`
     box-sizing: border-box;
@@ -12,23 +18,26 @@ const Sidebar_container = styled.div`
     background-color: #383838;
 `;
 const Sidebar_items_container = styled.div`
-    /* position: sticky; */
     /* top: 80px; */
     height: auto;
     max-width: 400px;
-    margin: 0 100px 0 30px;
+    /* overflow: hidden; */
+    margin: 0 50px 0 30px;
     /* padding-left: 15px; */
 `;
 const Sidebar_items_list = styled.ul`
     font-size: ${(props) => (props.eleven ? "11px" : "13px")};
     height: auto;
     width: auto;
-    text-align: left;
+    /* text-align: left; */
     list-style-type: none;
     border-style: solid;
-    border-width: 1px;
+    border-width: 2px;
     border-color: #535353;
     margin-bottom: 15px;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
     /* box-shadow: 1px 1px 1px 1px #535353; */
     /* border: 0 0 0 1px solid; */
 
@@ -46,6 +55,7 @@ const Sidebar_items = styled.li`
     color: #aaaaaa;
     border-color: ${(props) => (props.home ? "orange" : "null")};
     background-color: ${(props) => (props.title ? "#5A5A5A" : "#383838")};
+    margin: auto;
 `;
 const Sidebar_items_link = styled.a`
     font-size: ${(props) => (props.eleven ? "11px" : "13px")};
@@ -56,9 +66,15 @@ const Sidebar_items_link = styled.a`
     }
 `;
 const Sidebar_button = styled.button`
+    height: 30px;
     width: auto;
-    height: auto;
+    margin: auto;
     background-color: #383838;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    border: 1px solid #535353;
+    text-decoration: none;
     border: 1px solid #616161;
     border-radius: 5%;
     color: #aaaaaa;
@@ -93,12 +109,12 @@ function RightSidebar() {
                     <Sidebar_items title>Watched Tags</Sidebar_items>
                     <Sidebar_items>
                         <Sidebar_items>Watch Tags to curate your list of questions.</Sidebar_items>
-                        <Sidebar_button>Watch a tag</Sidebar_button>
+                        <Sidebar_button>{faEyeicon} Watch a tag</Sidebar_button>
                     </Sidebar_items>
                 </Sidebar_items_list>
                 <Sidebar_items_list>
                     <Sidebar_items title>Ignored Tags</Sidebar_items>
-                    <Sidebar_button>Create a custom filter</Sidebar_button>
+                    <Sidebar_button>Add an ignored tag</Sidebar_button>
                 </Sidebar_items_list>
                 <Sidebar_items_list>
                     <Sidebar_items title>Collectives</Sidebar_items>

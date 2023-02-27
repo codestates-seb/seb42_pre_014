@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import UserContext from "./UserContext";
 
 const StyledHeader = styled.header`
+    position: sticky;
+    top: 0;
     background-color: #393939;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
     display: grid;
