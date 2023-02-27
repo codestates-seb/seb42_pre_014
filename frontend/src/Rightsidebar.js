@@ -40,7 +40,6 @@ const Sidebar_items_list = styled.ul`
     text-align: center;
     /* box-shadow: 1px 1px 1px 1px #535353; */
     /* border: 0 0 0 1px solid; */
-
     /* position: relative; */
 `;
 const Sidebar_items = styled.li`
@@ -54,7 +53,7 @@ const Sidebar_items = styled.li`
     /* text-align: center; */
     color: #aaaaaa;
     border-color: ${(props) => (props.home ? "orange" : "null")};
-    background-color: ${(props) => (props.title ? "#5A5A5A" : "#383838")};
+    background-color: ${(props) => (props.title ? "#5A5A5A" : "#2d2d2d")};
     margin: auto;
 `;
 const Sidebar_items_link = styled.a`
