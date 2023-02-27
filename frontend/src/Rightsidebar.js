@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 const Sidebar_container = styled.div`
     box-sizing: border-box;
@@ -65,6 +66,7 @@ const Sidebar_button = styled.button`
 `;
 
 function RightSidebar() {
+    if (useLocation().pathname === "/ask") return null;
     return (
         <Sidebar_container>
             <Sidebar_items_container>

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { IconFaceMindBlown } from "@stackoverflow/stacks-icons/icons";
 import { SpotWave } from "@stackoverflow/stacks-icons/spots";
+import { useLocation } from "react-router-dom";
 
 const Sidebar_container = styled.div`
     box-sizing: border-box;
@@ -61,6 +62,7 @@ const Sidebar_items_link = styled.a`
 `;
 
 function Leftsidebar() {
+    if (useLocation().pathname === "/ask") return null;
     return (
         <Sidebar_container>
             <Sidebar_items_container>
