@@ -18,7 +18,6 @@ import pre14.stackoverflow.questions.service.QuestionService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,19 +29,15 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
     private final MemberService memberService;
-
     @PostMapping
-    public ResponseEntity createQuestion(@RequestBody QuestionDto.Post questionPostDto) {
-        Member Member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
-
+    public ResponseEntity postQuestion(@RequestBody @Valid QuestionDto.Post questionPostDto) {
         Question question = questionMapper.questionPostToQuestion(questionPostDto);
-        question.setMember(Member);
+        Member Member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
+        question.setMember(Member); // 서비스로 옮기려했지만 실패
         Question createQuestion = questionService.createQuestion(question);
-
-        QuestionDto.QuestionResponseDto response = questionMapper.questionToQuestionResponse(createQuestion);
-
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        QuestionDto.Response response = questionMapper.questionToQuestionResponse(createQuestion);
+        
+        return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
@@ -81,4 +76,3 @@ public class QuestionController {
         return ResponseEntity.noContent().build();
     }
 }
-
