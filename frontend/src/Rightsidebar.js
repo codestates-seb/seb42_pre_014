@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 const Sidebar_container = styled.div`
@@ -65,6 +66,7 @@ const Sidebar_button = styled.button`
 `;
 
 function RightSidebar() {
+    if (useLocation().pathname === '/login') return null;
     return (
         <Sidebar_container>
             <Sidebar_items_container>

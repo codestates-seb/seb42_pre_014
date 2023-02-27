@@ -27,10 +27,7 @@ class RegisterPage extends Component {
             email: this.state.email,
             password: this.state.password,
         }, { withCredentials: true })
-            .then(() => {
-                this.context.checkAuth()
-                    .then(() => this.setState({ error: false, redirectToHomePage: true }));
-            })
+            .then(() => this.setState({ error: false, redirectToHomePage: true }))
             .catch(error => {
                 this.setState({ error: error.response.data });
             });
