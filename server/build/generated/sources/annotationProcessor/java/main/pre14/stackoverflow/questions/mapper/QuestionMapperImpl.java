@@ -8,11 +8,13 @@ import org.springframework.stereotype.Component;
 import pre14.stackoverflow.member.dto.MemberDto;
 import pre14.stackoverflow.member.entity.Member;
 import pre14.stackoverflow.questions.dto.QuestionDto;
+import pre14.stackoverflow.questions.dto.QuestionVoteDto;
 import pre14.stackoverflow.questions.entity.Question;
+import pre14.stackoverflow.questions.entity.QuestionVote;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-28T15:08:49+0900",
+    date = "2023-02-28T18:30:09+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -26,7 +28,6 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         Question question = new Question();
 
-        question.setQuestionId( questionPostDto.getQuestionId() );
         question.setTitle( questionPostDto.getTitle() );
         question.setContents( questionPostDto.getContents() );
 
@@ -49,6 +50,19 @@ public class QuestionMapperImpl implements QuestionMapper {
     }
 
     @Override
+    public QuestionVote questionVoteDtoToQuestionVote(QuestionVoteDto requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        QuestionVote questionVote = new QuestionVote();
+
+        questionVote.setMemberId( requestBody.getMemberId() );
+
+        return questionVote;
+    }
+
+    @Override
     public QuestionDto.Response questionToQuestionResponse(Question question) {
         if ( question == null ) {
             return null;
@@ -59,6 +73,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         response.setQuestionId( question.getQuestionId() );
         response.setTitle( question.getTitle() );
         response.setContents( question.getContents() );
+        response.setScore( question.getScore() );
         response.setMember( memberToResponse( question.getMember() ) );
         response.setQuestionStatus( question.getQuestionStatus() );
         response.setCreatedAt( question.getCreatedAt() );

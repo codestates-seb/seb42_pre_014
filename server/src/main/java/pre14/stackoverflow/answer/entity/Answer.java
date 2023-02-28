@@ -48,6 +48,7 @@ public class Answer{
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
     public void setMember(Member member){
         this.member = member;
     }
@@ -58,6 +59,7 @@ public class Answer{
 
     @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
     private List<AnswerVote> answerVoteList = new ArrayList<>();
+
 
     public void setQuestion(Question question) {
         this.question = question;

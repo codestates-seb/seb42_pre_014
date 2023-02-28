@@ -73,7 +73,8 @@ public class AnswerVoteService {
 
     public Answer findVerifiedAnswer(long Id) {
         Optional<Answer> optionalAnswer = answerRepository.findById(Id);
-        Answer verifiedAnswer = optionalAnswer.orElseThrow(() -> new RuntimeException("Answer Not Found"));
+        Answer verifiedAnswer = optionalAnswer.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         return verifiedAnswer;
     }

@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import pre14.stackoverflow.answer.entity.Answer;
 import pre14.stackoverflow.member.entity.Member;
 import pre14.stackoverflow.tag.QuestionTag;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @Setter
 @EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime함께사용
 @RequiredArgsConstructor
-//@ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
+@ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
 @Table(name = "question")
 public class Question{
     @Id
@@ -28,14 +29,23 @@ public class Question{
     private String title;
     @Column(nullable = false, columnDefinition = "TEXT")
     private String contents;
+    @Column
+    private int score;
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) //자식엔티티는 ALL해줘야함
-    private List<QuestionTag> tags = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     @JsonIgnore//JPA 무한 참조순환으로 인한 어노테이션 추가
     private Member member;
+
+    // 질문 ~ 답변 (양방향)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> questionAnswers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVotes = new ArrayList<>();
+
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt ;

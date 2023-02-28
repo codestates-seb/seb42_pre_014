@@ -42,7 +42,9 @@ public class AnswerDto {
     @ToString
     public static class Response {
         private Long answerId;
+        private Long memberId;
         private String nickName;
+        private Long questionId;
         private String contents;
         private int score;
         private Answer.AnswerStatus answerStatus;                     // 대답 응답
