@@ -1,11 +1,7 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
-
-const FaMagnifyingGlassicon = <FontAwesomeIcon icon={faMagnifyingGlass} />;
-const faEyeicon = <FontAwesomeIcon icon={faEye} />;
+import HideRightSidebar from "./HideRightSidebar";
 
 const Sidebar_container = styled.div`
     box-sizing: border-box;
@@ -79,6 +75,7 @@ const Sidebar_button = styled.button`
 `;
 
 function RightSidebar() {
+    if (HideRightSidebar()) return null;
     return (
         <Sidebar_container>
             <Sidebar_items_container>
@@ -107,7 +104,7 @@ function RightSidebar() {
                     <Sidebar_items title>Watched Tags</Sidebar_items>
                     <Sidebar_items column>
                         <Sidebar_items>Watch Tags to curate your list of questions.</Sidebar_items>
-                        <Sidebar_button>{faEyeicon} Watch a tag</Sidebar_button>
+                        <Sidebar_button>Watch a tag</Sidebar_button>
                     </Sidebar_items>
                 </Sidebar_items_list>
                 <Sidebar_items_list>
@@ -120,25 +117,6 @@ function RightSidebar() {
                 </Sidebar_items_list>
             </Sidebar_items_container>
         </Sidebar_container>
-        // <Sidebar_container>
-        //     <Sidebar_items_container>
-        //         <Sidebar_items_list>
-        //             The Overflow Blog
-        //             <Sidebar_items>Why governments need open source more than ever</Sidebar_items>
-        //             <Sidebar_items>Stop saying “technical debt”</Sidebar_items>
-        //         </Sidebar_items_list>
-        //         <Sidebar_items_list>
-        //             Featured on Meta
-        //             <Sidebar_items>Ticket smash for [status-review] tag: Part Deux</Sidebar_items>
-        //             <Sidebar_items>
-        //                 We've added a "Necessary cookies only" option to the cookie consent popup
-        //             </Sidebar_items>
-        //             <Sidebar_items>The [amazon] tag is being burninated</Sidebar_items>
-        //             <Sidebar_items>Microsoft Azure Collective launch and proposed tag changes</Sidebar_items>
-        //             <Sidebar_items>Temporary policy: ChatGPT is banned</Sidebar_items>
-        //         </Sidebar_items_list>
-        //     </Sidebar_items_container>
-        // </Sidebar_container>
     );
 }
 
