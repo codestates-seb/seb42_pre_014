@@ -11,18 +11,18 @@ const Sidebar_container = styled.div`
     box-sizing: border-box;
     display: flex;
     height: auto;
-    /* max-width: 164px; */
-    top: 0;
+    width: auto;
     justify-content: flex-end;
     padding: 10px 0;
-    background-color: #383838;
+    background-color: #2d2d2d;
 `;
 const Sidebar_items_container = styled.div`
-    /* top: 80px; */
     height: auto;
-    max-width: 400px;
+    width: 300px;
+    margin: 20px 20px;
+    /* max-width: 400px; */
     /* overflow: hidden; */
-    margin: 0 50px 0 30px;
+    /* margin: 0 50px 0 30px; */
     /* padding-left: 15px; */
 `;
 const Sidebar_items_list = styled.ul`
@@ -34,26 +34,26 @@ const Sidebar_items_list = styled.ul`
     border-style: solid;
     border-width: 2px;
     border-color: #535353;
-    margin-bottom: 15px;
     align-items: center;
     justify-items: center;
-    text-align: center;
+    margin-bottom: 20px;
     /* box-shadow: 1px 1px 1px 1px #535353; */
     /* border: 0 0 0 1px solid; */
     /* position: relative; */
 `;
 const Sidebar_items = styled.li`
-    /* padding-left: 15px; */
+    display: flex;
+    flex-direction: ${(props) => (props.column ? "column" : "row")};
     height: auto;
-    padding: 10px 15px;
-    width: 100%;
+    padding: 12px 15px;
+    width: auto;
     border-style: solid;
     border-width: 1px 0 0 0;
     border-color: #535353;
-    /* text-align: center; */
     color: #aaaaaa;
     border-color: ${(props) => (props.home ? "orange" : "null")};
-    background-color: ${(props) => (props.title ? "#5A5A5A" : "#2d2d2d")};
+    background-color: ${(props) => (props.title ? "#524c38" : props.title2 ? "#393939" : "")};
+    /* #464337 */
     margin: auto;
 `;
 const Sidebar_items_link = styled.a`
@@ -68,13 +68,12 @@ const Sidebar_button = styled.button`
     height: 30px;
     width: auto;
     margin: auto;
-    background-color: #383838;
+    background-color: #3e4952;
     color: #fff;
     border: 0;
     border-radius: 5px;
-    border: 1px solid #535353;
+    border: 1px solid #678fac;
     text-decoration: none;
-    border: 1px solid #616161;
     border-radius: 5%;
     color: #aaaaaa;
 `;
@@ -106,7 +105,7 @@ function RightSidebar() {
                 </Sidebar_items_list>
                 <Sidebar_items_list>
                     <Sidebar_items title>Watched Tags</Sidebar_items>
-                    <Sidebar_items>
+                    <Sidebar_items column>
                         <Sidebar_items>Watch Tags to curate your list of questions.</Sidebar_items>
                         <Sidebar_button>{faEyeicon} Watch a tag</Sidebar_button>
                     </Sidebar_items>
@@ -121,6 +120,25 @@ function RightSidebar() {
                 </Sidebar_items_list>
             </Sidebar_items_container>
         </Sidebar_container>
+        // <Sidebar_container>
+        //     <Sidebar_items_container>
+        //         <Sidebar_items_list>
+        //             The Overflow Blog
+        //             <Sidebar_items>Why governments need open source more than ever</Sidebar_items>
+        //             <Sidebar_items>Stop saying “technical debt”</Sidebar_items>
+        //         </Sidebar_items_list>
+        //         <Sidebar_items_list>
+        //             Featured on Meta
+        //             <Sidebar_items>Ticket smash for [status-review] tag: Part Deux</Sidebar_items>
+        //             <Sidebar_items>
+        //                 We've added a "Necessary cookies only" option to the cookie consent popup
+        //             </Sidebar_items>
+        //             <Sidebar_items>The [amazon] tag is being burninated</Sidebar_items>
+        //             <Sidebar_items>Microsoft Azure Collective launch and proposed tag changes</Sidebar_items>
+        //             <Sidebar_items>Temporary policy: ChatGPT is banned</Sidebar_items>
+        //         </Sidebar_items_list>
+        //     </Sidebar_items_container>
+        // </Sidebar_container>
     );
 }
 

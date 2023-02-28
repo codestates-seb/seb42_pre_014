@@ -12,7 +12,6 @@ import LoginPage from "./LoginPage";
 import axios from "axios";
 import RegisterPage from "./RegisterPage";
 import Leftsidebar from "./Leftsidebar";
-import RightSidebar from "./Rightsidebar";
 import Footer from "./Footer";
 import "./App.css";
 import ProfilePage from "./ProfilePage";
@@ -40,28 +39,27 @@ function App() {
         checkAuth();
     }, []);
 
-  return (
-    <div id="App">
-      <Reset />
-      <GlobalStyles />
-      {error && <div>{error}</div>}
-      <UserContext.Provider value={{ user, checkAuth }}>
-        <Header />
-        <div className="Main-container">
-          <Leftsidebar></Leftsidebar>
-          <Routes>
-            <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
-            <Route path="/ask" element={<AskPage data={data} />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/:id" element={<Question />} />
-          </Routes>
-          <RightSidebar></RightSidebar>
+    return (
+        <div id="App">
+            <Reset />
+            <GlobalStyles />
+            {error && <div>{error}</div>}
+            <UserContext.Provider value={{ user, checkAuth }}>
+                <Header />
+                <div className="Main-container">
+                    <Leftsidebar></Leftsidebar>
+                    <Routes>
+                        <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
+                        <Route path="/ask" element={<AskPage data={data} />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/:id" element={<Question />} />
+                    </Routes>
+                </div>
+                <Footer />
+            </UserContext.Provider>
         </div>
-        <Footer />
-      </UserContext.Provider>
-  </div>
     );
 }
 export default App;

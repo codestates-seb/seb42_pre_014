@@ -6,7 +6,18 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import RightSidebar from "./Rightsidebar";
+
 const filtericon = <FontAwesomeIcon icon={faFilter} />;
+
+const Main_container = styled.div`
+    display: flex;
+    padding: 0 24px; ;
+`;
+const Content_container = styled.div`
+    height: auto;
+    width: 600px;
+`;
 const HeaderRow = styled.div`
     display: grid;
     grid-template-columns: 1fr min-content;
@@ -52,17 +63,20 @@ function QuestionsPage({ data }) {
     }, []);
 
     return (
-        <div>
-            <HeaderRow>
-                <Header1 style={{ margin: 0 }}>Top Questions</Header1>
-                <BlueButtonLink to="./ask">Ask&nbsp;Question</BlueButtonLink>
-                <QuestionNum>{questions.length} questions</QuestionNum>
-                <SortButton>{filtericon} Filter</SortButton>
-            </HeaderRow>
-            {questions.map((el) => {
-                return <QuestionRow db={el} key={el.id} />;
-            })}
-        </div>
+        <Main_container>
+            <Content_container>
+                <HeaderRow>
+                    <Header1 style={{ margin: 0 }}>Top Questions</Header1>
+                    <BlueButtonLink to="./ask">Ask&nbsp;Question</BlueButtonLink>
+                    <QuestionNum>{questions.length} questions</QuestionNum>
+                    <SortButton>{filtericon} Filter</SortButton>
+                </HeaderRow>
+                {questions.map((el) => {
+                    return <QuestionRow db={el} key={el.id} />;
+                })}
+            </Content_container>
+            <RightSidebar></RightSidebar>
+        </Main_container>
     );
 }
 
