@@ -1,19 +1,22 @@
 package pre14.stackoverflow.answer.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
-import pre14.stackoverflow.answer.dto.AnswerPatchDto;
-import pre14.stackoverflow.answer.dto.AnswerPostDto;
-import pre14.stackoverflow.answer.dto.AnswerResponseDto;
+import pre14.stackoverflow.answer.dto.AnswerDto;
+import pre14.stackoverflow.answer.dto.AnswerVoteDto;
 import pre14.stackoverflow.answer.entity.Answer;
+import pre14.stackoverflow.answer.entity.AnswerVote;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface AnswerMapper{
-    Answer answerPostToAnswer(AnswerPostDto answerPostDto);
-    Answer answerPatchToAnswer(AnswerPatchDto answerPatchDto);
-    AnswerResponseDto answerToAnswerResponse(Answer answer);
+    Answer answerPostDtoToAnswer(AnswerDto.Post answerPostDto);
 
-    List<AnswerResponseDto> answersToAnswerResponseDto(List<Answer> answer);
+    Answer answerPatchDtoToAnswer(AnswerDto.Patch answerPatchDto);
+    AnswerVote answerVoteDtoToAnswerVote(AnswerVoteDto requestBody);
+
+    AnswerDto.Response answerToAnswerResponse(Answer answer);
+
+    List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers);
+
 }

@@ -41,11 +41,10 @@ public class QuestionDto {
     public static class Response {
         private Long questionId;
 
-        private MemberDto.Response member; //멤버 정보 부분
         private String title;
 
         private String contents;
-
+        private MemberDto.Response member;
         private Question.QuestionStatus questionStatus;
         public String getQuestionStatus(){return questionStatus.getStatus();} //상태값이 한글로 저장 및 출력되게함
 
