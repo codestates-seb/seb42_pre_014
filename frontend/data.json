@@ -6,7 +6,7 @@
       "answerer": "minsangjung",
       "votes": 5,
       "answers": 1,
-      "views": 16,
+      "views": 22,
       "tags": [
         "c++",
         "dictionary",
@@ -19,19 +19,19 @@
       "modifyday": "2022-02-21T08:46:51.914Z",
       "save": "true",
       "answer": {
-        "answerBody": "Switch on the sky in the stars glow for you Go see the world 'cause it's all so brand new Don't close your eyes 'cause your future's ready to shine It's just matter of time before we learn how to fly Welcome to the rhythm of the night There's something in the air you can't deny It's been fun but now I've got to go Life is way too short to take it slow But before I go and hit the road",
-        "votes": 2,
+        "answerBody": "asdasd",
+        "votes": 0,
         "save": "false",
-        "number": 1
+        "number": 2
       }
     },
     {
       "id": 2,
       "writer": "Kimcoding",
       "answerer": "sunghoikim",
-      "votes": 0,
+      "votes": 1,
       "answers": 1,
-      "views": 8,
+      "views": 12,
       "tags": [
         "javascript",
         "parsing",
@@ -45,7 +45,7 @@
       "save": "false",
       "answer": {
         "answerBody": "I gotta know, 'til then When can we do this again? Oh oh oh oh When can I see you again? Oh oh oh oh When can we do this again? Oh oh oh oh I gotta know, when can I see you again? (When can I see you again?)",
-        "vote": 0,
+        "votes": 1,
         "save": "false",
         "number": 1
       }
@@ -55,7 +55,7 @@
       "writer": "naversarang",
       "votes": 0,
       "answers": 0,
-      "views": 6,
+      "views": 7,
       "tags": [
         "python",
         "parsing",
@@ -79,7 +79,7 @@
       "writer": "dangun",
       "votes": 1,
       "answers": 0,
-      "views": 6,
+      "views": 7,
       "tags": [
         "python",
         "bash",

@@ -12,58 +12,56 @@ import LoginPage from "./LoginPage";
 import axios from "axios";
 import RegisterPage from "./RegisterPage";
 import Leftsidebar from "./Leftsidebar";
-import RightSidebar from "./Rightsidebar";
 import Footer from "./Footer";
 import "./App.css";
 import ProfilePage from "./ProfilePage";
 import TagsPage from "./TagsPage";
 
 function App() {
-  const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
-  const [user, setUser] = useState(null);
+    const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
+    const [user, setUser] = useState(null);
 
-  function checkAuth() {
-    return new Promise((resolve, reject) => {
-      axios
-        .get("http://localhost:4000/profile", { withCredentials: true })
-        .then((response) => {
-          setUser({ email: response.data });
-          resolve(response.data);
-        })
-        .catch(() => {
-          setUser(null);
-          reject(null);
+    function checkAuth() {
+        return new Promise((resolve, reject) => {
+            axios
+                .get("http://localhost:4000/profile", { withCredentials: true })
+                .then((response) => {
+                    setUser({ email: response.data });
+                    resolve(response.data);
+                })
+                .catch(() => {
+                    setUser(null);
+                    reject(null);
+                });
         });
-    });
-  }
+    }
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+    useEffect(() => {
+        checkAuth();
+    }, []);
 
-  return (
-    <div id="App">
-      <Reset />
-      <GlobalStyles />
-      {error && <div>{error}</div>}
-      <UserContext.Provider value={{ user, checkAuth }}>
-        <Header />
-        <div className="Main-container">
-          <Leftsidebar></Leftsidebar>
-          <Routes>
-            <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
-            <Route path="/ask" element={<AskPage data={data} />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/:id" element={<Question />} />
-            <Route path="/tags" element={<TagsPage />} />
-          </Routes>
-          <RightSidebar></RightSidebar>
+    return (
+        <div id="App">
+            <Reset />
+            <GlobalStyles />
+            {error && <div>{error}</div>}
+            <UserContext.Provider value={{ user, checkAuth }}>
+                <Header />
+                <div className="Main-container">
+                    <Leftsidebar></Leftsidebar>
+                    <Routes>
+                        <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
+                        <Route path="/ask" element={<AskPage data={data} />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/:id" element={<Question />} />
+                        <Route path="/tags" element={<TagsPage />} />
+                    </Routes>
+                </div>
+                <Footer />
+            </UserContext.Provider>
         </div>
-        <Footer />
-      </UserContext.Provider>
-    </div>
-  );
+    );
 }
 export default App;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
-import { fetchPatch } from "./json-server/api"
+import { fetchPatch } from "./json-server/api";
 import Tag from "./Tag";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
@@ -38,7 +38,7 @@ const QuestionLink = styled(Link)`
     margin-bottom: 5px;
 `;
 const StyledQuestionRow = styled.div`
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: #2d2d2d;
     padding: 15px 15px 10px;
     display: grid;
     grid-template-columns: 85px 1fr;
@@ -58,41 +58,41 @@ const UserLink = styled.a`
 `;
 
 function QuestionRow({ db }) {
-  const timeString = dayjs(db.writetime).fromNow();
+    const timeString = dayjs(db.writetime).fromNow();
 
-  const viewsUp = () => {
-    const views = { "views": db.views + 1 }
-    fetchPatch("http://localhost:3001/questions/", db.id, views)
-  }
+    const viewsUp = () => {
+        const views = { views: db.views + 1 };
+        fetchPatch("http://localhost:3001/questions/", db.id, views);
+    };
 
-  return (
-    <StyledQuestionRow>
-      <QuestionStat_container>
-        <QuestionStat votes>
-          {db.votes}
-          <span> {db.votes === 1 ? "vote" : "votes"}</span>
-        </QuestionStat>
-        <QuestionStat answers={db.answers}>
-          {db.answers}
-          <span> {db.answers === 1 ? "answer" : "answers"}</span>
-        </QuestionStat>
-        <QuestionStat>
-          {db.views}
-          <span> {db.views === 1 ? "view" : "views"}</span>
-        </QuestionStat>
-      </QuestionStat_container>
+    return (
+        <StyledQuestionRow>
+            <QuestionStat_container>
+                <QuestionStat votes>
+                    {db.votes}
+                    <span> {db.votes === 1 ? "vote" : "votes"}</span>
+                </QuestionStat>
+                <QuestionStat answers={db.answers}>
+                    {db.answers}
+                    <span> {db.answers === 1 ? "answer" : "answers"}</span>
+                </QuestionStat>
+                <QuestionStat>
+                    {db.views}
+                    <span> {db.views === 1 ? "view" : "views"}</span>
+                </QuestionStat>
+            </QuestionStat_container>
 
-      <QuestionTitleArea onClick={viewsUp}>
-        <QuestionLink to={`./${db.id}`}>{db.title}</QuestionLink>
-        <WhoAndWhen>
-          {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
-        </WhoAndWhen>
-        {db.tags.map((el) => {
-          return <Tag>{el}</Tag>;
-        })}
-      </QuestionTitleArea>
-    </StyledQuestionRow>
-  );
+            <QuestionTitleArea onClick={viewsUp}>
+                <QuestionLink to={`./${db.id}`}>{db.title}</QuestionLink>
+                <WhoAndWhen>
+                    {db.answerer ? `${db.answerer} answered` : `${db.writer} asked`} {timeString} <UserLink></UserLink>
+                </WhoAndWhen>
+                {db.tags.map((el) => {
+                    return <Tag>{el}</Tag>;
+                })}
+            </QuestionTitleArea>
+        </StyledQuestionRow>
+    );
 }
 
 export default QuestionRow;
