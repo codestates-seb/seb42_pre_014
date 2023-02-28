@@ -9,7 +9,8 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
     QUESTION_EXISTS(409, "Question exists"),
     QUESTION_CANNOT_CHANGE(403,"권한이 없습니다."),
-    ANSWER_CANNOT_CHANGE(403,"권한이 없습니다.");
+    ANSWER_CANNOT_CHANGE(403,"권한이 없습니다."),
+    MEMBER_ALREADY_VOTED(405, "아직 투표를 하지 않았습니다.");
 
     @Getter
     private final int status;

@@ -43,7 +43,7 @@ public class MemberController {
         System.out.println(member.toString());
         Member createdMember=memberService.createMember(member);
         System.out.println(createdMember.toString());
-        MemberDto.Response response=mapper.memberToMemberResponse(createdMember);
+        MemberDto.Response response= mapper.memberToMemberResponse(createdMember);
 //        URI location= UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);//.created(location).build();
