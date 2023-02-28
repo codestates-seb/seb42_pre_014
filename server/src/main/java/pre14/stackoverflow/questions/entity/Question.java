@@ -6,7 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import pre14.stackoverflow.member.entity.Member;
-import pre14.stackoverflow.tag.QuestionTag;
+import pre14.stackoverflow.tag.Tag;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,8 +30,6 @@ public class Question{
     private String contents;
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) //자식엔티티는 ALL해줘야함
-    private List<QuestionTag> tags = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "member_id")
     @JsonIgnore//JPA 무한 참조순환으로 인한 어노테이션 추가

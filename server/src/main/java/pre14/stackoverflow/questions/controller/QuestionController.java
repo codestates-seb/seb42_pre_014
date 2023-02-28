@@ -32,8 +32,8 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity postQuestion(@RequestBody @Valid QuestionDto.Post questionPostDto) {
         Question question = questionMapper.questionPostToQuestion(questionPostDto);
-        Member Member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
-        question.setMember(Member); // 서비스로 옮기려했지만 실패
+        Member member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
+        question.setMember(member); // 서비스로 옮기려했지만 실패
         Question createQuestion = questionService.createQuestion(question);
         QuestionDto.Response response = questionMapper.questionToQuestionResponse(createQuestion);
         

@@ -1,8 +1,11 @@
 package pre14.stackoverflow.tag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import pre14.stackoverflow.member.entity.Member;
+import pre14.stackoverflow.questions.entity.Question;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ public class Tag {
     @Column(length = 20)
     private String tagName;
 
-    @OneToMany(mappedBy = "tag")
-    private List<QuestionTag> questions = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    @JsonIgnore//JPA 무한 참조순환으로 인한 어노테이션 추가
+    private Question question;
 }
