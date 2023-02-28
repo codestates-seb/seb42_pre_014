@@ -7,10 +7,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pre14.stackoverflow.answer.entity.Answer;
 import pre14.stackoverflow.answer.repository.AnswerRepository;
+import pre14.stackoverflow.audit.Auditable;
 import pre14.stackoverflow.exception.BusinessLogicException;
 import pre14.stackoverflow.exception.ExceptionCode;
 import pre14.stackoverflow.questions.entity.Question;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +31,6 @@ public class AnswerService {
         // 답변 내용 업데이트
         Optional.ofNullable(answer.getContents())
                 .ifPresent(contents -> findAnswer.setContents(contents));
-
-        Optional.ofNullable(answer.getModifiedAt()).ifPresent(findAnswer::setModifiedAt);
-
 
         return answerRepository.save(findAnswer);
     }
