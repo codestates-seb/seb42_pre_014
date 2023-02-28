@@ -39,7 +39,7 @@ const QuestionLink = styled.a`
   margin-bottom: 5px;
 `;
 const StyledQuestionRow = styled.div`
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(57, 57, 57, 0.05);
   padding: 15px 15px 10px;
   display: flex;
   border-top: 1px solid #555;
@@ -54,6 +54,7 @@ const Answerbutton = styled.div`
 const Buttondiv = styled.div`
     display: flex;
     flex-direction: row;
+    padding: 30px 0px 0px 0px;
 `;
 const Leftbuttons = styled.div`
   display: flex;
@@ -114,17 +115,17 @@ const Sharebtn = styled.div`
   cursor: pointer;
 `;
 const Alert = styled.div`
-  background-color: rgb(219,240,226);
+  background-color: rgb(52,75,60);
   border: 2px solid rgba(255, 127, 80, 0.1);
-  border-color: rgba(47, 197, 34, 0.4);
-  border-radius: 5px;
+  border-color: rgba(52,75,60, 0.4);
+  border-radius: 3px;
   /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
   height: 40px;
   width: 500px;
-  padding: 5px 5px 5px 10px;
+  padding: 0px 5px 2px 13px;
   text-align: center;
-  font-size: 1rem;
-  color: black;
+  font-size: 13px;
+  color: lightgrey;
   display: flex;
   align-items: center;
   justify-content: start;
@@ -133,7 +134,6 @@ const Alert = styled.div`
   margin: 0 auto;
   left: 0;
   right: 0;
-  
 `;
 
 

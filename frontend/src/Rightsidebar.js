@@ -10,7 +10,7 @@ const Sidebar_container = styled.div`
     width: auto;
     justify-content: flex-end;
     padding: 10px 0;
-    background-color: #2d2d2d;
+    background-color: rgba(57, 57, 57, 0.05);
 `;
 const Sidebar_items_container = styled.div`
     height: auto;
