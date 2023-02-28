@@ -6,6 +6,7 @@ function HideLeftSidebar() {
     switch (locationName) {
         case "/login":
         case "/register":
+        case "/ask":
             return true;
         default:
             return false;

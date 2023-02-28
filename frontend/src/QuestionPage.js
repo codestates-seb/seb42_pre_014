@@ -41,6 +41,11 @@ const SortButton = styled.button`
     grid-row-start: 3;
     grid-row-end: 4;
 `;
+const RSidebar = styled.div`
+  @media screen and (max-width: 980px) {
+    display:none;
+  }
+`;
 async function fetchQuestions() {
     try {
         const res = await axios.get("http://localhost:3001/questions");
@@ -75,7 +80,9 @@ function QuestionsPage({ data }) {
                     return <QuestionRow db={el} key={el.id} />;
                 })}
             </Content_container>
-            <RightSidebar></RightSidebar>
+            <RSidebar>
+                <RightSidebar/>
+            </RSidebar>
         </Main_container>
     );
 }
