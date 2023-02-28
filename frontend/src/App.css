@@ -1,6 +1,6 @@
 .Main-container {
   display: flex;
-  flex-flow: row nowrap;
-  margin : 0 auto;
+  margin : auto;
   justify-content: center;
+  flex-flow: row nowrap;
 }

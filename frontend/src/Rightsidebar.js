@@ -1,52 +1,56 @@
 import React from "react";
-import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
+import HideRightSidebar from "./HideRightSidebar";
 
 const Sidebar_container = styled.div`
     box-sizing: border-box;
     display: flex;
     height: auto;
-    /* max-width: 164px; */
-    top: 0;
+    width: auto;
     justify-content: flex-end;
     padding: 10px 0;
-    background-color: #383838;
+    background-color: #2d2d2d;
 `;
 const Sidebar_items_container = styled.div`
-    /* position: sticky; */
-    /* top: 80px; */
     height: auto;
-    max-width: 400px;
-    margin: 0 100px 0 30px;
+    width: 300px;
+    margin: 20px 20px;
+    /* max-width: 400px; */
+    /* overflow: hidden; */
+    /* margin: 0 50px 0 30px; */
     /* padding-left: 15px; */
 `;
 const Sidebar_items_list = styled.ul`
     font-size: ${(props) => (props.eleven ? "11px" : "13px")};
     height: auto;
     width: auto;
-    text-align: left;
+    /* text-align: left; */
     list-style-type: none;
     border-style: solid;
-    border-width: 1px;
+    border-width: 2px;
     border-color: #535353;
-    margin-bottom: 15px;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 20px;
     /* box-shadow: 1px 1px 1px 1px #535353; */
     /* border: 0 0 0 1px solid; */
-
     /* position: relative; */
 `;
 const Sidebar_items = styled.li`
-    /* padding-left: 15px; */
+    display: flex;
+    flex-direction: ${(props) => (props.column ? "column" : "row")};
     height: auto;
-    padding: 10px 15px;
-    width: 100%;
+    padding: 12px 15px;
+    width: auto;
     border-style: solid;
     border-width: 1px 0 0 0;
     border-color: #535353;
-    /* text-align: center; */
     color: #aaaaaa;
     border-color: ${(props) => (props.home ? "orange" : "null")};
-    background-color: ${(props) => (props.title ? "#5A5A5A" : "#383838")};
+    background-color: ${(props) => (props.title ? "#524c38" : props.title2 ? "#393939" : "")};
+    /* #464337 */
+    margin: auto;
 `;
 const Sidebar_items_link = styled.a`
     font-size: ${(props) => (props.eleven ? "11px" : "13px")};
@@ -57,16 +61,21 @@ const Sidebar_items_link = styled.a`
     }
 `;
 const Sidebar_button = styled.button`
+    height: 30px;
     width: auto;
-    height: auto;
-    background-color: #383838;
-    border: 1px solid #616161;
+    margin: auto;
+    background-color: #3e4952;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    border: 1px solid #678fac;
+    text-decoration: none;
     border-radius: 5%;
     color: #aaaaaa;
 `;
 
 function RightSidebar() {
-    if (useLocation().pathname === "/ask") return null;
+    if (HideRightSidebar()) return null;
     return (
         <Sidebar_container>
             <Sidebar_items_container>
@@ -93,14 +102,14 @@ function RightSidebar() {
                 </Sidebar_items_list>
                 <Sidebar_items_list>
                     <Sidebar_items title>Watched Tags</Sidebar_items>
-                    <Sidebar_items>
+                    <Sidebar_items column>
                         <Sidebar_items>Watch Tags to curate your list of questions.</Sidebar_items>
                         <Sidebar_button>Watch a tag</Sidebar_button>
                     </Sidebar_items>
                 </Sidebar_items_list>
                 <Sidebar_items_list>
                     <Sidebar_items title>Ignored Tags</Sidebar_items>
-                    <Sidebar_button>Create a custom filter</Sidebar_button>
+                    <Sidebar_button>Add an ignored tag</Sidebar_button>
                 </Sidebar_items_list>
                 <Sidebar_items_list>
                     <Sidebar_items title>Collectives</Sidebar_items>
