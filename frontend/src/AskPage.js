@@ -7,11 +7,14 @@ import { useState } from "react";
 import { fetchCreate } from "./json-server/api";
 import { Reset } from "styled-reset";
 // import Input from "./Input";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 const Askpage = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  margin: 0 auto;
   width: 70%;
   @media screen and (max-width: 1200px) {
     width: 80%;
@@ -146,18 +149,37 @@ const BlueButton = styled.button`
     width: 150px;
     margin: 20px 0px 20px 20px;
 `;
-const Titletip = styled.div`
+const Tipbox = styled.div`
   box-sizing: border-box;
   width: 100%;
+  height: 50%;
   margin: 20px;
-  background-color: #2d2d2d;
-  border: 1px solid grey;
-  border-radius: 3px;
-  padding: 24px;
+  box-shadow: 0px 0px 10px rgb(54,54,54);
   @media screen and (max-width: 1200px) {
     margin: 20px 0px 0px 0px;
-
   }
+`;
+const Tip1 = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  background-color: rgb(57,57,57);
+  border: 1px solid grey;
+  border-radius: 3px 3px 0px 0px;
+  padding: 15px;
+`;
+const Tip2 = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  font-size: 11px;
+  background-color: #2d2d2d;
+  border: 1px solid grey;
+  border-radius: 0px 0px 3px 3px;
+  padding: 15px;
+`;
+const Tiptext = styled.div`
+  padding: 10px;
 `;
 const Containerbox = styled.div`
   display: flex;
@@ -189,6 +211,21 @@ export default function AskPage() {
     const data = { title, body, writetime, modifyday, views, votes, save };
     fetchCreate("http://localhost:3001/questions/", data);
   };
+  const titlefocus = () => {
+    setFocustitle(true);
+    setFocusbody(false);
+    setFocustags(false);
+  };
+  const bodyfocus = () => {
+    setFocustitle(false);
+    setFocusbody(true);
+    setFocustags(false);
+  };
+  const tagsfocus = () => {
+    setFocustitle(false);
+    setFocusbody(false);
+    setFocustags(true);
+  };
 
   return (
     <Askpage>
@@ -197,9 +234,13 @@ export default function AskPage() {
     </Header>
     <Container>
       <Containerbox>
-        <Titletip style={{display:focustitle===false?"none":""}}>
-          Writing a good title
-        </Titletip>
+        <Tipbox style={{display:focustitle===false?"none":""}}>
+        <Tip1>Writing a good title</Tip1>
+        <Tip2><FontAwesomeIcon icon={faPen} size="3x" style={{padding: "10px"}}/>
+        <Tiptext>Your title should summarize the problem.<br/><br/>
+        You might find that you have a better idea of your title after writing out the rest of the question.</Tiptext>
+        </Tip2>
+        </Tipbox>
         <QuestionContainer>
           <h3>Title</h3>
           <Subtitle>Be specific and imagine you’re asking a question to another person.</Subtitle>
@@ -207,23 +248,25 @@ export default function AskPage() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            onFocus={(e) =>setFocustitle(true)}
-            onBlur={(e) =>setFocustitle(false)}
+            onFocus={(e) =>titlefocus()}
             placeholder="Title of your question"
           />
         </QuestionContainer>
       </Containerbox>
       <Containerbox>
-        <Titletip style={{display:focusbody===false?"none":""}}>
-          Proof-read before posting
-        </Titletip>
+        <Tipbox style={{display:focusbody===false?"none":""}}>
+        <Tip1>Proof-read before posting</Tip1>
+        <Tip2><FontAwesomeIcon icon={faPen} size="3x" style={{padding: "10px"}}/>
+        <Tiptext>Now that you’re ready to post your question, read through it from start to finish. Does it make sense?<br/><br/>
+        Add any details you missed and read through it again. Now is a good time to make sure that your title still describes the problem!</Tiptext>
+        </Tip2>
+        </Tipbox>
         <QuestionContainer>
           <h3>Body</h3>
           <Subtitle>The body of your question contains your problem details and results. Minimum 30 characters.</Subtitle>
           <QuestionBodyTextarea
             onChange={(e) => setBody(e.target.value)}
-            onFocus={(e) =>setFocusbody(true)}
-            onBlur={(e) =>setFocusbody(false)}
+            onFocus={(e) =>bodyfocus()}
             placeholder="More info about your question. You can use markdown here"
           >
             {body}
@@ -234,21 +277,23 @@ export default function AskPage() {
         </QuestionContainer>
       </Containerbox>
       <Containerbox>
-        <Titletip style={{display:focustags===false?"none":""}}>
-          Adding tags
-        </Titletip>
+        <Tipbox style={{display:focustags===false?"none":""}}>
+        <Tip1>Adding tags</Tip1>
+        <Tip2><FontAwesomeIcon icon={faPen} size="3x" style={{padding: "10px"}}/>
+        <Tiptext>Tags help ensure that your question will get attention from the right people.<br/><br/>
+        Tag things in more than one way so people can find them more easily. Add tags for product lines, projects, teams, and the specific technologies or languages used.</Tiptext>
+        </Tip2>
+        </Tipbox>
         <QuestionContainer>
           <h3>Tags</h3>
           <Subtitle>Add up to 5 tags to describe what your question is about. Start typing to see suggestions.</Subtitle>
           <TagsInputContainer>
             <Input
                 type="text"
-                onFocus={(e) =>setFocustags(true)}
-                onBlur={(e) =>setFocustags(false)}
+                onFocus={(e) =>tagsfocus()}
                 placeholder="Tags"
               />
           </TagsInputContainer>
-          
         </QuestionContainer>
       </Containerbox>
       <QuestionContainer>

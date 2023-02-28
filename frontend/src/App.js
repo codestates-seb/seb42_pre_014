@@ -16,7 +16,18 @@ import RightSidebar from "./Rightsidebar";
 import Footer from "./Footer";
 import "./App.css";
 import ProfilePage from "./ProfilePage";
+import styled from "styled-components";
 
+const LSidebar = styled.div`
+  @media screen and (max-width: 640px) {
+    display:none;
+  }
+`;
+const RSidebar = styled.div`
+  @media screen and (max-width: 980px) {
+    display:none;
+  }
+`;
 function App() {
     const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
     const [user, setUser] = useState(null);
@@ -48,7 +59,9 @@ function App() {
       <UserContext.Provider value={{ user, checkAuth }}>
         <Header />
         <div className="Main-container">
-          <Leftsidebar></Leftsidebar>
+          <LSidebar>
+            <Leftsidebar/>
+          </LSidebar>
           <Routes>
             <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
             <Route path="/ask" element={<AskPage data={data} />} />
@@ -57,7 +70,9 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/:id" element={<Question />} />
           </Routes>
-          <RightSidebar></RightSidebar>
+          <RSidebar>
+            <RightSidebar/>
+          </RSidebar>
         </div>
         <Footer />
       </UserContext.Provider>
