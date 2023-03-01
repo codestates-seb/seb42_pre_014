@@ -70,7 +70,7 @@ public class AnswerController {
 
     //find
     @GetMapping("/{answer-id}")
-    public ResponseEntity<?> getAnswer(@PathVariable("answer-id") long answerId) {
+    public ResponseEntity<?> getAnswer(@PathVariable("answer-id") @Positive long answerId) {
         Answer answer = answerService.findAnswer(answerId);
 
         AnswerDto.InfoResponse response = mapper.answerToAnswerInfoResponse(answer);
@@ -80,7 +80,7 @@ public class AnswerController {
     //finds
     @GetMapping
     public ResponseEntity<?> getAnswers(@RequestParam("page") int page,
-                                     @RequestParam("size") int size) {
+                                        @RequestParam("size") int size) {
         Page<Answer> answerPages = answerService.findAnswers(page -1, size);
 
         List<Answer> answers = answerPages.getContent();

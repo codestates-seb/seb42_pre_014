@@ -60,8 +60,7 @@ public class Question{
 
     public enum QuestionStatus {
         QUESTION_REGISTRATION("질문 등록"),
-        QUESTION_ANSWERED("답변 완료"),
-        QUESTION_DELETE("질문 삭제");
+        QUESTION_ANSWERED("답변 완료");
 
         @Getter
         private String status;

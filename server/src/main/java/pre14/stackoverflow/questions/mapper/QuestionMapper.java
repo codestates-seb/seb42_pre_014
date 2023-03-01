@@ -30,6 +30,7 @@ public interface QuestionMapper {
     @Mapping(source = "member.questions", target = "member.numberOfQuestions", qualifiedByName = "countQuestions")
     @Mapping(source = "member.answers", target = "member.numberOfAnswers", qualifiedByName = "countAnswers")
     QuestionDto.TotalPageResponse questionToQuestionTotalPageResponse(Question question);
+
     @Named("countAnswers")
     default long countAnswers(List<Answer> answers) { return answers.size();}
     @Named("countQuestions")
