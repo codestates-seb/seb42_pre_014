@@ -56,9 +56,9 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.OPTIONS).permitAll()
-                        .antMatchers(HttpMethod.POST,"/members", "/members/login").permitAll() // 지정된 URI에서 POST 메서드만 허용
-                        .antMatchers(HttpMethod.GET,"/members", "/question/**").permitAll() // 지정된 URI에서 GET 메서드만 허용
-                        .anyRequest().hasRole("USER") // 나머지 모든 요청은 유저 권한이 있어야지 호출할 수 있다.
+                        .antMatchers(HttpMethod.POST,"/members", "/members/login").permitAll()
+                        .antMatchers(HttpMethod.GET,"/members", "/question/**").permitAll()
+                        .anyRequest().hasRole("USER")
                 );
         return http.build();
     }
