@@ -2,17 +2,12 @@ package pre14.stackoverflow.questions.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pre14.stackoverflow.exception.BusinessLogicException;
-import pre14.stackoverflow.exception.ExceptionCode;
 import pre14.stackoverflow.member.entity.Member;
-import pre14.stackoverflow.member.repository.MemberRepository;
 import pre14.stackoverflow.member.service.MemberService;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.entity.QuestionVote;
-import pre14.stackoverflow.questions.repository.QuestionRepository;
 import pre14.stackoverflow.questions.repository.QuestionVoteRepository;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

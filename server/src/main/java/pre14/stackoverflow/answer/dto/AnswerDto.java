@@ -46,6 +46,7 @@ public class AnswerDto {
         private Answer.AnswerStatus answerStatus;                     // 대답 응답
         private LocalDateTime createdAt;                              // 작성시간
         private LocalDateTime modifiedAt;                             // 수정시간
+        private long answerCount;
         private MemberDto.Response member;
     }
 
@@ -61,6 +62,7 @@ public class AnswerDto {
         private Answer.AnswerStatus answerStatus;                     // 대답 응답
         private LocalDateTime createdAt;                              // 작성시간
         private LocalDateTime modifiedAt;                             // 수정시간
+        private long answerCount;
         private MemberDto.Response member;
     }
 }

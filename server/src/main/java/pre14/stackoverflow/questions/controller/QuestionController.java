@@ -89,12 +89,6 @@ public class QuestionController {
         QuestionDto.DetailPageResponse response = questionMapper.questionToQuestionDetailPageResponse(question);
 
 
-//        Question question = questionMapper.questionPostToQuestion(questionPostDto);
-//        question.setMember(member); // 서비스로 옮기려했지만 실패
-//
-//        Question createQuestion = questionService.createQuestion(question);
-//
-//        QuestionDto.TotalPageResponse response = questionMapper.questionToQuestionTotalPageResponse(createQuestion);
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 

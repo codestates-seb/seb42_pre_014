@@ -34,14 +34,8 @@ public class AnswerVote {
 
 
     public enum AnswerVoteStatus {
-        UP("추천"),
-        DOWN("비추천");
-
-        @Getter
-        private String massage;
-
-        AnswerVoteStatus(String massage) {
-            this.massage = massage;
-        }
+        UP,
+        NONE,
+        DOWN
     }
 }

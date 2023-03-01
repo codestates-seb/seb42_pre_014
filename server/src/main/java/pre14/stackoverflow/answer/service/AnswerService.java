@@ -11,7 +11,9 @@ import pre14.stackoverflow.answer.repository.AnswerRepository;
 import pre14.stackoverflow.audit.Auditable;
 import pre14.stackoverflow.exception.BusinessLogicException;
 import pre14.stackoverflow.exception.ExceptionCode;
+import pre14.stackoverflow.member.service.MemberService;
 import pre14.stackoverflow.questions.entity.Question;
+import pre14.stackoverflow.questions.repository.QuestionRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

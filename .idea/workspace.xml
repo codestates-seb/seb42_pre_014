@@ -4,54 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f03c3ad6-5a5b-4ca8-8dcd-079f84b36d21" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/stackoverflow.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/stackoverflow.main.iml" afterDir="false" />
+    <list default="true" id="f03c3ad6-5a5b-4ca8-8dcd-079f84b36d21" name="변경" comment="질문 투표 &amp; 확인 완료">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/7.6/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gradle/7.6/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/7.6/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/7.6/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/7.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/7.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/7.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/7.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/controller/QuestionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/controller/QuestionController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/dto/QuestionDto$Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/dto/QuestionDto$Post.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/dto/QuestionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/dto/QuestionDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/entity/Question.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/entity/Question.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/mapper/QuestionMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/mapper/QuestionMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/mapper/QuestionMapperImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/classes/java/main/pre14/stackoverflow/questions/mapper/QuestionMapperImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/build/generated/sources/annotationProcessor/java/main/pre14/stackoverflow/questions/mapper/QuestionMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/generated/sources/annotationProcessor/java/main/pre14/stackoverflow/questions/mapper/QuestionMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/controller/AnswerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/controller/AnswerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/dto/AnswerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/dto/AnswerDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/dto/AnswerVoteDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/dto/AnswerVoteDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/entity/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/entity/Answer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/entity/AnswerVote.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/entity/AnswerVote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/mapper/AnswerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/mapper/AnswerMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/repository/AnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/repository/AnswerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/repository/AnswerVoteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/repository/AnswerVoteRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/service/AnswerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/service/AnswerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/service/AnswerVoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/answer/service/AnswerVoteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/member/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/member/controller/MemberController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/member/entity/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/member/entity/Member.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/controller/QuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/controller/QuestionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/dto/QuestionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/dto/QuestionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/dto/QuestionVoteDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/dto/QuestionVoteDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/entity/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/entity/Question.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/entity/QuestionVote.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/entity/QuestionVote.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/mapper/QuestionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/mapper/QuestionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/repository/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/repository/QuestionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/repository/QuestionVoteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/repository/QuestionVoteRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/service/QuestionVoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/questions/service/QuestionVoteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/tag/controller/TagController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/tag/dto/TagDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/tag/entity/Tag.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/tag/mapper/TagMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/tag/repository/TagRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/pre14/stackoverflow/tag/service/TagService.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,6 +117,18 @@
       <option name="presentableId" value="Default" />
       <updated>1677686194534</updated>
     </task>
+    <task id="LOCAL-00001" summary="질문 투표 &amp; 확인 완료">
+      <created>1677688914974</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1677688914974</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="질문 투표 &amp; 확인 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="질문 투표 &amp; 확인 완료" />
   </component>
 </project>

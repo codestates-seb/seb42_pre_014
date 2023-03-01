@@ -17,6 +17,8 @@ import pre14.stackoverflow.globaldto.MultiResponseDto;
 import pre14.stackoverflow.globaldto.SingleResponseDto;
 import pre14.stackoverflow.member.entity.Member;
 import pre14.stackoverflow.member.service.MemberService;
+import pre14.stackoverflow.questions.dto.QuestionDto;
+import pre14.stackoverflow.questions.dto.QuestionVoteDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.service.QuestionService;
 
@@ -31,6 +33,7 @@ import java.util.List;
 @Validated
 public class AnswerController {
     private final AnswerService answerService;
+    private final AnswerVoteService answerVoteService;
     private final AnswerMapper mapper;
     private final QuestionService questionService;
     private final MemberService memberService;
@@ -67,7 +70,7 @@ public class AnswerController {
 
     //find
     @GetMapping("/{answer-id}")
-    public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId) {
+    public ResponseEntity<?> getAnswer(@PathVariable("answer-id") long answerId) {
         Answer answer = answerService.findAnswer(answerId);
 
         AnswerDto.InfoResponse response = mapper.answerToAnswerInfoResponse(answer);
@@ -76,7 +79,7 @@ public class AnswerController {
     }
     //finds
     @GetMapping
-    public ResponseEntity getAnswers(@RequestParam("page") int page,
+    public ResponseEntity<?> getAnswers(@RequestParam("page") int page,
                                      @RequestParam("size") int size) {
         Page<Answer> answerPages = answerService.findAnswers(page -1, size);
 
@@ -88,9 +91,29 @@ public class AnswerController {
 
     //delete
     @DeleteMapping("/{answer-id}")
-    public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
+    public ResponseEntity<?> deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
         answerService.deleteAnswer(answerId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/{answer-id}/upvotes")
+    public ResponseEntity<?> upVoteAnswer(@Positive @PathVariable("answer-id") long answerId,
+                                         @Valid @RequestBody QuestionVoteDto requestBody) {
+
+        Answer votedAnswer = answerVoteService.upVote(answerId, requestBody.getMemberId());
+        AnswerDto.Response response = mapper.answerToAnswerResponse(votedAnswer);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+    }
+
+    //답변 비추천
+    @PostMapping("/{answer-id}/downvotes")
+    public ResponseEntity<?> downVoteQuestion(@PathVariable("answer-id") long answerId,
+                                           @Valid @RequestBody QuestionVoteDto requestBody) {
+        Answer votedAnswer = answerVoteService.downVote(answerId, requestBody.getMemberId());
+        AnswerDto.Response response = mapper.answerToAnswerResponse(votedAnswer);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
 }

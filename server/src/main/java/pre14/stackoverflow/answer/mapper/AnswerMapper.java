@@ -18,7 +18,11 @@ public interface AnswerMapper{
     Answer answerPatchDtoToAnswer(AnswerDto.Patch answerPatchDto);
     AnswerVote answerVoteDtoToAnswerVote(AnswerVoteDto requestBody);
 
+    @Mapping(source = "question", target = "questionId", qualifiedByName = "questionId")
+    @Mapping(source = "member.questions", target = "member.numberOfQuestions", qualifiedByName = "countQuestions")
+    @Mapping(source = "member.answers", target = "member.numberOfAnswers", qualifiedByName = "countAnswers")
     AnswerDto.Response answerToAnswerResponse(Answer answer);
+
     @Mapping(source = "question", target = "questionId", qualifiedByName = "questionId")
     @Mapping(source = "member.questions", target = "member.numberOfQuestions", qualifiedByName = "countQuestions")
     @Mapping(source = "member.answers", target = "member.numberOfAnswers", qualifiedByName = "countAnswers")
