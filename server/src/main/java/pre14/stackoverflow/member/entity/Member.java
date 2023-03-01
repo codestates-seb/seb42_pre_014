@@ -1,19 +1,29 @@
 package pre14.stackoverflow.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import pre14.stackoverflow.answer.entity.Answer;
+import pre14.stackoverflow.questions.entity.Question;
 
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime 함께사용
 @Table(name = "member")
 public class Member {
     @Id
@@ -33,12 +43,18 @@ public class Member {
     private String email;
     @Column(length = 13, nullable = false, unique = true)
     private String phone;
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt=LocalDateTime.now();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Question> questions = new ArrayList<>();
 
-    @Column(nullable = false, name="LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt=LocalDateTime.now();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Answer> answers = new ArrayList<>();
 
     public Member(String email,String name, String phone){
         this.email=email;

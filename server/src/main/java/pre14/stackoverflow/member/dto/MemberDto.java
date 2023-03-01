@@ -1,9 +1,6 @@
 package pre14.stackoverflow.member.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import pre14.stackoverflow.member.entity.Member;
 
 import javax.validation.constraints.Email;
@@ -47,8 +44,8 @@ public class MemberDto {
         }
     }
 
-    @AllArgsConstructor
-    @Getter
+    @NoArgsConstructor
+    @Getter @Setter
     public static class Response{
         private long memberId;
         private String email;
@@ -56,11 +53,9 @@ public class MemberDto {
         private String phone;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-
         private Member.MemberStatus memberStatus;
 
-        public String getMemberStatus(){
-            return memberStatus.getStatus();
-        }
+        private long numberOfQuestions;             //회원 작성 질문 총 갯수
+        private long numberOfAnswers;             //회원 작성 답변 총 갯수
     }
 }

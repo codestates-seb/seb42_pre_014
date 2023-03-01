@@ -16,7 +16,8 @@ public interface AnswerMapper{
     AnswerVote answerVoteDtoToAnswerVote(AnswerVoteDto requestBody);
 
     AnswerDto.Response answerToAnswerResponse(Answer answer);
+    AnswerDto.InfoResponse answerToAnswerInfoResponse(Answer answer);
 
-    List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers);
+    List<AnswerDto.InfoResponse> answersToAnswerInfoResponseDtos(List<Answer> answers);
 
 }

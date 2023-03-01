@@ -20,7 +20,6 @@ public class QuestionDto {
     @RequiredArgsConstructor
     @ToString
     public static class Post{
-
         @Positive
         @NotNull
         private Long memberId;
@@ -57,18 +56,42 @@ public class QuestionDto {
         private Long questionId;
         private String title;
         private String contents;
-        private int score;
+        private long voteCount;
         private MemberDto.Response member;
         private Question.QuestionStatus questionStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private List<AnswerDto.Response> answers;
 
-        private List<AnswerDto.Response> answer;
 
-        public String getQuestionStatus() {
-            return questionStatus.getStatus();} //상태값이 한글로 저장 및 출력되게함
+    }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class TotalPageResponse {
+        private Long questionId;
+        private String title;
+        private String contents;
+        private long voteCount;
+        private MemberDto.Response member;
+        private Question.QuestionStatus questionStatus;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+        private long answerCount;
+    }
 
-       // private List<QuestionTag> tagList;
-
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class DetailPageResponse {
+        private Long questionId;
+        private String title;
+        private String contents;
+        private long voteCount;
+        private MemberDto.Response member;
+        private Question.QuestionStatus questionStatus;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+        private List<AnswerDto.InfoResponse> answers;
     }
 }

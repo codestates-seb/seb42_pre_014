@@ -28,12 +28,12 @@ public class AnswerVoteService {
             findAnswerVote.setAnswer(verifiedAnswer);
             findAnswerVote.setMemberId(answerVote.getMemberId());
             findAnswerVote.setAnswerVoteStatus(AnswerVote.AnswerVoteStatus.UP);
-            verifiedAnswer.setScore(verifiedAnswer.getScore() + 1);
+            verifiedAnswer.setVoteCount(verifiedAnswer.getVoteCount() + 1);
             answerVoteRepository.save(findAnswerVote);
             answerRepository.save(verifiedAnswer);
         }
         else if (findAnswerVote.getAnswerVoteStatus() == AnswerVote.AnswerVoteStatus.DOWN) {
-            verifiedAnswer.setScore(verifiedAnswer.getScore() + 1);
+            verifiedAnswer.setVoteCount(verifiedAnswer.getVoteCount() + 1);
             answerVoteRepository.delete(findAnswerVote);
             answerRepository.save(verifiedAnswer);
         }
@@ -54,12 +54,12 @@ public class AnswerVoteService {
             findAnswerVote.setAnswer(verifiedAnswer);
             findAnswerVote.setMemberId(answerVote.getMemberId());
             findAnswerVote.setAnswerVoteStatus(AnswerVote.AnswerVoteStatus.DOWN);
-            verifiedAnswer.setScore(verifiedAnswer.getScore() - 1);
+            verifiedAnswer.setVoteCount(verifiedAnswer.getVoteCount() - 1);
             answerVoteRepository.save(findAnswerVote);
             answerRepository.save(verifiedAnswer);
         }
         else if (findAnswerVote.getAnswerVoteStatus() == AnswerVote.AnswerVoteStatus.UP) {
-            verifiedAnswer.setScore(verifiedAnswer.getScore() - 1);
+            verifiedAnswer.setVoteCount(verifiedAnswer.getVoteCount() - 1);
             answerVoteRepository.delete(findAnswerVote);
             answerRepository.save(verifiedAnswer);
         }

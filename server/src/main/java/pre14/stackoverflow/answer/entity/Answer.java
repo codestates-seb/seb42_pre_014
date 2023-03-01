@@ -26,23 +26,21 @@ import java.util.List;
 public class Answer{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long answerId;
-    @Column(nullable = false, length = 30)
-    private String nickName;                                     // 유저 이름
+    private Long answerId;
+
     @Column(nullable = false, length = 99999)
     private String contents;                                      // 대답 내용
-    @Column(nullable = false)                                     // 채택 수
-    private int score;
+    @Column(nullable = false)                                     // 추천 수
+    private long voteCount;
 
     @Enumerated(value = EnumType.STRING)
     private AnswerStatus answerStatus =  AnswerStatus.UNACCEPTED;    // 대답 응답
 
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt=LocalDateTime.now();
-
-    @Column(nullable = false, name="LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt=LocalDateTime.now();
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
 
 
     @ManyToOne

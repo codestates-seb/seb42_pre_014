@@ -29,7 +29,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class QuestionController {
-    private final MemberRepository memberRepository;
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
     private final MemberService memberService;
@@ -39,15 +38,13 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity postQuestion(@RequestBody @Valid QuestionDto.Post questionPostDto) {
         Member member = memberService.findVerifiedMember(questionPostDto.getMemberId());// 멤버를저장해주는
-        log.info(questionPostDto.toString());
-
         Question question = questionMapper.questionPostToQuestion(questionPostDto);
-        log.info(questionPostDto.toString());
         question.setMember(member); // 서비스로 옮기려했지만 실패
-        log.info(questionPostDto.toString());
+
         Question createQuestion = questionService.createQuestion(question);
-        log.info(questionPostDto.toString());
-        QuestionDto.Response response = questionMapper.questionToQuestionResponse(createQuestion);
+
+        QuestionDto.TotalPageResponse response = questionMapper.questionToQuestionTotalPageResponse(createQuestion);
+        //토탈페이지
         
         return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.CREATED);
     }
@@ -55,38 +52,53 @@ public class QuestionController {
     @PatchMapping("/{question-id}")
     public ResponseEntity updateQuestion(@PathVariable("question-id")@Positive long questionId,
                                          @RequestBody QuestionDto.Patch questionPatchDto) {
-    Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
-    question.setQuestionId(questionId);
-    Question updateQuestion = questionService.updateQuestion(question);
 
-    return new ResponseEntity<>(updateQuestion, HttpStatus.OK);
+        Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
+        question.setQuestionId(questionId);
+
+        Question updateQuestion = questionService.updateQuestion(question);
+        QuestionDto.TotalPageResponse response = questionMapper.questionToQuestionTotalPageResponse(updateQuestion);
+
+
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
+    /**
+     *  질문 전체조회 (질문 리스트페이지)
+     */
     @GetMapping
-    public ResponseEntity getAllQuestions(@RequestParam("page") int page,
-                                            @RequestParam("size") int size) {
+    public ResponseEntity getAllQuestions(@RequestParam("page") int page, @RequestParam("size") int size) {
+
         Page<Question> questionPages = questionService.findQuestions(page -1, size);
         List<Question> questions = questionPages.getContent();
 
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(questionMapper.questionToQuestionResponseDtos(questions),questionPages),
-                HttpStatus.OK);
+        List<QuestionDto.TotalPageResponse> response = questionMapper.questionToQuestionTotalPageResponseDtos(questions);
+
+        return new ResponseEntity<>(new MultiResponseDto<>(response,questionPages), HttpStatus.OK);
     }
 
+    /**
+     * 질문 한건 조회 (질문 상세페이지, response에 답변 정보 포함)
+     */
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestionById(@PathVariable("question-id") @Positive long questionId) {
-    Question question = questionService.findQuestion(questionId);
 
-    return new ResponseEntity<>(
-            new SingleResponseDto<>(questionMapper.questionToQuestionResponse(question)),
-            HttpStatus.OK);
+        Question question = questionService.findQuestion(questionId);
+        QuestionDto.DetailPageResponse response = questionMapper.questionToQuestionDetailPageResponse(question);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
+    /**
+     * 질문 삭제
+     */
     @DeleteMapping("/{question-id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable("question-id") long questionId) {
         questionService.deleteQuestion(questionId);
         return ResponseEntity.noContent().build();
     }
+
+
 
     //  답변 추천
     @PatchMapping("/{question-id}/upvotes")

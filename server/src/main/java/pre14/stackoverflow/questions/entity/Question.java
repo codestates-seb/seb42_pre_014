@@ -1,5 +1,6 @@
 package pre14.stackoverflow.questions.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime함께사용
 @RequiredArgsConstructor
 @ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
@@ -30,33 +30,26 @@ public class Question{
     @Column(nullable = false, columnDefinition = "TEXT")
     private String contents;
     @Column
-    private int score;
+    private long voteCount;
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    @JsonIgnore//JPA 무한 참조순환으로 인한 어노테이션 추가
+    @JsonBackReference
     private Member member;
 
     // 질문 ~ 답변 (양방향)
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> questionAnswers = new ArrayList<>();
+    private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<QuestionVote> questionVotes = new ArrayList<>();
+    private List<QuestionVote> votes = new ArrayList<>();
 
     @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdAt ;
+    private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
-
-    public Question(String title, String contents, LocalDateTime createdAt) {
-        this.title = title;
-        this.contents = contents;
-        this.createdAt = createdAt;
-    }
 
     public enum QuestionStatus {
         QUESTION_REGISTRATION("질문 등록"),

@@ -83,14 +83,12 @@ public class QuestionService {
     public List<Answer> getEveryAnswers(Long questionId){
         Question findQuestion = findQuestionById(questionId);
 
-        return findQuestion.getQuestionAnswers();
+        return findQuestion.getAnswers();
     }
 
     public Question findQuestionById(long questionId) {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
-        Question findQuestion =
-                optionalQuestion.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        return findQuestion;
+        return optionalQuestion.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
 }

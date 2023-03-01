@@ -18,9 +18,6 @@ public class AnswerDto {
     public static class Post {
         private Long questionId;
         private Long memberId;
-
-        private String nickName;
-
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String contents;
     }
@@ -43,23 +40,27 @@ public class AnswerDto {
     public static class Response {
         private Long answerId;
         private Long memberId;
-        private String nickName;
         private Long questionId;
         private String contents;
-        private int score;
+        private long voteCount;
         private Answer.AnswerStatus answerStatus;                     // 대답 응답
         private LocalDateTime createdAt;                              // 작성시간
         private LocalDateTime modifiedAt;                             // 수정시간
         private MemberDto.Response member;
-        private QuestionDto.Response question;
+    }
 
-
-        public void setCreatedAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-        }
-
-        public void setModifiedAt(LocalDateTime modifiedAt) {
-            this.modifiedAt = modifiedAt;
-        }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class InfoResponse {
+        private long answerId;
+        private long questionId;
+        private String contents;
+        private long voteCount;
+        private Answer.AnswerStatus answerStatus;                     // 대답 응답
+        private LocalDateTime createdAt;                              // 작성시간
+        private LocalDateTime modifiedAt;                             // 수정시간
+        private MemberDto.Response member;
     }
 }
