@@ -1,6 +1,7 @@
-.Main-container {
+.page-Main {
   display: flex;
   margin : auto;
   justify-content: center;
   flex-flow: row nowrap;
+  background-color: #2d2d2d;
 }
