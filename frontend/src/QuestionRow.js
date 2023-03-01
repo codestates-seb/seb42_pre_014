@@ -7,24 +7,36 @@ import Tag from "./Tag";
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
+const StyledQuestionRow = styled.div`
+    background-color: #2d2d2d;
+    padding: 15px 15px 20px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    /* grid-template-rows: repeat(3, 20px); */
+    grid-template-rows: 1fr;
+    border-top: 1px solid #3b3d3f;
+`;
+
 const QuestionStat_container = styled.div`
-    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
 `;
 const QuestionStat = styled.div`
-    align-self: stretch;
-    text-align: center;
+    height: auto;
+    width: 55px;
+    text-align: end;
     display: inline-block;
     font-size: 0.8rem;
     color: ${(props) => (props.answers ? "#89ca9f" : props.votes ? "#fff" : "#aaa")};
     border: ${(props) => (props.answers ? "1px solid #3a8251" : "")};
     border-radius: 5%;
     border-width: 10%;
-    padding: 3px 2px 3px 2px;
+    padding: 3px 0;
 
     span {
         font-size: 0.7rem;
         font-weight: 300;
-        text-align: end;
     }
 `;
 const QuestionTitleArea = styled.div`
@@ -33,23 +45,15 @@ const QuestionTitleArea = styled.div`
 const QuestionLink = styled(Link)`
     text-decoration: none;
     color: #3ca4ff;
-    font-size: 1.1rem;
+    font-size: 1rem;
     display: block;
     margin-bottom: 5px;
 `;
-const StyledQuestionRow = styled.div`
-    background-color: #2d2d2d;
-    padding: 15px 15px 10px;
-    display: grid;
-    grid-template-columns: 85px 1fr;
-    /* grid-template-rows: repeat(3, 20px); */
-    grid-template-rows: 1fr;
-    border-top: 1px solid #555;
-`;
+
 const WhoAndWhen = styled.div`
     /* display: inline-block; */
     color: #aaa;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     float: right;
     padding: 10px 0;
 `;

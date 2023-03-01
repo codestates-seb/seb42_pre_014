@@ -1,10 +1,10 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import HideLeftSidebar from "./HideLeftSidebar";
-// import { IconFaceMindBlown } from "@stackoverflow/stacks-icons/icons";
-// import { SpotWave } from "@stackoverflow/stacks-icons/spots";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
+const Facircleinfo = <FontAwesomeIcon icon={faCircleInfo}></FontAwesomeIcon>;
 const Sidebar_container = styled.div`
     /* box-sizing: border-box; */
     display: flex;
@@ -19,6 +19,9 @@ const Sidebar_container = styled.div`
     border-style: solid;
     border-width: 0 1px 0 0;
     border-color: #535353;
+    @media screen and (max-width: 640px) {
+        display: none;
+    }
 `;
 const Sidebar_items_container = styled.div`
     position: sticky;
@@ -63,7 +66,6 @@ const Sidebar_items_link = styled.a`
 `;
 
 function Leftsidebar() {
-
     if (HideLeftSidebar()) return null;
     return (
         <Sidebar_container>
@@ -88,6 +90,7 @@ function Leftsidebar() {
                 </Sidebar_items_list>
                 <Sidebar_items_list>
                     <Sidebar_items_link eleven>COLLECTIVES</Sidebar_items_link>
+                    <Sidebar_items_link>{Facircleinfo}</Sidebar_items_link>
 
                     <Sidebar_items>
                         <Sidebar_items_link>Explore Collectives</Sidebar_items_link>
