@@ -7,5 +7,5 @@ import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.entity.QuestionVote;
 
 public interface QuestionVoteRepository extends JpaRepository<QuestionVote, Long> {
-    QuestionVote findByQuestionAndMemberId(Question question, long memberId);
+    QuestionVote findByQuestionAndMember(Question question,Member member);
 }

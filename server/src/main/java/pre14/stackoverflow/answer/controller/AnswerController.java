@@ -32,7 +32,6 @@ import java.util.List;
 public class AnswerController {
     private final AnswerService answerService;
     private final AnswerMapper mapper;
-    private final AnswerVoteService answerVoteService;
     private final QuestionService questionService;
     private final MemberService memberService;
 
@@ -55,7 +54,7 @@ public class AnswerController {
     //patch
     @PatchMapping("/{answer-id}")
     public ResponseEntity<?> patchAnswer(@Positive @PathVariable("answer-id") long answerId,
-                                      @Valid @RequestBody AnswerDto.Patch answerPatchDto) {
+                                         @Valid @RequestBody AnswerDto.Patch answerPatchDto) {
         answerPatchDto.setAnswerId(answerId);
 
 
@@ -78,7 +77,7 @@ public class AnswerController {
     //finds
     @GetMapping
     public ResponseEntity getAnswers(@RequestParam("page") int page,
-                                                              @RequestParam("size") int size) {
+                                     @RequestParam("size") int size) {
         Page<Answer> answerPages = answerService.findAnswers(page -1, size);
 
         List<Answer> answers = answerPages.getContent();
@@ -94,24 +93,4 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
-
-    // 답변 추천
-    @PatchMapping("/{answer-id}/upvotes")
-    public ResponseEntity upVoteAnswer(@Positive @PathVariable("answer-id") long voteId,
-                                       @Valid @RequestBody AnswerVoteDto requestBody) {
-
-        Answer votedAnswer = answerVoteService.upVote(voteId, mapper.answerVoteDtoToAnswerVote(requestBody));
-
-        return new ResponseEntity<>(mapper.answerToAnswerResponse(votedAnswer), HttpStatus.OK);
-    }
-
-    // 답변 비추천
-    @PatchMapping("/{answer-id}/downvotes")
-    public ResponseEntity downVoteAnswer(@PathVariable("answer-id") long voteId,
-                                         @Valid @RequestBody AnswerVoteDto requestBody) {
-        Answer votedAnswer = answerVoteService.downVote(voteId, mapper.answerVoteDtoToAnswerVote(requestBody));
-
-        return new ResponseEntity<>(mapper.answerToAnswerResponse(votedAnswer), HttpStatus.OK);
-    }
 }

@@ -10,7 +10,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import pre14.stackoverflow.answer.entity.Answer;
+import pre14.stackoverflow.answer.entity.AnswerVote;
 import pre14.stackoverflow.questions.entity.Question;
+import pre14.stackoverflow.questions.entity.QuestionVote;
 
 
 import javax.persistence.*;
@@ -55,6 +57,14 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<QuestionVote> questionVotes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<AnswerVote> answerVotes = new ArrayList<>();
 
     public Member(String email,String name, String phone){
         this.email=email;

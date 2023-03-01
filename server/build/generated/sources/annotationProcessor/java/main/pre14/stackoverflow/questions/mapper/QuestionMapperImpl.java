@@ -12,12 +12,10 @@ import pre14.stackoverflow.questions.dto.QuestionDto;
 import pre14.stackoverflow.questions.dto.QuestionVoteDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.entity.QuestionVote;
-import pre14.stackoverflow.tag.dto.TagDto;
-import pre14.stackoverflow.tag.entity.Tag;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-01T22:40:00+0900",
+    date = "2023-03-02T01:27:02+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -33,6 +31,10 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         question.setTitle( questionPostDto.getTitle() );
         question.setContents( questionPostDto.getContents() );
+        List<String> list = questionPostDto.getTag();
+        if ( list != null ) {
+            question.setTag( new ArrayList<String>( list ) );
+        }
 
         return question;
     }
@@ -48,6 +50,10 @@ public class QuestionMapperImpl implements QuestionMapper {
         question.setQuestionId( questionPatchDto.getQuestionId() );
         question.setTitle( questionPatchDto.getTitle() );
         question.setContents( questionPatchDto.getContents() );
+        List<String> list = questionPatchDto.getTag();
+        if ( list != null ) {
+            question.setTag( new ArrayList<String>( list ) );
+        }
 
         return question;
     }
@@ -59,8 +65,6 @@ public class QuestionMapperImpl implements QuestionMapper {
         }
 
         QuestionVote questionVote = new QuestionVote();
-
-        questionVote.setMemberId( requestBody.getMemberId() );
 
         return questionVote;
     }
@@ -81,7 +85,10 @@ public class QuestionMapperImpl implements QuestionMapper {
         response.setQuestionStatus( question.getQuestionStatus() );
         response.setCreatedAt( question.getCreatedAt() );
         response.setModifiedAt( question.getModifiedAt() );
-        response.setTags( tagListToTagResponseDtoList( question.getTags() ) );
+        List<String> list = question.getTag();
+        if ( list != null ) {
+            response.setTag( new ArrayList<String>( list ) );
+        }
         response.setAnswers( answerListToResponseList( question.getAnswers() ) );
 
         return response;
@@ -95,14 +102,19 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         QuestionDto.DetailPageResponse detailPageResponse = new QuestionDto.DetailPageResponse();
 
+        detailPageResponse.setMember( memberToResponse1( question.getMember() ) );
+        detailPageResponse.setAnswerCount( countAnswers( question.getAnswers() ) );
         detailPageResponse.setQuestionId( question.getQuestionId() );
         detailPageResponse.setTitle( question.getTitle() );
         detailPageResponse.setContents( question.getContents() );
         detailPageResponse.setVoteCount( question.getVoteCount() );
-        detailPageResponse.setMember( memberToResponse( question.getMember() ) );
         detailPageResponse.setQuestionStatus( question.getQuestionStatus() );
         detailPageResponse.setCreatedAt( question.getCreatedAt() );
         detailPageResponse.setModifiedAt( question.getModifiedAt() );
+        List<String> list = question.getTag();
+        if ( list != null ) {
+            detailPageResponse.setTag( new ArrayList<String>( list ) );
+        }
         detailPageResponse.setAnswers( answerListToInfoResponseList( question.getAnswers() ) );
 
         return detailPageResponse;
@@ -116,16 +128,19 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         QuestionDto.TotalPageResponse totalPageResponse = new QuestionDto.TotalPageResponse();
 
-        totalPageResponse.setMember( memberToResponse1( question.getMember() ) );
+        totalPageResponse.setMember( memberToResponse2( question.getMember() ) );
         totalPageResponse.setAnswerCount( countAnswers( question.getAnswers() ) );
         totalPageResponse.setQuestionId( question.getQuestionId() );
         totalPageResponse.setTitle( question.getTitle() );
         totalPageResponse.setContents( question.getContents() );
         totalPageResponse.setVoteCount( question.getVoteCount() );
         totalPageResponse.setQuestionStatus( question.getQuestionStatus() );
-        totalPageResponse.setTags( tagListToTagResponseDtoList( question.getTags() ) );
         totalPageResponse.setCreatedAt( question.getCreatedAt() );
         totalPageResponse.setModifiedAt( question.getModifiedAt() );
+        List<String> list = question.getTag();
+        if ( list != null ) {
+            totalPageResponse.setTag( new ArrayList<String>( list ) );
+        }
 
         return totalPageResponse;
     }
@@ -164,32 +179,6 @@ public class QuestionMapperImpl implements QuestionMapper {
         return response;
     }
 
-    protected TagDto.TagResponseDto tagToTagResponseDto(Tag tag) {
-        if ( tag == null ) {
-            return null;
-        }
-
-        TagDto.TagResponseDto.TagResponseDtoBuilder tagResponseDto = TagDto.TagResponseDto.builder();
-
-        tagResponseDto.tagId( tag.getTagId() );
-        tagResponseDto.hashTag( tag.getHashTag() );
-
-        return tagResponseDto.build();
-    }
-
-    protected List<TagDto.TagResponseDto> tagListToTagResponseDtoList(List<Tag> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<TagDto.TagResponseDto> list1 = new ArrayList<TagDto.TagResponseDto>( list.size() );
-        for ( Tag tag : list ) {
-            list1.add( tagToTagResponseDto( tag ) );
-        }
-
-        return list1;
-    }
-
     protected AnswerDto.Response answerToResponse(Answer answer) {
         if ( answer == null ) {
             return null;
@@ -219,6 +208,28 @@ public class QuestionMapperImpl implements QuestionMapper {
         }
 
         return list1;
+    }
+
+    protected MemberDto.Response memberToResponse1(Member member) {
+        if ( member == null ) {
+            return null;
+        }
+
+        MemberDto.Response response = new MemberDto.Response();
+
+        response.setNumberOfQuestions( countNumberOfQuestions( member.getQuestions() ) );
+        response.setNumberOfAnswers( countAnswers( member.getAnswers() ) );
+        if ( member.getMemberId() != null ) {
+            response.setMemberId( member.getMemberId() );
+        }
+        response.setEmail( member.getEmail() );
+        response.setName( member.getName() );
+        response.setPhone( member.getPhone() );
+        response.setCreatedAt( member.getCreatedAt() );
+        response.setModifiedAt( member.getModifiedAt() );
+        response.setMemberStatus( member.getMemberStatus() );
+
+        return response;
     }
 
     protected AnswerDto.InfoResponse answerToInfoResponse(Answer answer) {
@@ -254,7 +265,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         return list1;
     }
 
-    protected MemberDto.Response memberToResponse1(Member member) {
+    protected MemberDto.Response memberToResponse2(Member member) {
         if ( member == null ) {
             return null;
         }

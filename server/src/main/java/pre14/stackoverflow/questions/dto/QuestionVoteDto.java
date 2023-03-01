@@ -7,7 +7,6 @@ import javax.validation.constraints.Positive;
 
 @Getter
 public class QuestionVoteDto {
-    private Long questionId;
     @Positive
     @NotNull
     private Long memberId;

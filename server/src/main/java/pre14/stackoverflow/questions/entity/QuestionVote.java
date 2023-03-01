@@ -3,6 +3,7 @@ package pre14.stackoverflow.questions.entity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import pre14.stackoverflow.member.entity.Member;
 
 import javax.persistence.*;
 
@@ -18,23 +19,18 @@ public class QuestionVote {
     @Enumerated(EnumType.STRING)
     private QuestionVoteStatus questionVoteStatus;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 
     public enum QuestionVoteStatus {
-        UP("추천"),
-        NONE("취소"),
-        DOWN("비추천");
+        UP,
+        NONE,
+        DOWN
 
-        @Getter
-        private String status;
-
-        QuestionVoteStatus(String status) {
-            this.status = status;
-        }
     }
 }

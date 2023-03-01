@@ -7,5 +7,4 @@ import pre14.stackoverflow.answer.entity.AnswerVote;
 
 @Repository
 public interface AnswerVoteRepository extends JpaRepository<AnswerVote, Long> {
-    AnswerVote findByAnswerAndMemberId(Answer answer, Long memberId);
 }

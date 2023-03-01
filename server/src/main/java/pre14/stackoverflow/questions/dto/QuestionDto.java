@@ -4,7 +4,6 @@ import lombok.*;
 import pre14.stackoverflow.answer.dto.AnswerDto;
 import pre14.stackoverflow.member.dto.MemberDto;
 import pre14.stackoverflow.questions.entity.Question;
-import pre14.stackoverflow.tag.dto.TagDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,10 +28,8 @@ public class QuestionDto {
 
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String contents;
+        private List<String> tag;
 
-//      private Long answerId;
-
-//      private List<QuestionTag> tagList;
     }
 
     @Getter
@@ -45,6 +42,8 @@ public class QuestionDto {
         private String title;
         @Size(min = 10, max = 5000, message = "내용은 공백이 아니어야 합니다.")
         private String contents;
+
+        private List<String> tag;
     }
 
     @Getter
@@ -60,7 +59,7 @@ public class QuestionDto {
         private Question.QuestionStatus questionStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-        private List<TagDto.TagResponseDto> tags;
+        private List<String> tag;
         private List<AnswerDto.Response> answers;
 
 
@@ -75,11 +74,11 @@ public class QuestionDto {
         private long voteCount;
         private MemberDto.Response member;
         private Question.QuestionStatus questionStatus;
-        private List<TagDto.TagResponseDto> tags;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private List<String> tag;
         private long answerCount;
-        
+
     }
 
     @Getter
@@ -94,6 +93,8 @@ public class QuestionDto {
         private Question.QuestionStatus questionStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private List<String> tag;
+        private long answerCount;
         private List<AnswerDto.InfoResponse> answers;
     }
 }

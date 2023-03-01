@@ -1,9 +1,11 @@
 package pre14.stackoverflow.answer.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import pre14.stackoverflow.member.entity.Member;
 
 import javax.persistence.*;
 
@@ -20,11 +22,14 @@ public class AnswerVote {
     @Enumerated(EnumType.STRING)
     private AnswerVoteStatus answerVoteStatus;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    @JsonBackReference
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "answer_id")
+    @JsonBackReference
     private Answer answer;
 
 
