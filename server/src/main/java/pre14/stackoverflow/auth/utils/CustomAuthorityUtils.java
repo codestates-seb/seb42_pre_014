@@ -1,4 +1,4 @@
-package pre14.stackoverflow.config.auth;
+package pre14.stackoverflow.auth.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthorityUtils {
-
     @Value("${mail.address.admin}")
     private String adminMailAddress;
 
@@ -31,11 +30,9 @@ public class CustomAuthorityUtils {
         List<GrantedAuthority> authorities = roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
-
         return authorities;
     }
 
-    // DB 저장 용
     public List<String> createRoles(String email) {
         if (email.equals(adminMailAddress)) {
             return ADMIN_ROLES_STRING;
@@ -43,4 +40,3 @@ public class CustomAuthorityUtils {
         return USER_ROLES_STRING;
     }
 }
-

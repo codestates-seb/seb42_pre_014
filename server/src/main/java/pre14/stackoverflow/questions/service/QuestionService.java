@@ -22,6 +22,7 @@ public class QuestionService {
 
     public Question createQuestion(Question question) { //질문 생성
 
+
         return questionRepository.save(question); // 게시글 생성
     }
 
@@ -58,4 +59,6 @@ public class QuestionService {
                         new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return findQuestion;
     }
+
+
 }

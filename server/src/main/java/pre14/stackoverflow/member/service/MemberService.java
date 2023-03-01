@@ -1,6 +1,8 @@
 package pre14.stackoverflow.member.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -9,57 +11,62 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pre14.stackoverflow.config.auth.CustomAuthorityUtils;
+import pre14.stackoverflow.auth.event.MemberRegistrationApplicationEvent;
+import pre14.stackoverflow.auth.jwt.JwtTokenizer;
+import pre14.stackoverflow.auth.utils.CustomAuthorityUtils;
 import pre14.stackoverflow.member.entity.Member;
 import pre14.stackoverflow.exception.BusinessLogicException;
 import pre14.stackoverflow.exception.ExceptionCode;
 import pre14.stackoverflow.member.repository.MemberRepository;
+import pre14.stackoverflow.questions.repository.QuestionRepository;
+import pre14.stackoverflow.utils.CustomBeanUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 @ToString
+@RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    private final QuestionRepository questionRepository;
+
+    private final CustomBeanUtils customBeanUtils;
     private final PasswordEncoder passwordEncoder;
 
     private final CustomAuthorityUtils authorityUtils;
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils){
-        this.memberRepository=memberRepository;
-        this.passwordEncoder=passwordEncoder;
-        this.authorityUtils=authorityUtils;
-    }
+    private final JwtTokenizer jwtTokenizer;
+
+    private final ApplicationEventPublisher publisher;
+
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
-        member.setPassword(passwordEncoder.encode((member.getPassword())));
-        List<String> roles= authorityUtils.createRoles(member.getEmail());
+
+        String encryptPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptPassword);
+
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
-        return memberRepository.save(member);
+        Member savedMember = memberRepository.save(member);
+
+        publisher.publishEvent(new MemberRegistrationApplicationEvent(savedMember));
+        return savedMember;
     }
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
         Member findMember=findVerifiedMember(member.getMemberId());
 
-        Optional.ofNullable(member.getName())
-                .ifPresent(name -> findMember.setName(name));
-        Optional.ofNullable(member.getPhone())
-                .ifPresent(phone ->findMember.setPhone(phone));
-        Optional.ofNullable(member.getPassword())
-                .ifPresent(password -> findMember.setPassword(password));
-        Optional.ofNullable(member.getMemberStatus())
-                .ifPresent(memberStatus->findMember.setMemberStatus(memberStatus));
+        Member updatedMember = (Member) customBeanUtils.copyNonNullProperties(member, findMember);
 
-        findMember.setModifiedAt(LocalDateTime.now());
-
-        return memberRepository.save(findMember);
+        return memberRepository.save(updatedMember);
     }
-
+    @Transactional(readOnly = true)
     public Member findMember(long memberId) {
         return findVerifiedMember(memberId);
     }
@@ -72,6 +79,8 @@ public class MemberService {
 
         memberRepository.delete(findMember);
     }
+
+
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember=
                 memberRepository.findById(memberId);
@@ -87,4 +96,6 @@ public class MemberService {
         if(member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
+
+
 }

@@ -47,6 +47,10 @@ public class QuestionDto {
 
         private String contents;
 
+        private int votes;
+        private int views;
+
+
         private Question.QuestionStatus questionStatus;
         public String getQuestionStatus(){return questionStatus.getStatus();} //상태값이 한글로 저장 및 출력되게함
 

@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@AllArgsConstructor
+//@AllArgsConstructor
 @Table(name = "member")
 public class Member {
     @Id
@@ -23,9 +23,6 @@ public class Member {
     @Column(length =20, nullable = false)
     private MemberStatus memberStatus=MemberStatus.MEMBER_ACTIVE;
 
-    public Member(long memberId){
-        this.memberId=memberId;
-    }
     @Column(length = 100, nullable = false)
     private String name;
     @Column(nullable = false, updatable = false, unique = true)
@@ -36,11 +33,12 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
+
     @Column(nullable = false)
     private LocalDateTime createdAt=LocalDateTime.now();
 
-    @Column(nullable = false, name="LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt=LocalDateTime.now();
+
+
 
     public Member(String email,String name, String phone,String password){
         this.email=email;

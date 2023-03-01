@@ -1,13 +1,15 @@
-package pre14.stackoverflow.config.auth.filter;
+package pre14.stackoverflow.auth.filter;
 
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pre14.stackoverflow.config.auth.CustomAuthorityUtils;
-import pre14.stackoverflow.config.auth.JwtTokenizer;
-
+import pre14.stackoverflow.auth.jwt.JwtTokenizer;
+import pre14.stackoverflow.auth.utils.CustomAuthorityUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,15 +23,25 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
+    public JwtVerificationFilter(JwtTokenizer jwtTokenizer,
+                                 CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Map<String, Object> claims = verifyJws(request);
-        setAuthenticationToContext(claims);
+
+        try {
+            Map<String, Object> claims = verifyJws(request);
+            setAuthenticationToContext(claims);
+        } catch (SignatureException se) {
+            request.setAttribute("exception", se);
+        } catch (ExpiredJwtException ee) {
+            request.setAttribute("exception", ee);
+        } catch (Exception e) {
+            request.setAttribute("exception", e);
+        }
 
         filterChain.doFilter(request, response);
     }

@@ -9,6 +9,10 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
     QUESTION_EXISTS(409, "Question exists"),
     QUESTION_CANNOT_CHANGE(403,"권한이 없습니다."),
+    VOTE_NOT_FOUND(404, "Vote not found"),
+    TOKEN_NOT_FOUND(404, "token not found"),
+    NOT_AUTHORIZED(404, "not authorized"),
+    PASSWORD_NOT_CONFIRMED(404, "Password not confirmed"),
     ANSWER_CANNOT_CHANGE(403,"권한이 없습니다.");
 
     @Getter

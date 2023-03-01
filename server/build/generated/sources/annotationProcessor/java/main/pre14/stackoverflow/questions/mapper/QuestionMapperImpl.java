@@ -1,6 +1,5 @@
 package pre14.stackoverflow.questions.mapper;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -12,7 +11,7 @@ import pre14.stackoverflow.questions.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-27T16:28:20+0900",
+    date = "2023-03-01T15:33:16+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -86,25 +85,26 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
 
+        List<String> roles = null;
         long memberId = 0L;
         String email = null;
         String name = null;
         String phone = null;
-        LocalDateTime createdAt = null;
-        LocalDateTime modifiedAt = null;
         Member.MemberStatus memberStatus = null;
 
+        List<String> list = member.getRoles();
+        if ( list != null ) {
+            roles = new ArrayList<String>( list );
+        }
         if ( member.getMemberId() != null ) {
             memberId = member.getMemberId();
         }
         email = member.getEmail();
         name = member.getName();
         phone = member.getPhone();
-        createdAt = member.getCreatedAt();
-        modifiedAt = member.getModifiedAt();
         memberStatus = member.getMemberStatus();
 
-        MemberDto.Response response = new MemberDto.Response( memberId, email, name, phone, createdAt, modifiedAt, memberStatus );
+        MemberDto.Response response = new MemberDto.Response( memberId, email, name, phone, roles, memberStatus );
 
         return response;
     }

@@ -15,7 +15,9 @@ import java.util.List;
 public class MemberDto {
 
     @Getter
+    @Setter
     @RequiredArgsConstructor
+    @AllArgsConstructor
     @ToString
     public static class Post{
         @NotBlank
@@ -32,6 +34,8 @@ public class MemberDto {
         @NotBlank(message = "패스워드를 입력해 주세요(최소 8자 최대 12자)")
         @Pattern(regexp = "[(a-zA-Z0-9)`~!@#\\$%\\^&*\\(\\)-_=\\+]{8,12}", message = "영문자와 숫자, !@#$%^&*()_+-=만 사용 가능합니다 ")
         private String password;
+
+
     }
 
     @Getter
@@ -61,8 +65,9 @@ public class MemberDto {
         private String email;
         private String name;
         private String phone;
-        private LocalDateTime createdAt;
-        private LocalDateTime modifiedAt;
+        private List<String> roles;
+//        private LocalDateTime createdAt;
+//        private LocalDateTime modifiedAt;
 
         private Member.MemberStatus memberStatus;
 

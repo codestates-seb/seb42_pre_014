@@ -1,4 +1,4 @@
-package pre14.stackoverflow.config.auth;
+package pre14.stackoverflow.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -62,17 +62,24 @@ public class JwtTokenizer {
 
     public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
-        System.out.println(key);
+
         Jws<Claims> claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jws);
-        System.out.println(claims);
-
         return claims;
     }
 
-    public Date getExpiration(int expirationMinutes) {
+    public void verifySignature(String jws, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+
+        Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jws);
+    }
+
+    public Date getTokenExpiration(int expirationMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationMinutes);
         Date expiration = calendar.getTime();
@@ -83,6 +90,7 @@ public class JwtTokenizer {
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
+
         return key;
     }
 }

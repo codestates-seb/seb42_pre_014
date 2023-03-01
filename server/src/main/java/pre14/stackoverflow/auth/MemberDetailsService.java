@@ -1,42 +1,34 @@
-package pre14.stackoverflow.config.auth;
+package pre14.stackoverflow.auth;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import pre14.stackoverflow.auth.utils.CustomAuthorityUtils;
 import pre14.stackoverflow.exception.BusinessLogicException;
 import pre14.stackoverflow.exception.ExceptionCode;
 import pre14.stackoverflow.member.entity.Member;
 import pre14.stackoverflow.member.repository.MemberRepository;
 
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Service
 public class MemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
-    private final CustomAuthorityUtils auth;
+    private final CustomAuthorityUtils authorityUtils;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public MemberDetailsService(MemberRepository memberRepository, CustomAuthorityUtils auth, @Autowired PasswordEncoder passwordEncoder) {
+    public MemberDetailsService(MemberRepository memberRepository, CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
-        this.auth = auth;
-        this.passwordEncoder=passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Member> optionalMember = memberRepository.findByEmail(username);
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
         return new MemberDetails(findMember);
     }
 
@@ -44,13 +36,14 @@ public class MemberDetailsService implements UserDetailsService {
         MemberDetails(Member member) {
             setMemberId(member.getMemberId());
             setEmail(member.getEmail());
+            setPhone(member.getPhone());
             setPassword(member.getPassword());
             setRoles(member.getRoles());
         }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return auth.createAuthorities(this.getRoles());
+            return authorityUtils.createAuthorities(this.getRoles());
         }
 
         @Override

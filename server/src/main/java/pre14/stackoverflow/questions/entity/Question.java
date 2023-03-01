@@ -28,6 +28,11 @@ public class Question{
     private String title;
     @Column(nullable = false, columnDefinition = "TEXT")
     private String contents;
+
+
+
+
+
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) //자식엔티티는 ALL해줘야함
