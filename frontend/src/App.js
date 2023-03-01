@@ -57,18 +57,19 @@ function App() {
             <UserContext.Provider value={{ user, checkAuth }}>
                 <Header />
                 <div className={className}>
-                  <LS_container>
-                      <Leftsidebar />
-                  </LS_container>
-                  <Routes>
-                      <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
-                      <Route path="/ask" element={<AskPage data={data} />} />
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route path="/register" element={<RegisterPage />} />
-                      <Route path="/profile" element={<ProfilePage />} />
-                      <Route path="/:id" element={<Question />} />
-                      <Route path="/tags" element={<TagsPage />} />
-                  </Routes>
+                    <LS_container>
+                        <Leftsidebar />
+                    </LS_container>
+
+                    <Routes>
+                        <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
+                        <Route path="/ask" element={<AskPage data={data} />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/:id" element={<Question />} />
+                        <Route path="/tags" element={<TagsPage />} />
+                    </Routes>
                 </div>
                 <Footer />
             </UserContext.Provider>
