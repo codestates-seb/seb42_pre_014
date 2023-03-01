@@ -10,6 +10,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
@@ -23,12 +24,12 @@ public class JwtTokenizer {
     private String secretKey;
 
     @Getter
-    @Value("${jwt.access-token-expiration-minutes}")
-    private int accessTokenExpirationMinutes;
+    @Value("${jwt.access-token-expiration-minute}")
+    private int accessTokenExpirationMinute;
 
     @Getter
-    @Value("${jwt.refresh-token-expiration-minutes}")
-    private int refreshTokenExpirationMinutes;
+    @Value("${jwt.refresh-token-expiration-minute}")
+    private int refreshTokenExpirationMinute;
 
     public String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -49,7 +50,9 @@ public class JwtTokenizer {
                 .compact();
     }
 
-    public String generateRefreshToken(String subject, Date expiration, String base64EncodedSecretKey) {
+    public String generateRefreshToken(String subject,
+                                       Date expiration,
+                                       String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.builder()
@@ -67,29 +70,20 @@ public class JwtTokenizer {
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jws);
+
         return claims;
     }
 
-    public void verifySignature(String jws, String base64EncodedSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
-
-        Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jws);
-    }
-
-    public Date getTokenExpiration(int expirationMinutes) {
+    public Date getTokenExpiration(int expirationMinute) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, expirationMinutes);
+        calendar.add(Calendar.MINUTE, expirationMinute);
         Date expiration = calendar.getTime();
-
         return expiration;
     }
 
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
-        byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
-        Key key = Keys.hmacShaKeyFor(keyBytes);
+        byte[] decodedKey = Decoders.BASE64.decode(base64EncodedSecretKey);
+        Key key = Keys.hmacShaKeyFor(decodedKey);
 
         return key;
     }

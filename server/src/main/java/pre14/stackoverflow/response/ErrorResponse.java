@@ -1,43 +1,34 @@
 package pre14.stackoverflow.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import pre14.stackoverflow.exception.ExceptionCode;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
-    private int status;
-    private String message;
-    private List<FieldError> fieldErrors;
-    private List<ConstraintViolationError> violationErrors;
+
+    private final int status;
+    private final String message;
+    private List<ValueError> valueErrors;
 
     private ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    private ErrorResponse(final List<FieldError> fieldErrors,
-                          final List<ConstraintViolationError> violationErrors) {
-        this.fieldErrors = fieldErrors;
-        this.violationErrors = violationErrors;
-    }
-
-    public static ErrorResponse of(BindingResult bindingResult) {
-        return new ErrorResponse(FieldError.of(bindingResult), null);
-    }
-
-    public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
-        return new ErrorResponse(null, ConstraintViolationError.of(violations));
-    }
-
-    public static ErrorResponse of(ExceptionCode exceptionCode) {
-        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
+    private ErrorResponse(final List<ValueError> valueErrors) {
+        this.status = HttpStatus.BAD_REQUEST.value();
+        this.message = HttpStatus.BAD_REQUEST.getReasonPhrase();
+        this.valueErrors = valueErrors;
     }
 
     public static ErrorResponse of(HttpStatus httpStatus) {
@@ -48,52 +39,45 @@ public class ErrorResponse {
         return new ErrorResponse(httpStatus.value(), message);
     }
 
-    @Getter
-    public static class FieldError {
-        private String field;
-        private Object rejectedValue;
-        private String reason;
+    public static ErrorResponse of(BindingResult bindingResult) {
+        return new ErrorResponse(ValueError.of(bindingResult));
+    }
 
-        private FieldError(String field, Object rejectedValue, String reason) {
-            this.field = field;
+    public static ErrorResponse of(ConstraintViolationException e) {
+        return new ErrorResponse(ValueError.of(e));
+    }
+
+    @Getter
+    public static class ValueError {
+        private final String descriptor;
+        private final Object rejectedValue;
+        private final String reason;
+
+        private ValueError(String descriptor, Object rejectedValue, String reason) {
+            this.descriptor = descriptor;
             this.rejectedValue = rejectedValue;
             this.reason = reason;
         }
 
-        public static List<FieldError> of(BindingResult bindingResult) {
-            final List<org.springframework.validation.FieldError> fieldErrors =
-                    bindingResult.getFieldErrors();
-            return fieldErrors.stream()
-                    .map(error -> new FieldError(
+        public static List<ValueError> of(BindingResult bindingResult) {
+            return bindingResult.getFieldErrors()
+                    .stream()
+                    .map(error -> new ValueError(
                             error.getField(),
                             error.getRejectedValue() == null ?
                                     "" : error.getRejectedValue().toString(),
                             error.getDefaultMessage()))
                     .collect(Collectors.toList());
         }
-    }
 
-    @Getter
-    public static class ConstraintViolationError {
-        private String propertyPath;
-        private Object rejectedValue;
-        private String reason;
-
-        private ConstraintViolationError(String propertyPath, Object rejectedValue,
-                                         String reason) {
-            this.propertyPath = propertyPath;
-            this.rejectedValue = rejectedValue;
-            this.reason = reason;
-        }
-
-        public static List<ConstraintViolationError> of(
-                Set<ConstraintViolation<?>> constraintViolations) {
-            return constraintViolations.stream()
-                    .map(constraintViolation -> new ConstraintViolationError(
-                            constraintViolation.getPropertyPath().toString(),
-                            constraintViolation.getInvalidValue().toString(),
-                            constraintViolation.getMessage()
-                    )).collect(Collectors.toList());
+        public static List<ValueError> of(ConstraintViolationException e) {
+            return e.getConstraintViolations()
+                    .stream()
+                    .map(error -> new ValueError(
+                            error.getPropertyPath().toString(),
+                            error.getInvalidValue().toString(),
+                            error.getMessage()))
+                    .collect(Collectors.toList());
         }
     }
 }

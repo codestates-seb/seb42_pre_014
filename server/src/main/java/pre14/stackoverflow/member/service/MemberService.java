@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pre14.stackoverflow.auth.event.MemberRegistrationApplicationEvent;
 import pre14.stackoverflow.auth.jwt.JwtTokenizer;
 import pre14.stackoverflow.auth.utils.CustomAuthorityUtils;
 import pre14.stackoverflow.member.entity.Member;
@@ -37,7 +36,6 @@ public class MemberService {
     private final QuestionRepository questionRepository;
 
     private final CustomBeanUtils customBeanUtils;
-    private final PasswordEncoder passwordEncoder;
 
     private final CustomAuthorityUtils authorityUtils;
 
@@ -45,18 +43,20 @@ public class MemberService {
 
     private final ApplicationEventPublisher publisher;
 
+    private final PasswordEncoder passwordEncoder;
+
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
-
-        String encryptPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptPassword);
-
+//         password 암호화
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
+//         User Role 저장
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
 
-        publisher.publishEvent(new MemberRegistrationApplicationEvent(savedMember));
+        // DB에 회원 정보 저장
         return savedMember;
     }
     public Member updateMember(Member member) {

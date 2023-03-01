@@ -11,30 +11,25 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthorityUtils {
+
     @Value("${mail.address.admin}")
-    private String adminMailAddress;
+    private String adminMail;
 
-    private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
-    private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
-    private final List<String> ADMIN_ROLES_STRING = List.of("ADMIN", "USER");
-    private final List<String> USER_ROLES_STRING = List.of("USER");
-
-    public List<GrantedAuthority> createAuthorities(String email) {
-        if (email.equals(adminMailAddress)) {
-            return ADMIN_ROLES;
-        }
-        return USER_ROLES;
-    }
+    private final List<String> ADMIN_ROLES_STRING = List.of("ROLE_ADMIN", "ROLE_USER");
+    private final List<String> USER_ROLES_STRING = List.of("ROLE_USER");
 
     public List<GrantedAuthority> createAuthorities(List<String> roles) {
-        List<GrantedAuthority> authorities = roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities =
+                roles.stream()
+                        .map(role -> new SimpleGrantedAuthority(role))
+                        .collect(Collectors.toList());
+
         return authorities;
     }
 
+    /* DB에 role 저장 */
     public List<String> createRoles(String email) {
-        if (email.equals(adminMailAddress)) {
+        if(email.equals(adminMail)) {
             return ADMIN_ROLES_STRING;
         }
         return USER_ROLES_STRING;
