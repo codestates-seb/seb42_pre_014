@@ -29,11 +29,11 @@ public class StackoverflowApplication {
 // 내가쓴글 조회 ->
 // 내가쓴댓글 조회 ->
 /**
- *                 "numberOfQuestions": 0,
- *                 "numberOfAnswers": 0
+ *                 "numberOfQuestions": 0, OK
+ *                 "numberOfAnswers": 0 OK
  *
  * 질문의 답변갯수
- *            "answerCount": 0
+ *            "answerCount": 0 OK
  *
  *            1개 조회시 답변 안옴 			  OK
  *            답변에 questionId 값 안들어감   OK

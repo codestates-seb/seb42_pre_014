@@ -20,7 +20,6 @@ public interface QuestionMapper {
 
     QuestionVote questionVoteDtoToQuestionVote(QuestionVoteDto requestBody);
 
-
     QuestionDto.Response questionToQuestionResponse(Question question);
     QuestionDto.DetailPageResponse questionToQuestionDetailPageResponse(Question question);
     @Mapping(source = "answers", target = "answerCount", qualifiedByName = "countAnswers")
