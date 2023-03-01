@@ -16,7 +16,13 @@ import Footer from "./Footer";
 import "./App.css";
 import ProfilePage from "./ProfilePage";
 import TagsPage from "./TagsPage";
+import styled from "styled-components";
 
+const LS_container = styled.div`
+    @media screen and (max-width: 640px) {
+        display: none;
+    }
+`;
 function App() {
     const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
     const [user, setUser] = useState(null);
@@ -51,7 +57,10 @@ function App() {
             <UserContext.Provider value={{ user, checkAuth }}>
                 <Header />
                 <div className={className}>
-                    <Leftsidebar />
+                    <LS_container>
+                        <Leftsidebar />
+                    </LS_container>
+
                     <Routes>
                         <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
                         <Route path="/ask" element={<AskPage data={data} />} />

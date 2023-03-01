@@ -12,6 +12,9 @@ const filtericon = <FontAwesomeIcon icon={faFilter} />;
 
 const Main_container = styled.div`
     display: flex;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+    border-color: #535353;
 `;
 const Content_container = styled.div`
     height: auto;
