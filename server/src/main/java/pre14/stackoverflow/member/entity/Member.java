@@ -1,6 +1,11 @@
 package pre14.stackoverflow.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import pre14.stackoverflow.answer.entity.Answer;
+import pre14.stackoverflow.answer.entity.AnswerVote;
+import pre14.stackoverflow.questions.entity.Question;
+import pre14.stackoverflow.questions.entity.QuestionVote;
 
 
 import javax.persistence.*;
@@ -29,6 +34,22 @@ public class Member {
     private String email;
     @Column(length = 13, nullable = false, unique = true)
     private String phone;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<QuestionVote> questionVotes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<AnswerVote> answerVotes = new ArrayList<>();
 
     @Column(nullable = false)
     private String password;

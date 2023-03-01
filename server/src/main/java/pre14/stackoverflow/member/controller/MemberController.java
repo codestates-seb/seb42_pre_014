@@ -51,10 +51,6 @@ public class MemberController {
         System.out.println(member.toString());
         Member createdMember=memberService.createMember(member);
         System.out.println(createdMember.toString());
-//        MemberDto.Response response=mapper.memberToMemberResponse(createdMember);
-//        URI location= UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
-
-//        return new ResponseEntity<>(response, HttpStatus.CREATED);//.created(location).build();
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToMemberResponse(createdMember)), HttpStatus.CREATED);
     }
 
@@ -63,13 +59,7 @@ public class MemberController {
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
             @Valid @RequestBody MemberDto.Patch requestBody){
-//        requestBody.setMemberId(memberId);
-//
-//        Member member=
-//                memberService.updateMember(mapper.memberPatchToMember(requestBody));
-//
-//        return new ResponseEntity<>(
-//                new SingleResponseDto<>(mapper.memberToMemberResponse(member)), HttpStatus.OK);
+
         Member member=mapper.memberPatchToMember(requestBody);
 
         Member updatedMember=memberService.updateMember(member);

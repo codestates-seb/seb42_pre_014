@@ -71,6 +71,9 @@ public class MemberDto {
 
         private Member.MemberStatus memberStatus;
 
+        private long numberOfQuestions;             //회원 작성 질문 총 갯수
+        private long numberOfAnswers;
+
         public String getMemberStatus(){
             return memberStatus.getStatus();
         }

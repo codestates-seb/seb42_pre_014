@@ -13,6 +13,7 @@ public enum ExceptionCode {
     TOKEN_NOT_FOUND(404, "token not found"),
     NOT_AUTHORIZED(404, "not authorized"),
     PASSWORD_NOT_CONFIRMED(404, "Password not confirmed"),
+    MEMBER_ALREADY_VOTED(405, "아직 투표를 하지 않았습니다."),
     ANSWER_CANNOT_CHANGE(403,"권한이 없습니다.");
 
     @Getter

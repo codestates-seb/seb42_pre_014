@@ -30,6 +30,7 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
         loginResponse.put("email", member.getEmail());
         loginResponse.put("roles", member.getRoles());
 
+
         String responseBody = objectMapper.writeValueAsString(loginResponse);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 

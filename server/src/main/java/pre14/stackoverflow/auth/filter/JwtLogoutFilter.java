@@ -10,7 +10,7 @@ public class JwtLogoutFilter extends LogoutFilter {
                            LogoutHandler... handlers) {
 
         super(logoutSuccessHandler, handlers);
-        setFilterProcessesUrl("/auth/logout");
+        setFilterProcessesUrl("/members/logout");
     }
 }
 

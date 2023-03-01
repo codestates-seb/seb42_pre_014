@@ -47,10 +47,10 @@ public class MemberService {
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
-//         password 암호화
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+
+        String password=member.getPassword();
+        String encryptedPassword = passwordEncoder.encode(password);
         member.setPassword(encryptedPassword);
-//         User Role 저장
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
