@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
-import pre14.stackoverflow.answer.dto.AnswerPatchDto;
-import pre14.stackoverflow.answer.dto.AnswerPostDto;
-import pre14.stackoverflow.answer.dto.AnswerResponseDto;
 import pre14.stackoverflow.answer.entity.Answer;
 
 @Generated(

@@ -1,30 +1,23 @@
 package pre14.stackoverflow.member.controller;
 
 
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pre14.stackoverflow.answer.mapper.AnswerMapper;
 import pre14.stackoverflow.globaldto.MultiResponseDto;
 import pre14.stackoverflow.globaldto.SingleResponseDto;
 import pre14.stackoverflow.member.dto.*;
 import pre14.stackoverflow.member.entity.Member;
 import pre14.stackoverflow.member.mapper.MemberMapper;
 import pre14.stackoverflow.member.service.MemberService;
-import pre14.stackoverflow.questions.mapper.QuestionMapper;
-import pre14.stackoverflow.utils.UriCreator;
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
-import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/members")
@@ -32,30 +25,23 @@ import java.util.List;
 @Validated
 @ToString
 @Slf4j
-@RequiredArgsConstructor
 public class MemberController {
-
+    private final String MEMBER_DEFAULT_URL="members";
     private final MemberService memberService;
     private final MemberMapper mapper;
 
-    private final QuestionMapper questionMapper;
-
-    private final AnswerMapper answerMapper;
-
-
-
+    public MemberController(MemberService memberService,MemberMapper mapper){
+        this.memberService=memberService;
+        this.mapper=mapper;
+    }
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){
-        System.out.println(requestBody.toString());
         Member member=mapper.memberPostToMember(requestBody);
-        System.out.println(member.toString());
         Member createdMember=memberService.createMember(member);
-        System.out.println(createdMember.toString());
-//        MemberDto.Response response=mapper.memberToMemberResponse(createdMember);
-//        URI location= UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+        MemberDto.Response response= mapper.memberToMemberResponse(createdMember);
 
-//        return new ResponseEntity<>(response, HttpStatus.CREATED);//.created(location).build();
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToMemberResponse(createdMember)), HttpStatus.CREATED);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
@@ -63,30 +49,23 @@ public class MemberController {
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
             @Valid @RequestBody MemberDto.Patch requestBody){
-//        requestBody.setMemberId(memberId);
-//
-//        Member member=
-//                memberService.updateMember(mapper.memberPatchToMember(requestBody));
-//
-//        return new ResponseEntity<>(
-//                new SingleResponseDto<>(mapper.memberToMemberResponse(member)), HttpStatus.OK);
-        Member member=mapper.memberPatchToMember(requestBody);
+        requestBody.setMemberId(memberId);
 
-        Member updatedMember=memberService.updateMember(member);
-        MemberDto.Response response=mapper.memberToMemberResponse(updatedMember);
+        Member member=
+                memberService.updateMember(mapper.memberPatchToMember(requestBody));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK
-        );
+                new SingleResponseDto<>(mapper.memberToMemberResponse(member)), HttpStatus.OK);
 
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity getMember(
-            @PathVariable("member-id")@Positive long memberId){
-        Member member=memberService.findMember(memberId);
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.memberToMemberResponse(member)),HttpStatus.OK);
+    public ResponseEntity getMember(@PathVariable("member-id")@Positive long memberId){
+
+        Member member = memberService.findMember(memberId);
+
+        MemberDto.Response response = mapper.memberToMemberResponse(member);
+        return new ResponseEntity<>(new SingleResponseDto<>(response),HttpStatus.OK);
     }
 
     @GetMapping
@@ -105,8 +84,4 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
-
 }

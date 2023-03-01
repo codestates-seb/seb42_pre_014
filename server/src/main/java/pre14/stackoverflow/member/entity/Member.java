@@ -1,6 +1,18 @@
 package pre14.stackoverflow.member.entity;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import pre14.stackoverflow.answer.entity.Answer;
+import pre14.stackoverflow.answer.entity.AnswerVote;
+import pre14.stackoverflow.questions.entity.Question;
+import pre14.stackoverflow.questions.entity.QuestionVote;
 
 
 import javax.persistence.*;
@@ -12,7 +24,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-//@AllArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime 함께사용
 @Table(name = "member")
 public class Member {
     @Id
@@ -20,8 +33,12 @@ public class Member {
     private Long memberId;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(length =20, nullable = false)
-    private MemberStatus memberStatus=MemberStatus.MEMBER_ACTIVE;
+    @Column(length = 20, nullable = false)
+    private MemberStatus memberStatus = MemberStatus.MEMBER_ONLINE;
+
+    public Member(long memberId) {
+        this.memberId = memberId;
+    }
 
     @Column(length = 100, nullable = false)
     private String name;
@@ -29,37 +46,35 @@ public class Member {
     private String email;
     @Column(length = 13, nullable = false, unique = true)
     private String phone;
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
 
-    @Column(nullable = false)
-    private String password;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Question> questions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Answer> answers = new ArrayList<>();
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt=LocalDateTime.now();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<QuestionVote> questionVotes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<AnswerVote> answerVotes = new ArrayList<>();
 
-
-
-    public Member(String email,String name, String phone,String password){
-        this.email=email;
-        this.name=name;
-        this.phone=phone;
-        this.password=password;
+    public Member(String email, String name, String phone) {
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
     }
 
-    public enum MemberStatus{
-        MEMBER_ACTIVE("온라인"),
-        MEMBER_QUIT("로그아웃");
-
-        @Getter
-        private String status;
-
-        MemberStatus(String status){
-            this.status=status;
-        }
+    public enum MemberStatus {
+        MEMBER_ONLINE,
+        MEMBER_OFFLINE;
     }
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
-
 }
