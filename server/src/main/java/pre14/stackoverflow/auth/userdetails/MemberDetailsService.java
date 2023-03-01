@@ -1,4 +1,5 @@
-package pre14.stackoverflow.auth;
+package pre14.stackoverflow.auth.userdetails;
+
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,17 +27,19 @@ public class MemberDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Member> optionalMember = memberRepository.findByEmail(username);
-        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Optional<Member> memberByEmail = memberRepository.findByEmail(username);
+        Member findMember = memberByEmail.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
 
         return new MemberDetails(findMember);
     }
 
     private final class MemberDetails extends Member implements UserDetails {
+
         MemberDetails(Member member) {
             setMemberId(member.getMemberId());
             setEmail(member.getEmail());
-            setPhone(member.getPhone());
             setPassword(member.getPassword());
             setRoles(member.getRoles());
         }

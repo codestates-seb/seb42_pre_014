@@ -2,12 +2,15 @@ package pre14.stackoverflow.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import pre14.stackoverflow.auth.dto.AuthDto;
 import pre14.stackoverflow.auth.jwt.JwtTokenizer;
-import pre14.stackoverflow.member.dto.MemberLoginDto;
 import pre14.stackoverflow.member.entity.Member;
 
 import javax.servlet.FilterChain;
@@ -18,22 +21,31 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
+    private final RedisTemplate<String, String> redisTemplate;
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
+                                   JwtTokenizer jwtTokenizer,
+                                   RedisTemplate<String, String> redisTemplate) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+        this.redisTemplate = redisTemplate;
     }
+
     @SneakyThrows
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         ObjectMapper objectMapper = new ObjectMapper();
-        MemberLoginDto loginDto = objectMapper.readValue(request.getInputStream(), MemberLoginDto.class);
+        AuthDto.Login loginDto = objectMapper.readValue(request.getInputStream(), AuthDto.Login.class);
+        /*TODO UsernamePasswordAuthenticationFilter에 이미 AuthenticationManager가 있는 것 아닌가?
+         *  this.getAuthenticationManager()로 예외처리 진행해보기 <- securityConfiguration에 있는 sharedObject쓰지 말고*/
 
+        /* 테스트 할 때 안되면 확인하기 */
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
@@ -44,11 +56,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) throws ServletException, IOException {
+                                            Authentication authResult) throws IOException, ServletException {
         Member member = (Member) authResult.getPrincipal();
 
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
+
+        redisTemplate.opsForValue().set(
+                member.getEmail(),
+                refreshToken,
+                jwtTokenizer.getRefreshTokenExpirationMinute(),
+                TimeUnit.MINUTES
+        );
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
@@ -62,21 +81,34 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         claims.put("roles", member.getRoles());
 
         String subject = member.getEmail();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        Date tokenExpiration =
+                jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinute());
 
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+        String accessToken
+                = jwtTokenizer.generateAccessToken(claims, subject, tokenExpiration, base64EncodedSecretKey);
 
         return accessToken;
     }
 
     private String delegateRefreshToken(Member member) {
         String subject = member.getEmail();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        Date tokenExpiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinute());
+        String base64EncodedSecretKey =
+                jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+        String refreshToken =
+                jwtTokenizer.generateRefreshToken(subject, tokenExpiration, base64EncodedSecretKey);
+
+        System.out.println("tokenExpiration.getTime() = " + tokenExpiration.getTime());
+
+        redisTemplate.opsForValue().set(
+                member.getEmail(),
+                refreshToken,
+                jwtTokenizer.getRefreshTokenExpirationMinute(),
+                TimeUnit.MINUTES
+        );
 
         return refreshToken;
     }

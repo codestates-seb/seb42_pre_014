@@ -3,6 +3,9 @@ spring:
     url: jdbc:mysql://localhost:3306/stackoverflow?serverTimezone=Asia/Seoul
     username: root
     password: 1234
+  redis:
+    host: localhost
+    port: 6379
   jpa:
     hibernate:
       ddl-auto: create
@@ -15,5 +18,5 @@ mail:
     admin: admin@gmail.com
 jwt:
   secret-key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 30
-  refresh-token-expiration-minutes: 420
+  access-token-expiration-minute: 10
+  refresh-token-expiration-minute: 420
