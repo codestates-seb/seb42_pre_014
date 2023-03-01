@@ -16,9 +16,8 @@ import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faDev } from "@fortawesome/free-brands-svg-icons";
 import useDetectClose from "./hooks/useDetectClose";
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import RightSidebar from "./Rightsidebar";
-
 
 const QuestionBodyTextarea = styled.textarea`
     background: none;
@@ -83,71 +82,71 @@ const QuestionStatcontainer = styled.div`
     margin-left: 10px;
 `;
 const Leftbuttons = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 `;
 const Tag = styled.span`
-  display: inline-block;
-  margin-right: 5px;
-  background-color: #3e4a52;
-  color: #9cc3db;
-  padding: 7px;
-  border-radius: 4px;
-  font-size: 0.7rem;
+    display: inline-block;
+    margin-right: 5px;
+    background-color: #3e4a52;
+    color: #9cc3db;
+    padding: 7px;
+    border-radius: 4px;
+    font-size: 0.7rem;
 `;
 const Dropdown = styled.div`
-  background-color: rgba(255, 255, 255, 0.05);
-  width: 350px;
-  height: 100px;
-  /* position: absolute; */
-  /* margin: 10px; */
-  padding: 15px 15px 0px 15px;
-  border: 10px;
-  border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.05);
+    width: 350px;
+    height: 100px;
+    /* position: absolute; */
+    /* margin: 10px; */
+    padding: 15px 15px 0px 15px;
+    border: 10px;
+    border-radius: 5px;
 `;
 const Sharetext = styled.div`
-  font-size: 14px;
-  padding: 0px 0px 10px 0px;
+    font-size: 14px;
+    padding: 0px 0px 10px 0px;
 `;
 const Dropinput = styled.input`
-  cursor: not-allowed;
-  width: 96%;
-  height: 35px;
-  border: 10px;
-  border-radius: 3px;
-  font-size: 15px;
-  padding: 0px 0px 0px 10px;
-  background-color: grey;
+    cursor: not-allowed;
+    width: 96%;
+    height: 35px;
+    border: 10px;
+    border-radius: 3px;
+    font-size: 15px;
+    padding: 0px 0px 0px 10px;
+    background-color: grey;
 `;
 const Copybutton = styled.div`
-  color: #3ca4ff;
-  cursor: pointer;
-  padding: 10px 0px 0px 0px;
-  font: caption;
-  font-size: 15px;
+    color: #3ca4ff;
+    cursor: pointer;
+    padding: 10px 0px 0px 0px;
+    font: caption;
+    font-size: 15px;
 `;
 const LicenseLink = styled.a`
-  font: caption;
-  color: #3ca4ff;
-  cursor: pointer;
-  padding: 10px 0px 0px 0px;
-  font-size: 15px;
+    font: caption;
+    color: #3ca4ff;
+    cursor: pointer;
+    padding: 10px 0px 0px 0px;
+    font-size: 15px;
 `;
 const Dropbuttons = styled.a`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 `;
 const Sharebuttons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 5px 0px 0px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 0px 0px 0px;
 `;
 const Sharebtn = styled.div`
-  padding: 5px;
-  cursor: pointer;
+    padding: 5px;
+    cursor: pointer;
 `;
 const Alert = styled.div`
   background-color: rgb(52,75,60);
@@ -248,29 +247,27 @@ const Question = () => {
             }
         }
         return "now";
-    }
+    };
     const handleChange = (e) => {
         setCopyText(e.target.value);
     };
-    
 
     useEffect(() => {
         fetch("http://localhost:3001/questions/?id=1")
-          .then((res) => res.json())
-          .then((json) => setQuest(json))
-          .catch((err) => console.err(err));
-          
-      }, []);
+            .then((res) => res.json())
+            .then((json) => setQuest(json))
+            .catch((err) => console.err(err));
+    }, []);
 
     useEffect(() => {
         let timer = setTimeout(() => {
             setCopied(false);
-            console.log("복사완료!")
+            console.log("복사완료!");
         }, 1500);
         return () => {
-          clearTimeout(timer);
+            clearTimeout(timer);
         };
-      }, [copied]);
+    }, [copied]);
 
     //   console.log(quest);
     return (

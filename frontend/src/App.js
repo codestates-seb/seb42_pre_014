@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import QuestionsPage from "./QuestionPage";
 import AskPage from "./AskPage";
 import Header from "./Header";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Question from "./Question";
 import useFetch from "./json-server/useFetch";
 import UserContext from "./UserContext";
@@ -15,22 +15,14 @@ import Leftsidebar from "./Leftsidebar";
 import Footer from "./Footer";
 import "./App.css";
 import ProfilePage from "./ProfilePage";
-import styled from "styled-components";
 import TagsPage from "./TagsPage";
 
-const LSidebar = styled.div`
-  @media screen and (max-width: 640px) {
-    display:none;
-  }
-`;
-const RSidebar = styled.div`
-  @media screen and (max-width: 980px) {
-    display:none;
-  }
-`;
 function App() {
     const [data, isPending, error] = useFetch(`http://localhost:3001/questions/`);
     const [user, setUser] = useState(null);
+
+    const location = useLocation();
+    const className = `page-${location.pathname === "/ask" ? "Askpage" : "Main"}`;
 
     function checkAuth() {
         return new Promise((resolve, reject) => {
@@ -58,19 +50,17 @@ function App() {
             {error && <div>{error}</div>}
             <UserContext.Provider value={{ user, checkAuth }}>
                 <Header />
-                <div className="Main-container">
-                  <LSidebar>
-                    <Leftsidebar/>
-                  </LSidebar>
-                  <Routes>
-                      <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
-                      <Route path="/ask" element={<AskPage data={data} />} />
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route path="/register" element={<RegisterPage />} />
-                      <Route path="/profile" element={<ProfilePage />} />
-                      <Route path="/:id" element={<Question />} />
-                      <Route path="/tags" element={<TagsPage />} />
-                  </Routes>
+                <div className={className}>
+                    <Leftsidebar />
+                    <Routes>
+                        <Route path="/" element={<QuestionsPage data={data} isPending={isPending} />} />
+                        <Route path="/ask" element={<AskPage data={data} />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/:id" element={<Question />} />
+                        <Route path="/tags" element={<TagsPage />} />
+                    </Routes>
                 </div>
                 <Footer />
             </UserContext.Provider>

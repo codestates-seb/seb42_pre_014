@@ -19,6 +19,7 @@ const StyledHeader = styled.header`
     display: grid;
     grid-template-columns: 48px 220px 1fr 200px;
     grid-column-gap: 20px;
+    border-top: 2px solid #f48224;
     @media screen and (max-width: 640px) {
         grid-template-columns: 48px 50px 1fr 200px;
         grid-column-gap: 0px;
