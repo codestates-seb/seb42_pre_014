@@ -6,12 +6,9 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const Facircleinfo = <FontAwesomeIcon icon={faCircleInfo}></FontAwesomeIcon>;
 const Sidebar_container = styled.div`
-    /* box-sizing: border-box; */
     display: flex;
     height: auto;
     width: auto;
-    position: sticky;
-    /* max-width: 164px; */
     top: 70px;
     justify-content: flex-end;
     padding: 10px 0;
