@@ -16,12 +16,6 @@ const Sidebar_container = styled.div`
     justify-content: flex-end;
     padding: 10px 0;
     background-color: #2d2d2d;
-    border-style: solid;
-    border-width: 0 1px 0 0;
-    border-color: #535353;
-    @media screen and (max-width: 640px) {
-        display: none;
-    }
 `;
 const Sidebar_items_container = styled.div`
     position: sticky;
