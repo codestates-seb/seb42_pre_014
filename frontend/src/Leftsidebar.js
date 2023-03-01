@@ -10,22 +10,16 @@ const Sidebar_container = styled.div`
     display: flex;
     height: auto;
     width: auto;
-    /* position: relative; */
+    position: sticky;
     /* max-width: 164px; */
-    top: 0;
+    top: 70px;
     justify-content: flex-end;
     padding: 10px 0;
     background-color: #2d2d2d;
-    border-style: solid;
-    border-width: 0 1px 0 0;
-    border-color: #535353;
-    @media screen and (max-width: 640px) {
-        display: none;
-    }
 `;
 const Sidebar_items_container = styled.div`
     position: sticky;
-    top: 80px;
+    /* top: 80px; */
     height: 500px;
     max-width: 164px;
     margin-left: 50px;
