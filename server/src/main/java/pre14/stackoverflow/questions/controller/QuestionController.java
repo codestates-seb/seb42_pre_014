@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pre14.stackoverflow.answer.entity.Answer;
 import pre14.stackoverflow.answer.service.AnswerService;
@@ -28,6 +29,7 @@ import java.util.List;
 @RequestMapping("/questions")
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
@@ -51,7 +53,7 @@ public class QuestionController {
 
     @PatchMapping("/{question-id}")
     public ResponseEntity updateQuestion(@PathVariable("question-id")@Positive long questionId,
-                                         @RequestBody QuestionDto.Patch questionPatchDto) {
+                                         @Valid @RequestBody QuestionDto.Patch questionPatchDto) {
 
         Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
         question.setQuestionId(questionId);

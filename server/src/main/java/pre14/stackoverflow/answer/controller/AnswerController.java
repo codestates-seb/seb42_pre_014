@@ -46,7 +46,8 @@ public class AnswerController {
         postAnswer.setQuestion(questionService.findQuestion(answerPostDto.getQuestionId()));
 
         Answer answer = answerService.createAnswer(postAnswer);
-        AnswerDto.InfoResponse response = mapper.answerToAnswerInfoResponse(answer);
+        Answer answer1 = answerService.findAnswer(answer.getAnswerId());
+        AnswerDto.InfoResponse response = mapper.answerToAnswerInfoResponse(answer1);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
@@ -56,6 +57,7 @@ public class AnswerController {
     public ResponseEntity<?> patchAnswer(@Positive @PathVariable("answer-id") long answerId,
                                       @Valid @RequestBody AnswerDto.Patch answerPatchDto) {
         answerPatchDto.setAnswerId(answerId);
+
 
         Answer requestAnswer = mapper.answerPatchDtoToAnswer(answerPatchDto);
         Answer answer = answerService.updateAnswer(requestAnswer);

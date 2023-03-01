@@ -52,6 +52,8 @@ public class QuestionVoteService {
         return verifiedQuestion;
     }
 
+
+
 //    public QuestionVote questionVoteUp(long questionId) {
 //        String loginMemberEmail = SecurityContextHolder.getContext().getAuthentication().getName(); //토큰에서 유저확인.
 //        Question question = questionService.findQuestion(questionId);

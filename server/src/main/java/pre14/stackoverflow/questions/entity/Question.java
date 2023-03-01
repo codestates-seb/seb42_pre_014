@@ -1,14 +1,14 @@
 package pre14.stackoverflow.questions.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import pre14.stackoverflow.answer.entity.Answer;
 import pre14.stackoverflow.member.entity.Member;
-import pre14.stackoverflow.tag.QuestionTag;
+import pre14.stackoverflow.tag.entity.Tag;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,10 +20,10 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)//시간 생성해주는 것 LocalDateTime함께사용
 @RequiredArgsConstructor
 @ToString //애플리케이션 실행 시 콘솔에 여러정보 확인할 수 있게해주는것
-@Table(name = "question")
 public class Question{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id")
     private Long questionId;
     @Column(nullable = false, length = 100)
     private String title;
@@ -38,6 +38,10 @@ public class Question{
     @JoinColumn(name = "member_id")
     @JsonBackReference
     private Member member;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
+    private List<Tag> tags = new ArrayList<>();
 
     // 질문 ~ 답변 (양방향)
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)

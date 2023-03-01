@@ -12,10 +12,12 @@ import pre14.stackoverflow.questions.dto.QuestionDto;
 import pre14.stackoverflow.questions.dto.QuestionVoteDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.entity.QuestionVote;
+import pre14.stackoverflow.tag.dto.TagDto;
+import pre14.stackoverflow.tag.entity.Tag;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-01T12:24:09+0900",
+    date = "2023-03-01T22:40:00+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -79,6 +81,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         response.setQuestionStatus( question.getQuestionStatus() );
         response.setCreatedAt( question.getCreatedAt() );
         response.setModifiedAt( question.getModifiedAt() );
+        response.setTags( tagListToTagResponseDtoList( question.getTags() ) );
         response.setAnswers( answerListToResponseList( question.getAnswers() ) );
 
         return response;
@@ -120,6 +123,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         totalPageResponse.setContents( question.getContents() );
         totalPageResponse.setVoteCount( question.getVoteCount() );
         totalPageResponse.setQuestionStatus( question.getQuestionStatus() );
+        totalPageResponse.setTags( tagListToTagResponseDtoList( question.getTags() ) );
         totalPageResponse.setCreatedAt( question.getCreatedAt() );
         totalPageResponse.setModifiedAt( question.getModifiedAt() );
 
@@ -158,6 +162,32 @@ public class QuestionMapperImpl implements QuestionMapper {
         response.setMemberStatus( member.getMemberStatus() );
 
         return response;
+    }
+
+    protected TagDto.TagResponseDto tagToTagResponseDto(Tag tag) {
+        if ( tag == null ) {
+            return null;
+        }
+
+        TagDto.TagResponseDto.TagResponseDtoBuilder tagResponseDto = TagDto.TagResponseDto.builder();
+
+        tagResponseDto.tagId( tag.getTagId() );
+        tagResponseDto.hashTag( tag.getHashTag() );
+
+        return tagResponseDto.build();
+    }
+
+    protected List<TagDto.TagResponseDto> tagListToTagResponseDtoList(List<Tag> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<TagDto.TagResponseDto> list1 = new ArrayList<TagDto.TagResponseDto>( list.size() );
+        for ( Tag tag : list ) {
+            list1.add( tagToTagResponseDto( tag ) );
+        }
+
+        return list1;
     }
 
     protected AnswerDto.Response answerToResponse(Answer answer) {

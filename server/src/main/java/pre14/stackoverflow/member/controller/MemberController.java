@@ -14,11 +14,10 @@ import pre14.stackoverflow.member.dto.*;
 import pre14.stackoverflow.member.entity.Member;
 import pre14.stackoverflow.member.mapper.MemberMapper;
 import pre14.stackoverflow.member.service.MemberService;
-import pre14.stackoverflow.utils.UriCreator;
+
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 @RequestMapping("/members")
@@ -40,9 +39,9 @@ public class MemberController {
         Member member=mapper.memberPostToMember(requestBody);
         Member createdMember=memberService.createMember(member);
         MemberDto.Response response= mapper.memberToMemberResponse(createdMember);
-//        URI location= UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);//.created(location).build();
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 

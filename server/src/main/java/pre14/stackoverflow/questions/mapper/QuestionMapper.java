@@ -9,6 +9,7 @@ import pre14.stackoverflow.questions.dto.QuestionDto;
 import pre14.stackoverflow.questions.dto.QuestionVoteDto;
 import pre14.stackoverflow.questions.entity.Question;
 import pre14.stackoverflow.questions.entity.QuestionVote;
+import pre14.stackoverflow.tag.entity.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,15 @@ public interface QuestionMapper {
     @Mapping(source = "answers", target = "answerCount", qualifiedByName = "countAnswers")
     @Mapping(source = "member.questions", target = "member.numberOfQuestions", qualifiedByName = "countQuestions")
     @Mapping(source = "member.answers", target = "member.numberOfAnswers", qualifiedByName = "countAnswers")
+//    @Mapping(source = "tags", target = "tags", qualifiedByName = "tag")
     QuestionDto.TotalPageResponse questionToQuestionTotalPageResponse(Question question);
     @Named("countAnswers")
     default long countAnswers(List<Answer> answers) { return answers.size();}
     @Named("countQuestions")
     default long countNumberOfQuestions(List<Question> questions) { return questions.size();}
+
+//    @Named("tag")
+//    default List<Tag> tagName(List<Tag> tagName) {return tagName;}
 
     List<QuestionDto.TotalPageResponse> questionToQuestionTotalPageResponseDtos(List<Question> questions);
 

@@ -16,10 +16,16 @@ import java.time.LocalDateTime;
 public abstract class Auditable {
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    protected LocalDateTime createdTime;
 
     @LastModifiedDate
-    @Column(name = "last_modified_at")
-    private LocalDateTime modifiedAt;
+    protected LocalDateTime modifiedTime;
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public LocalDateTime getModifiedTime() {
+        return modifiedTime;
+    }
 }

@@ -4,9 +4,8 @@ import lombok.*;
 import pre14.stackoverflow.answer.dto.AnswerDto;
 import pre14.stackoverflow.member.dto.MemberDto;
 import pre14.stackoverflow.questions.entity.Question;
-import pre14.stackoverflow.tag.QuestionTag;
+import pre14.stackoverflow.tag.dto.TagDto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -31,9 +30,9 @@ public class QuestionDto {
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String contents;
 
-//        private Long answerId;
+//      private Long answerId;
 
-       //    private List<QuestionTag> tagList;
+//      private List<QuestionTag> tagList;
     }
 
     @Getter
@@ -61,6 +60,7 @@ public class QuestionDto {
         private Question.QuestionStatus questionStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private List<TagDto.TagResponseDto> tags;
         private List<AnswerDto.Response> answers;
 
 
@@ -75,9 +75,11 @@ public class QuestionDto {
         private long voteCount;
         private MemberDto.Response member;
         private Question.QuestionStatus questionStatus;
+        private List<TagDto.TagResponseDto> tags;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private long answerCount;
+        
     }
 
     @Getter

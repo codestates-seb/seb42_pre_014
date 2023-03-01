@@ -27,6 +27,7 @@ public class QuestionVote {
 
     public enum QuestionVoteStatus {
         UP("추천"),
+        NONE("취소"),
         DOWN("비추천");
 
         @Getter
