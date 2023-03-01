@@ -17,6 +17,7 @@ import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faDev } from "@fortawesome/free-brands-svg-icons";
 import useDetectClose from "./hooks/useDetectClose";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import RightSidebar from "./Rightsidebar";
 
 const QuestionBodyTextarea = styled.textarea`
     background: none;
@@ -41,10 +42,17 @@ const Questionarticle = styled.div`
     grid-template-columns: 1fr min-content;
     padding: 10px 20px 0px 20px;
 `;
-const Buttondiv = styled.div`
+const Questioninfo = styled.div`
     display: flex;
     flex-direction: row;
     padding: 5px 0px 15px 0px;
+    border-bottom: 1px solid #777;
+`;
+const Buttondiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    padding: 30px 0px 15px 0px;
+    /* border-bottom: 1px solid #777; */
 `;
 const Answerbutton = styled.div`
     display: flex;
@@ -65,10 +73,10 @@ const QuestionStat = styled.span`
     cursor: pointer;
 `;
 const StyledQuestionRow = styled.div`
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(57, 57, 57, 0.05);
     padding: 15px 15px 10px;
     display: flex;
-    border-top: 1px solid #555;
+    /* border-top: 1px solid #555; */
 `;
 const QuestionStatcontainer = styled.div`
     margin-left: 10px;
@@ -141,25 +149,41 @@ const Sharebtn = styled.div`
     cursor: pointer;
 `;
 const Alert = styled.div`
-    background-color: rgb(219, 240, 226);
-    border: 2px solid rgba(255, 127, 80, 0.1);
-    border-color: rgba(47, 197, 34, 0.4);
-    border-radius: 5px;
-    /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
-    height: 40px;
-    width: 500px;
-    padding: 5px 5px 5px 10px;
-    text-align: center;
-    font-size: 1rem;
-    color: black;
+  background-color: rgb(52,75,60);
+  border: 2px solid rgba(255, 127, 80, 0.1);
+  border-color: rgba(52,75,60, 0.4);
+  border-radius: 3px;
+  /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
+  height: 40px;
+  width: 500px;
+  padding: 0px 5px 2px 13px;
+  text-align: center;
+  font-size: 13px;
+  color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  position: fixed;
+  top: 20px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+`;
+const Container = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: start;
-    position: fixed;
-    top: 20px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
+    flex-direction: row;
+`;
+const Section = styled.div`
+    flex-direction: column;
+    margin: 0px 20px 0px 0px;
+`;
+const RSidebar = styled.div`
+  @media screen and (max-width: 980px) {
+    display:none;
+  }
+`;
+const Bodytext = styled.div`
+    padding: 0px 0px 30px 0px;
 `;
 
 const Question = () => {
@@ -256,132 +280,96 @@ const Question = () => {
                         <h1>{data.title}</h1>
                         <BlueButtonLink to="../ask">Ask&nbsp;Question</BlueButtonLink>
                     </HeaderRow>
-                    <Buttondiv>
+                    <Questioninfo>
                         <Divfont>Asked&nbsp;</Divfont>
                         {elapsedTime(data.writetime)}
                         <Divfont>&nbsp;&nbsp;Modified&nbsp;</Divfont>
                         {elapsedTime(data.modifyday)}
                         <Divfont>&nbsp;&nbsp;Viewed&nbsp;</Divfont>
                         {data.views + " times"}
-                    </Buttondiv>
-                    <StyledQuestionRow>
-                        <Leftbuttons>
-                            <QuestionStat>
-                                <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp} />
-                            </QuestionStat>
-                            <div>{data.votes}</div>
-                            <QuestionStat>
-                                <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown} />
-                            </QuestionStat>
-                            <QuestionStat>
-                                {data.save === "false" ? (
-                                    <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick} />
-                                ) : (
-                                    <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick} />
-                                )}
-                            </QuestionStat>
-                            <QuestionStat>
-                                <FontAwesomeIcon icon={faClockRotateLeft} size="2x" />
-                            </QuestionStat>
-                        </Leftbuttons>
-                        <QuestionStatcontainer>
-                            <div>{data.body}</div>
-                            {data.tags.map((el) => {
+                    </Questioninfo>
+                    <Container>
+                        <Section>
+                            <StyledQuestionRow>
+                            <Leftbuttons>
+                                <QuestionStat>
+                                    <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
+                                </QuestionStat>
+                                    <div>{ data.votes }</div>
+                                <QuestionStat>
+                                    <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
+                                </QuestionStat>
+                                <QuestionStat>
+                                    {data.save === "false" ? <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick}/> : <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick}/>}
+                                </QuestionStat>
+                                <QuestionStat>
+                                    <FontAwesomeIcon icon={faClockRotateLeft} size="2x"/>
+                                </QuestionStat>
+                            </Leftbuttons>
+                            <QuestionStatcontainer>
+                                <Bodytext>{ data.body }</Bodytext>
+                                {data.tags.map((el) => {
                                 return <Tag>{el}</Tag>;
-                            })}
-                            <div ref={dropDownRef}>
-                                <Buttondiv>
-                                    <Answerbutton onClick={() => setIsOpen(!isOpen)}>Share</Answerbutton>
-                                    <Answerbutton onClick={() => setIsOpen(false)}>Edit&nbsp;</Answerbutton>
-                                    <Answerbutton onClick={() => setIsOpen(false)}>Follow</Answerbutton>
-                                </Buttondiv>
-                                {isOpen && (
+                                })}
+                                <div ref={dropDownRef}>
+                                    <Buttondiv>
+                                        <Answerbutton onClick={() => setIsOpen(!isOpen)}>Share</Answerbutton>
+                                        <Answerbutton onClick={() => setIsOpen(false)}>Edit&nbsp;</Answerbutton>
+                                        <Answerbutton onClick={() => setIsOpen(false)}>Follow</Answerbutton>
+                                    </Buttondiv>
+                                    {isOpen && 
                                     <Dropdown>
-                                        <Sharetext>
-                                            <b>Share a link to this question</b> (Includes your user id)
-                                        </Sharetext>
-                                        <Dropinput value={copyText} onChange={handleChange} />
+                                        <Sharetext><b>Share a link to this question</b> (Includes your user id)</Sharetext>
+                                        <Dropinput
+                                            value={copyText}
+                                            onChange={handleChange}
+                                        />
                                         <Dropbuttons>
-                                            <CopyToClipboard text={copyText} onCopy={() => setCopied(true)}>
+                                            <CopyToClipboard text={copyText}
+                                                onCopy={() => setCopied(true)}>
                                                 <Copybutton type="button">Copy link</Copybutton>
                                             </CopyToClipboard>
                                             {copied ? <Alert>Link copied to clipboard.</Alert> : null}
-                                            <LicenseLink
-                                                href="https://creativecommons.org/licenses/by-sa/4.0/"
-                                                target="_blank"
-                                                rel="noreferrer"
-                                            >
-                                                CC BY-SA 4.0
-                                            </LicenseLink>
+                                            <LicenseLink href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</LicenseLink>
                                             <Sharebuttons>
-                                                <Sharebtn
-                                                    onClick={() =>
-                                                        window.open(
-                                                            "https://www.facebook.com/sharer/sharer.php?u=https://stackoverflow.com/",
-                                                            "_blank",
-                                                            "width=650 height=550"
-                                                        )
-                                                    }
-                                                >
-                                                    <FontAwesomeIcon icon={faFacebookSquare} size="lg" />
-                                                </Sharebtn>
-                                                <Sharebtn
-                                                    onClick={() =>
-                                                        window.open(
-                                                            "https://www.twitter.com/sharer/sharer.php?u=https://stackoverflow.com/",
-                                                            "_blank",
-                                                            "width=650 height=550"
-                                                        )
-                                                    }
-                                                >
-                                                    <FontAwesomeIcon icon={faTwitter} size="lg" />
-                                                </Sharebtn>
-                                                <Sharebtn
-                                                    onClick={() =>
-                                                        window.open(
-                                                            "https://dev.to/new?prefill=https://stackoverflow.com/",
-                                                            "_blank",
-                                                            "width=650 height=550"
-                                                        )
-                                                    }
-                                                >
-                                                    <FontAwesomeIcon icon={faDev} size="lg" />
-                                                </Sharebtn>
+                                                <Sharebtn onClick={() => window.open('https://www.facebook.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faFacebookSquare} size="lg"/></Sharebtn>
+                                                <Sharebtn onClick={() => window.open('https://www.twitter.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faTwitter} size="lg"/></Sharebtn>
+                                                <Sharebtn onClick={() => window.open('https://dev.to/new?prefill=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faDev} size="lg"/></Sharebtn>
                                             </Sharebuttons>
                                         </Dropbuttons>
-                                    </Dropdown>
-                                )}
+                                    </Dropdown>}
+                                </div>
+                            </QuestionStatcontainer>
+                            </StyledQuestionRow>
+                            <h2>1 Answer</h2>
+                            {quest.map((el) => {
+                                return (
+                                    <Answers
+                                        title={el.answer.answerBody}
+                                        number={el.answer.number}
+                                        // id={id}
+                                    />
+                                
+                                );
+                            })}
+                            <div>
+                                <h2>Your Answer</h2>
+                                <QuestionBodyTextarea
+                                    onChange={e => 
+                                        setAnswer({
+                                            "answerBody": e.target.value,
+                                            "votes": 0,
+                                            "save": "false",
+                                            "number": 2
+                                        })}></QuestionBodyTextarea>
+                                <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
                             </div>
-                        </QuestionStatcontainer>
-                    </StyledQuestionRow>
-                    <h2>1 Answer</h2>
-                    {quest.map((el) => {
-                        return (
-                            <Answers
-                                title={el.answer.answerBody}
-                                number={el.answer.number}
-                                // id={id}
-                            />
-                        );
-                    })}
-                    <div>
-                        <h2>Your Answer</h2>
-                        <QuestionBodyTextarea
-                            onChange={(e) =>
-                                setAnswer({
-                                    answerBody: e.target.value,
-                                    votes: 0,
-                                    save: "false",
-                                    number: 2,
-                                })
-                            }
-                        ></QuestionBodyTextarea>
-                        <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
-                    </div>
-                    <h3>
-                        Not the answer you're looking for? Browse other questions tagged r&nbsp;string&nbsp;stringr or
-                        ask your own question.
-                    </h3>
+                            <h3>Not the answer you're looking for? Browse other questions tagged r&nbsp;string&nbsp;stringr or ask your own question.</h3>
+                        </Section>
+                        <RSidebar>
+                            <RightSidebar/>
+                        </RSidebar>
+                    </Container>
                 </Questionarticle>
             )}
         </>
