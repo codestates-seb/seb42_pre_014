@@ -30,11 +30,6 @@ const GlobalStyles = createGlobalStyle`
     padding: 15px;
     border-radius: 4px;
   }
-  svg {
-    .white {
-      fill:white
-    }
-  }
 `;
 
 export default GlobalStyles;
