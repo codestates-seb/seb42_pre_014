@@ -239,21 +239,23 @@ const Containerbox = styled.div`
 
 export default function AskPage() {
     const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
-    const [writetime, setWritetime] = useState(new Date());
-    const [modifyday, setModifyday] = useState(new Date());
-    const [views, setViews] = useState("0 times");
-    const [votes, setVotes] = useState(0);
-    const [save, setSave] = useState("false");
+    const [contents, setContents] = useState("");
+    // const [writetime, setWritetime] = useState(new Date());
+    // const [modifyday, setModifyday] = useState(new Date());
+    // const [views, setViews] = useState("0 times");
+    // const [votes, setVotes] = useState(0);
+    // const [save, setSave] = useState("false");
     const [focustitle, setFocustitle] = useState(false);
     const [focusbody, setFocusbody] = useState(false);
     const [focustags, setFocustags] = useState(false);
     const [focusdup, setFocusdup] = useState(false);
-    const [tags, setTags] = useState([]);
+    const [tag, setTag] = useState([]);
+    const [memberId, setMemberId] = useState(1);
 
     const handleSubmit = () => {
-        const data = { title, body, writetime, modifyday, views, votes, save, tags};
-        fetchCreate("http://localhost:3001/questions/", data);
+        const data = { title, contents, tag, memberId};
+        // fetchCreate("/questions/", data);
+        console.log(data)
     };
     const titlefocus = () => {
         setFocustitle(true);
@@ -271,14 +273,14 @@ export default function AskPage() {
         setFocustags(true);
     };
     const removeTags = (indexToRemove) => {
-      const deletetags = tags.filter(item => item !== tags[indexToRemove])
-      setTags(deletetags)
+      const deletetags = tag.filter(item => item !== tag[indexToRemove])
+      setTag(deletetags)
     };
   
     const addTags = (e) => {
-      if (e.target.value.length !== 0 && e.key === 'Enter' && !tags.includes(e.target.value)) {
-        let updatedTagList = [...tags, e.target.value]
-        setTags(updatedTagList)
+      if (e.target.value.length !== 0 && e.key === 'Enter' && !tag.includes(e.target.value)) {
+        let updatedTagList = [...tag, e.target.value]
+        setTag(updatedTagList)
         e.target.value = '';
       }
     };
@@ -341,14 +343,14 @@ export default function AskPage() {
                             The body of your question contains your problem details and results. Minimum 30 characters.
                         </Subtitle>
                         <QuestionBodyTextarea
-                            onChange={(e) => setBody(e.target.value)}
+                            onChange={(e) => setContents(e.target.value)}
                             onFocus={(e) => bodyfocus()}
                             placeholder="More info about your question. You can use markdown here"
                         >
-                            {body}
+                            {contents}
                         </QuestionBodyTextarea>
                         <PreviewArea>
-                            <ReactMarkdown plugins={[gfm]} children={body} />
+                            <ReactMarkdown plugins={[gfm]} children={contents} />
                         </PreviewArea>
                     </QuestionContainer>
                 </Containerbox>
@@ -373,7 +375,7 @@ export default function AskPage() {
                         </Subtitle>
                         <TagsInputContainer>
                           <ul>
-                              {tags.map((tag, index) => (
+                              {tag.map((tag, index) => (
                                 <li key={index} className="tag">
                                   <span>{tag}</span>
                                   <span onClick={() => removeTags(index)}>&nbsp;<b>X</b>

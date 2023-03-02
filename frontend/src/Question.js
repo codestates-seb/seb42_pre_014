@@ -188,13 +188,15 @@ const Bodytext = styled.div`
 
 const Question = () => {
     const { id } = useParams();
-    const [data, isPending, error] = useFetch(`http://localhost:3001/questions/${id}`);
-    const [answer, setAnswer] = useState("");
+    const [data, isPending, error] = useFetch(`/questions/${id}`);
+    const [contents, setContents] = useState("");
     const [quest, setQuest] = useState([]);
     const dropDownRef = useRef();
     const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
-    const [copyText, setCopyText] = useState(`http://localhost:3000/${id}`);
+    const [copyText, setCopyText] = useState(`http://3.39.150.26:8080/${id}`);
     const [copied, setCopied] = useState(false);
+    const [questionId, setQuestionId] = useState(1);
+    const [memberId, setMemberId] = useState(2);
 
     // const handleSubmit = (e) => {
     //     // e.preventDefault(); //새로고침 막기
@@ -203,26 +205,29 @@ const Question = () => {
     // }
     const handleSubmit = () => {
         // e.preventDefault(); //새로고침 막기
-        const data = { answer };
-        fetchPatch("http://localhost:3001/questions/", id, data);
-        console.log(answer);
+        const data = { questionId, memberId, contents };
+        fetchCreate("/answers/", data);
     };
     const voteUp = () => {
-        const votes = { votes: data.votes + 1 };
-        fetchPatch("http://localhost:3001/questions/", id, votes);
+        // const votes = { votes: data.votes + 1 };
+        const data = { memberId };
+        fetchCreate(`/questions/1/upvotes`, data);
+        window.location.reload();
     };
     const voteDown = () => {
-        const votes = { votes: data.votes - 1 };
-        fetchPatch("http://localhost:3001/questions/", id, votes);
+        // const votes = { votes: data.votes - 1 };
+        const data = { memberId };
+        fetchCreate(`/questions/${id}/downvotes`, data);
+        window.location.reload();
     };
     const bookMarkClick = () => {
         // setBookmark(!bookmark);
         if (data.save === "false") {
             const saves = { save: (data.save = "true") };
-            fetchPatch("http://localhost:3001/questions/", id, saves);
+            fetchPatch("/questions/", id, saves);
         } else {
             const saves = { save: (data.save = "false") };
-            fetchPatch("http://localhost:3001/questions/", id, saves);
+            fetchPatch("/questions/", id, saves);
         }
     };
     const elapsedTime = (date) => {
@@ -253,7 +258,7 @@ const Question = () => {
     };
 
     useEffect(() => {
-        fetch("http://localhost:3001/questions/?id=1")
+        fetch(`/questions/${id}`)
             .then((res) => res.json())
             .then((json) => setQuest(json))
             .catch((err) => console.err(err));
@@ -262,7 +267,6 @@ const Question = () => {
     useEffect(() => {
         let timer = setTimeout(() => {
             setCopied(false);
-            console.log("복사완료!");
         }, 1500);
         return () => {
             clearTimeout(timer);
@@ -277,7 +281,7 @@ const Question = () => {
             {data && (
                 <Questionarticle>
                     <HeaderRow>
-                        <h1>{data.title}</h1>
+                        <h1>{data.data.title}</h1>
                         <BlueButtonLink to="../ask">Ask&nbsp;Question</BlueButtonLink>
                     </HeaderRow>
                     <Questioninfo>
@@ -286,7 +290,8 @@ const Question = () => {
                         <Divfont>&nbsp;&nbsp;Modified&nbsp;</Divfont>
                         {elapsedTime(data.modifyday)}
                         <Divfont>&nbsp;&nbsp;Viewed&nbsp;</Divfont>
-                        {data.views + " times"}
+                        {/* {data.views + " times"} */}
+                        {"1 times"}
                     </Questioninfo>
                     <Container>
                         <Section>
@@ -295,7 +300,7 @@ const Question = () => {
                                 <QuestionStat>
                                     <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
                                 </QuestionStat>
-                                    <div>{ data.votes }</div>
+                                    <div>{ data.data.voteCount }</div>
                                 <QuestionStat>
                                     <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
                                 </QuestionStat>
@@ -307,8 +312,8 @@ const Question = () => {
                                 </QuestionStat>
                             </Leftbuttons>
                             <QuestionStatcontainer>
-                                <Bodytext>{ data.body }</Bodytext>
-                                {data.tags.map((el) => {
+                                <Bodytext>{ data.data.contents }</Bodytext>
+                                {data.data.tag.map((el) => {
                                 return <Tag>{el}</Tag>;
                                 })}
                                 <div ref={dropDownRef}>
@@ -341,12 +346,14 @@ const Question = () => {
                                 </div>
                             </QuestionStatcontainer>
                             </StyledQuestionRow>
-                            <h2>1 Answer</h2>
-                            {quest.map((el) => {
+                            <h2>{quest.data.answers[0].answerCount} Answer</h2>
+                            {/* {console.log(data.data.member.memberId)} */}
+                            {/* {console.log(quest.data.answers[0])} */}
+                            {quest.data.answers.map((el) => {
                                 return (
                                     <Answers
-                                        title={el.answer.answerBody}
-                                        number={el.answer.number}
+                                        title={el.contents}
+                                        // number={el.answers.number}
                                         // id={id}
                                     />
                                 
@@ -355,13 +362,11 @@ const Question = () => {
                             <div>
                                 <h2>Your Answer</h2>
                                 <QuestionBodyTextarea
-                                    onChange={e => 
-                                        setAnswer({
-                                            "answerBody": e.target.value,
-                                            "votes": 0,
-                                            "save": "false",
-                                            "number": 2
-                                        })}></QuestionBodyTextarea>
+                                    onChange={e => setContents(e.target.value)
+                                        
+                                        }>
+
+                                    </QuestionBodyTextarea>
                                 <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
                             </div>
                             <h3>Not the answer you're looking for? Browse other questions tagged r&nbsp;string&nbsp;stringr or ask your own question.</h3>

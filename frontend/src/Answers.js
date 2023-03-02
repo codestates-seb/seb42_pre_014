@@ -139,7 +139,7 @@ const Alert = styled.div`
 
 const Answers = ({ title }) => {
   const { id } = useParams();
-  const [data, isPending, error ] = useFetch(`http://localhost:3001/questions/${id}`);
+  const [data, isPending, error] = useFetch(`/questions/${id}`);
   const [number, setNumber] = useState(1);
   const dropDownRef = useRef();
     const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
@@ -203,7 +203,6 @@ const Answers = ({ title }) => {
   useEffect(() => {
     let timer = setTimeout(() => {
         setCopied(false);
-        console.log("복사완료!")
     }, 1500);
     return () => {
       clearTimeout(timer);
@@ -221,12 +220,14 @@ const Answers = ({ title }) => {
         <QuestionStat>
             <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
         </QuestionStat>
-            <div>{ data.answer.votes }</div>
+            <div>{ data.data.answers.voteCount }</div>
+            {/* <div>0</div> */}
         <QuestionStat>
             <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
         </QuestionStat>
         <QuestionStat>
-            {data.answer.save === "false" ? <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick}/> : <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick}/>}
+          <FontAwesomeIcon icon={farBookmark} size="2x"/>
+            {/* {data.data.answers.save === "false" ? <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick}/> : <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick}/>} */}
         </QuestionStat>
         <QuestionStat>
             <FontAwesomeIcon icon={faClockRotateLeft} size="2x"/>
