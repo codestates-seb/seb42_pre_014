@@ -4,7 +4,7 @@ import styled from "styled-components";
 import HideRightSidebar from "./HideRightSidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
-
+import { ReactComponent as Search } from "../src/icons/MobileSearch.svg";
 const FaStackOverFlow = <FontAwesomeIcon icon={faStackOverflow} size="0.5x" />;
 
 const SB_container = styled.div`
@@ -79,6 +79,7 @@ const SB_Link = styled(Link)`
     margin-bottom: 5px;
 `;
 const SB_Img_container = styled.div``;
+const SB_Img = styled.img``;
 
 function RightSidebar() {
     if (HideRightSidebar()) return null;
@@ -127,6 +128,11 @@ function RightSidebar() {
                 <SB_item_list>
                     <SB_Item title2>Watched Tags</SB_Item>
                     <SB_Item column>
+                        <SB_Img_container>
+                            <SB_Img width="48" height="48">
+                                <Search />
+                            </SB_Img>
+                        </SB_Img_container>
                         <SB_Item>Watch Tags to curate your list of questions.</SB_Item>
                         <SB_Button>Watch a tag</SB_Button>
                     </SB_Item>
