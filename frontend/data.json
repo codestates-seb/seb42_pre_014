@@ -6,7 +6,11 @@
       "answerer": "minsangjung",
       "votes": 5,
       "answers": 1,
+<<<<<<< HEAD
       "views": 53,
+=======
+      "views": 34,
+>>>>>>> aa65a4eaddd2ed6c0aa623a9166bf9a9863bb487
       "tags": [
         "c++",
         "dictionary",
@@ -79,7 +83,7 @@
       "writer": "dangun",
       "votes": 1,
       "answers": 0,
-      "views": 7,
+      "views": 9,
       "tags": [
         "python",
         "bash",
@@ -337,6 +341,21 @@
         "save": "false",
         "number": 1
       }
+    },
+    {
+      "title": "테스트",
+      "body": "이것은 테스트입니다",
+      "writetime": "2023-03-01T08:09:08.951Z",
+      "modifyday": "2023-03-01T08:09:08.951Z",
+      "views": "0 times",
+      "votes": 0,
+      "save": "false",
+      "tags": [
+        "Test",
+        "테스트 성공?",
+        "아싸"
+      ],
+      "id": 15
     }
   ],
   "profile": {

@@ -62,11 +62,11 @@ const Input = styled.input`
     padding: 10px;
     /* margin-bottom: 20px; */
     color: #fff;
-    &:focus-within {
+    /* &:focus-within {
         border: 1px solid rgba(0, 103, 194, 0.4);
         box-shadow: 0 0 0 4px rgba(144, 203, 255, 0.4);
         border-radius: 3px;
-    }
+    } */
 `;
 const PreviewArea = styled.div`
     padding: 10px 20px;
@@ -94,11 +94,54 @@ const QuestionContainer = styled.div`
     }
 `;
 const TagsInputContainer = styled.div`
-    &:focus-within {
-        border: 1px solid rgba(0, 103, 194, 0.4);
-        box-shadow: 0 0 0 4px rgba(144, 203, 255, 0.4);
-        border-radius: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 8px 0px 8px;
+  border: 1px solid rgb(214, 216, 218);
+  border-radius: 3px;
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 8px 0 7px 0;
+    > .tag {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      margin: 0px 5px 0px 0px;
+      background-color: #3e4a52;
+      color: #9cc3db;
+      padding: 7px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      > span > b{
+        /* display: flex; */
+        cursor: pointer;
+        padding: 0px 4px 1px 4px;
+        border-radius: 2px;
+        font-size: 0.8rem;
+      }
+      > span > b:hover{
+        color: #3e4a52;
+        background-color: #9cc3db;
+      }
     }
+  }
+  > input {
+    flex: 1;
+    border: none;
+    height: 46px;
+    font-size: 14px;
+    padding: 4px 0 0 0;
+    :focus {
+      outline: transparent;
+    }
+  }
+  &:focus-within {
+      border: 1px solid rgba(0, 103, 194, 0.4);
+      box-shadow: 0 0 0 4px rgba(144, 203, 255, 0.4);
+      border-radius: 3px;
+  }
 `;
 const Header = styled.h1`
     display: flex;
@@ -193,22 +236,26 @@ const Containerbox = styled.div`
     }
 `;
 
+
 export default function AskPage() {
     const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
-    const [writetime, setWritetime] = useState(new Date());
-    const [modifyday, setModifyday] = useState(new Date());
-    const [views, setViews] = useState("0 times");
-    const [votes, setVotes] = useState(0);
-    const [save, setSave] = useState("false");
+    const [contents, setContents] = useState("");
+    // const [writetime, setWritetime] = useState(new Date());
+    // const [modifyday, setModifyday] = useState(new Date());
+    // const [views, setViews] = useState("0 times");
+    // const [votes, setVotes] = useState(0);
+    // const [save, setSave] = useState("false");
     const [focustitle, setFocustitle] = useState(false);
     const [focusbody, setFocusbody] = useState(false);
     const [focustags, setFocustags] = useState(false);
     const [focusdup, setFocusdup] = useState(false);
+    const [tag, setTag] = useState([]);
+    const [memberId, setMemberId] = useState(1);
 
     const handleSubmit = () => {
-        const data = { title, body, writetime, modifyday, views, votes, save };
-        fetchCreate("http://localhost:3001/questions/", data);
+        const data = { title, contents, tag, memberId};
+        // fetchCreate("/questions/", data);
+        console.log(data)
     };
     const titlefocus = () => {
         setFocustitle(true);
@@ -224,6 +271,18 @@ export default function AskPage() {
         setFocustitle(false);
         setFocusbody(false);
         setFocustags(true);
+    };
+    const removeTags = (indexToRemove) => {
+      const deletetags = tag.filter(item => item !== tag[indexToRemove])
+      setTag(deletetags)
+    };
+  
+    const addTags = (e) => {
+      if (e.target.value.length !== 0 && e.key === 'Enter' && !tag.includes(e.target.value)) {
+        let updatedTagList = [...tag, e.target.value]
+        setTag(updatedTagList)
+        e.target.value = '';
+      }
     };
 
     return (
@@ -284,14 +343,14 @@ export default function AskPage() {
                             The body of your question contains your problem details and results. Minimum 30 characters.
                         </Subtitle>
                         <QuestionBodyTextarea
-                            onChange={(e) => setBody(e.target.value)}
+                            onChange={(e) => setContents(e.target.value)}
                             onFocus={(e) => bodyfocus()}
                             placeholder="More info about your question. You can use markdown here"
                         >
-                            {body}
+                            {contents}
                         </QuestionBodyTextarea>
                         <PreviewArea>
-                            <ReactMarkdown plugins={[gfm]} children={body} />
+                            <ReactMarkdown plugins={[gfm]} children={contents} />
                         </PreviewArea>
                     </QuestionContainer>
                 </Containerbox>
@@ -315,7 +374,18 @@ export default function AskPage() {
                             Add up to 5 tags to describe what your question is about. Start typing to see suggestions.
                         </Subtitle>
                         <TagsInputContainer>
-                            <Input type="text" onFocus={(e) => tagsfocus()} placeholder="Tags" />
+                          <ul>
+                              {tag.map((tag, index) => (
+                                <li key={index} className="tag">
+                                  <span>{tag}</span>
+                                  <span onClick={() => removeTags(index)}>&nbsp;<b>X</b>
+                                  </span>
+                                </li>
+                              ))}
+                          </ul>
+                          <Input type="text" onFocus={(e) => tagsfocus()} placeholder="Tags" onKeyUp={(e) => {
+                              return e.key === 'Enter'? addTags(e) : null
+                            }}/>
                         </TagsInputContainer>
                     </QuestionContainer>
                 </Containerbox>
