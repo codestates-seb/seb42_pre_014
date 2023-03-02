@@ -11,5 +11,5 @@
 ## ⚙️ Back-end
 |김성회 (BE팀장)|김석진|김진수|
 |:-:|:-:|:-:|
-|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|<img src="https://user-images.githubusercontent.com/101001956/218995536-b271d70b-9c48-4c52-a05b-0a294bfe0874.jpg" width=150>|
+|<img src="https://user-images.githubusercontent.com/101001956/222424970-76d272e9-2e83-4e75-a908-3bdc0dbc00ca.jpg" width=150>|<img src="https://user-images.githubusercontent.com/101001956/222425204-cfd32e15-6207-45ac-a366-c643aecdeb30.jpg" width=150>|<img src="https://user-images.githubusercontent.com/101001956/222425132-8a85a887-bf34-42bb-a331-c57189cc84eb.jpg" width=150>|
 |[@sungstii](https://github.com/sungstii)|[@tjrwls9881](https://github.com/tjrwls9881)|[@kjsu1994](https://github.com/kjsu1994)|
