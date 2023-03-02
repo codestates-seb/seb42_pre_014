@@ -4,21 +4,17 @@ import Header1 from "./Header1";
 import BlueButtonLink from "./BlueButtonLink";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import RightSidebar from "./Rightsidebar";
-
-const filtericon = <FontAwesomeIcon icon={faFilter} />;
 
 const Main_container = styled.div`
     display: flex;
     border-style: solid;
     border-width: 0 0 0 1px;
     border-color: #535353;
+    max-width: 1051px;
 `;
 const Content_container = styled.div`
     height: auto;
-    max-width: 800px;
 `;
 const HeaderRow = styled.div`
     display: grid;
@@ -54,16 +50,17 @@ const SortButton = styled.button`
     border: 1px solid #7c858d;
     text-decoration: none;
 `;
+
 async function fetchQuestions() {
     try {
-        const res = await axios.get("http://localhost:3001/questions");
-        return res.data;
+        const res = await axios.get("/questions?page=1&size=5");
+        return res.data.data;
     } catch (err) {
-        console.err(err);
+        console.error(err);
     }
 }
 
-function QuestionsPage({ data }) {
+function QuestionsPage() {
     const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
@@ -72,7 +69,11 @@ function QuestionsPage({ data }) {
             setQuestions(data);
         }
         getQuestions();
-        console.log(questions);
+        // fetch("/questions?page=1&size=5")
+        //     .then((res) => res.json())
+        //     // .then((data) => console.log(data.data))
+        //     .then((data) => setQuestions(data.data))
+        //     .catch((error) => console.error(error));
     }, []);
 
     return (
@@ -95,7 +96,7 @@ function QuestionsPage({ data }) {
                     </Button_container>
                 </HeaderRow>
                 {questions.map((el) => {
-                    return <QuestionRow db={el} key={el.id} />;
+                    return <QuestionRow db={el} key={el.questionId} />;
                 })}
             </Content_container>
             <RightSidebar />

@@ -41,6 +41,7 @@ const HeaderRow = styled.div`
 const Questionarticle = styled.div`
     grid-template-columns: 1fr min-content;
     padding: 10px 20px 0px 20px;
+    max-width: 1051px;
 `;
 const Questioninfo = styled.div`
     display: flex;
@@ -149,25 +150,25 @@ const Sharebtn = styled.div`
     cursor: pointer;
 `;
 const Alert = styled.div`
-  background-color: rgb(52,75,60);
-  border: 2px solid rgba(255, 127, 80, 0.1);
-  border-color: rgba(52,75,60, 0.4);
-  border-radius: 3px;
-  /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
-  height: 40px;
-  width: 500px;
-  padding: 0px 5px 2px 13px;
-  text-align: center;
-  font-size: 13px;
-  color: lightgrey;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  position: fixed;
-  top: 20px;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
+    background-color: rgb(52, 75, 60);
+    border: 2px solid rgba(255, 127, 80, 0.1);
+    border-color: rgba(52, 75, 60, 0.4);
+    border-radius: 3px;
+    /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
+    height: 40px;
+    width: 500px;
+    padding: 0px 5px 2px 13px;
+    text-align: center;
+    font-size: 13px;
+    color: lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    position: fixed;
+    top: 20px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 `;
 const Container = styled.div`
     display: flex;
@@ -178,9 +179,9 @@ const Section = styled.div`
     margin: 0px 20px 0px 0px;
 `;
 const RSidebar = styled.div`
-  @media screen and (max-width: 980px) {
-    display:none;
-  }
+    @media screen and (max-width: 980px) {
+        display: none;
+    }
 `;
 const Bodytext = styled.div`
     padding: 0px 0px 30px 0px;
@@ -291,55 +292,94 @@ const Question = () => {
                     <Container>
                         <Section>
                             <StyledQuestionRow>
-                            <Leftbuttons>
-                                <QuestionStat>
-                                    <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp}/>
-                                </QuestionStat>
-                                    <div>{ data.votes }</div>
-                                <QuestionStat>
-                                    <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown}/>
-                                </QuestionStat>
-                                <QuestionStat>
-                                    {data.save === "false" ? <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick}/> : <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick}/>}
-                                </QuestionStat>
-                                <QuestionStat>
-                                    <FontAwesomeIcon icon={faClockRotateLeft} size="2x"/>
-                                </QuestionStat>
-                            </Leftbuttons>
-                            <QuestionStatcontainer>
-                                <Bodytext>{ data.body }</Bodytext>
-                                {data.tags.map((el) => {
-                                return <Tag>{el}</Tag>;
-                                })}
-                                <div ref={dropDownRef}>
-                                    <Buttondiv>
-                                        <Answerbutton onClick={() => setIsOpen(!isOpen)}>Share</Answerbutton>
-                                        <Answerbutton onClick={() => setIsOpen(false)}>Edit&nbsp;</Answerbutton>
-                                        <Answerbutton onClick={() => setIsOpen(false)}>Follow</Answerbutton>
-                                    </Buttondiv>
-                                    {isOpen && 
-                                    <Dropdown>
-                                        <Sharetext><b>Share a link to this question</b> (Includes your user id)</Sharetext>
-                                        <Dropinput
-                                            value={copyText}
-                                            onChange={handleChange}
-                                        />
-                                        <Dropbuttons>
-                                            <CopyToClipboard text={copyText}
-                                                onCopy={() => setCopied(true)}>
-                                                <Copybutton type="button">Copy link</Copybutton>
-                                            </CopyToClipboard>
-                                            {copied ? <Alert>Link copied to clipboard.</Alert> : null}
-                                            <LicenseLink href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</LicenseLink>
-                                            <Sharebuttons>
-                                                <Sharebtn onClick={() => window.open('https://www.facebook.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faFacebookSquare} size="lg"/></Sharebtn>
-                                                <Sharebtn onClick={() => window.open('https://www.twitter.com/sharer/sharer.php?u=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faTwitter} size="lg"/></Sharebtn>
-                                                <Sharebtn onClick={() => window.open('https://dev.to/new?prefill=https://stackoverflow.com/', '_blank', "width=650 height=550")}><FontAwesomeIcon icon={faDev} size="lg"/></Sharebtn>
-                                            </Sharebuttons>
-                                        </Dropbuttons>
-                                    </Dropdown>}
-                                </div>
-                            </QuestionStatcontainer>
+                                <Leftbuttons>
+                                    <QuestionStat>
+                                        <FontAwesomeIcon icon={faCaretUp} size="4x" onClick={voteUp} />
+                                    </QuestionStat>
+                                    <div>{data.votes}</div>
+                                    <QuestionStat>
+                                        <FontAwesomeIcon icon={faCaretDown} size="4x" onClick={voteDown} />
+                                    </QuestionStat>
+                                    <QuestionStat>
+                                        {data.save === "false" ? (
+                                            <FontAwesomeIcon icon={farBookmark} size="2x" onClick={bookMarkClick} />
+                                        ) : (
+                                            <FontAwesomeIcon icon={fasBookmark} size="2x" onClick={bookMarkClick} />
+                                        )}
+                                    </QuestionStat>
+                                    <QuestionStat>
+                                        <FontAwesomeIcon icon={faClockRotateLeft} size="2x" />
+                                    </QuestionStat>
+                                </Leftbuttons>
+                                <QuestionStatcontainer>
+                                    <Bodytext>{data.body}</Bodytext>
+                                    {data.tags.map((el) => {
+                                        return <Tag>{el}</Tag>;
+                                    })}
+                                    <div ref={dropDownRef}>
+                                        <Buttondiv>
+                                            <Answerbutton onClick={() => setIsOpen(!isOpen)}>Share</Answerbutton>
+                                            <Answerbutton onClick={() => setIsOpen(false)}>Edit&nbsp;</Answerbutton>
+                                            <Answerbutton onClick={() => setIsOpen(false)}>Follow</Answerbutton>
+                                        </Buttondiv>
+                                        {isOpen && (
+                                            <Dropdown>
+                                                <Sharetext>
+                                                    <b>Share a link to this question</b> (Includes your user id)
+                                                </Sharetext>
+                                                <Dropinput value={copyText} onChange={handleChange} />
+                                                <Dropbuttons>
+                                                    <CopyToClipboard text={copyText} onCopy={() => setCopied(true)}>
+                                                        <Copybutton type="button">Copy link</Copybutton>
+                                                    </CopyToClipboard>
+                                                    {copied ? <Alert>Link copied to clipboard.</Alert> : null}
+                                                    <LicenseLink
+                                                        href="https://creativecommons.org/licenses/by-sa/4.0/"
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                    >
+                                                        CC BY-SA 4.0
+                                                    </LicenseLink>
+                                                    <Sharebuttons>
+                                                        <Sharebtn
+                                                            onClick={() =>
+                                                                window.open(
+                                                                    "https://www.facebook.com/sharer/sharer.php?u=https://stackoverflow.com/",
+                                                                    "_blank",
+                                                                    "width=650 height=550"
+                                                                )
+                                                            }
+                                                        >
+                                                            <FontAwesomeIcon icon={faFacebookSquare} size="lg" />
+                                                        </Sharebtn>
+                                                        <Sharebtn
+                                                            onClick={() =>
+                                                                window.open(
+                                                                    "https://www.twitter.com/sharer/sharer.php?u=https://stackoverflow.com/",
+                                                                    "_blank",
+                                                                    "width=650 height=550"
+                                                                )
+                                                            }
+                                                        >
+                                                            <FontAwesomeIcon icon={faTwitter} size="lg" />
+                                                        </Sharebtn>
+                                                        <Sharebtn
+                                                            onClick={() =>
+                                                                window.open(
+                                                                    "https://dev.to/new?prefill=https://stackoverflow.com/",
+                                                                    "_blank",
+                                                                    "width=650 height=550"
+                                                                )
+                                                            }
+                                                        >
+                                                            <FontAwesomeIcon icon={faDev} size="lg" />
+                                                        </Sharebtn>
+                                                    </Sharebuttons>
+                                                </Dropbuttons>
+                                            </Dropdown>
+                                        )}
+                                    </div>
+                                </QuestionStatcontainer>
                             </StyledQuestionRow>
                             <h2>1 Answer</h2>
                             {quest.map((el) => {
@@ -349,25 +389,29 @@ const Question = () => {
                                         number={el.answer.number}
                                         // id={id}
                                     />
-                                
                                 );
                             })}
                             <div>
                                 <h2>Your Answer</h2>
                                 <QuestionBodyTextarea
-                                    onChange={e => 
+                                    onChange={(e) =>
                                         setAnswer({
-                                            "answerBody": e.target.value,
-                                            "votes": 0,
-                                            "save": "false",
-                                            "number": 2
-                                        })}></QuestionBodyTextarea>
+                                            answerBody: e.target.value,
+                                            votes: 0,
+                                            save: "false",
+                                            number: 2,
+                                        })
+                                    }
+                                ></QuestionBodyTextarea>
                                 <BlueButton onClick={handleSubmit}>Post Your Answer</BlueButton>
                             </div>
-                            <h3>Not the answer you're looking for? Browse other questions tagged r&nbsp;string&nbsp;stringr or ask your own question.</h3>
+                            <h3>
+                                Not the answer you're looking for? Browse other questions tagged
+                                r&nbsp;string&nbsp;stringr or ask your own question.
+                            </h3>
                         </Section>
                         <RSidebar>
-                            <RightSidebar/>
+                            <RightSidebar />
                         </RSidebar>
                     </Container>
                 </Questionarticle>
