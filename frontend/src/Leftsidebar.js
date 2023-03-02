@@ -6,6 +6,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const Facircleinfo = <FontAwesomeIcon icon={faCircleInfo}></FontAwesomeIcon>;
 const Sidebar_container = styled.div`
+    position: sticky;
     display: flex;
     height: auto;
     width: auto;
@@ -15,7 +16,7 @@ const Sidebar_container = styled.div`
     background-color: #2d2d2d;
 `;
 const Sidebar_items_container = styled.div`
-    position: sticky;
+    /* position: sticky; */
     /* top: 80px; */
     height: 500px;
     max-width: 164px;
