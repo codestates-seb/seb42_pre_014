@@ -52,7 +52,7 @@ const Footer_copyright_container = styled.div`
         margin-right: 5%;
     }
 `;
-function Footer() {
+function Footer3() {
     if (HideSidebar()) return null;
     return (
         <StyledFooter>
@@ -126,4 +126,4 @@ function Footer() {
     );
 }
 
-export default Footer;
+export default Footer3;

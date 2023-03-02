@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
 
 const StackOverflow = <FontAwesomeIcon icon={faStackOverflow} size="2x" />;
-const Footer = styled.footer`
+const Foooter = styled.footer`
     box-sizing: border-box;
     height: auto;
     width: 100%;
@@ -105,9 +105,9 @@ const Copyright = styled.p`
     margin: auto 0 24px 0;
 `;
 
-function Footer2() {
+function Footer() {
     return (
-        <Footer>
+        <Foooter>
             <Container>
                 <Logo_container>
                     <Logo_box>
@@ -223,8 +223,8 @@ function Footer2() {
                     </Copyright>
                 </Copyright_container>
             </Container>
-        </Footer>
+        </Foooter>
     );
 }
 
-export default Footer2;
+export default Footer;

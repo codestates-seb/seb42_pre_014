@@ -129,9 +129,9 @@ function RightSidebar() {
                     <SB_Item title2>Watched Tags</SB_Item>
                     <SB_Item column>
                         <SB_Img_container>
-                            <SB_Img width="48" height="48">
-                                <Search />
-                            </SB_Img>
+                            {/* <SB_Img width="48" height="48"> */}
+                            {/* <Search /> */}
+                            {/* </SB_Img> */}
                         </SB_Img_container>
                         <SB_Item>Watch Tags to curate your list of questions.</SB_Item>
                         <SB_Button>Watch a tag</SB_Button>
