@@ -62,11 +62,11 @@ const Input = styled.input`
     padding: 10px;
     /* margin-bottom: 20px; */
     color: #fff;
-    &:focus-within {
+    /* &:focus-within {
         border: 1px solid rgba(0, 103, 194, 0.4);
         box-shadow: 0 0 0 4px rgba(144, 203, 255, 0.4);
         border-radius: 3px;
-    }
+    } */
 `;
 const PreviewArea = styled.div`
     padding: 10px 20px;
@@ -94,11 +94,54 @@ const QuestionContainer = styled.div`
     }
 `;
 const TagsInputContainer = styled.div`
-    &:focus-within {
-        border: 1px solid rgba(0, 103, 194, 0.4);
-        box-shadow: 0 0 0 4px rgba(144, 203, 255, 0.4);
-        border-radius: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 8px 0px 8px;
+  border: 1px solid rgb(214, 216, 218);
+  border-radius: 3px;
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 8px 0 7px 0;
+    > .tag {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      margin: 0px 5px 0px 0px;
+      background-color: #3e4a52;
+      color: #9cc3db;
+      padding: 7px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      > span > b{
+        /* display: flex; */
+        cursor: pointer;
+        padding: 0px 4px 1px 4px;
+        border-radius: 2px;
+        font-size: 0.8rem;
+      }
+      > span > b:hover{
+        color: #3e4a52;
+        background-color: #9cc3db;
+      }
     }
+  }
+  > input {
+    flex: 1;
+    border: none;
+    height: 46px;
+    font-size: 14px;
+    padding: 4px 0 0 0;
+    :focus {
+      outline: transparent;
+    }
+  }
+  &:focus-within {
+      border: 1px solid rgba(0, 103, 194, 0.4);
+      box-shadow: 0 0 0 4px rgba(144, 203, 255, 0.4);
+      border-radius: 3px;
+  }
 `;
 const Header = styled.h1`
     display: flex;
@@ -193,6 +236,7 @@ const Containerbox = styled.div`
     }
 `;
 
+
 export default function AskPage() {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
@@ -205,9 +249,10 @@ export default function AskPage() {
     const [focusbody, setFocusbody] = useState(false);
     const [focustags, setFocustags] = useState(false);
     const [focusdup, setFocusdup] = useState(false);
+    const [tags, setTags] = useState([]);
 
     const handleSubmit = () => {
-        const data = { title, body, writetime, modifyday, views, votes, save };
+        const data = { title, body, writetime, modifyday, views, votes, save, tags};
         fetchCreate("http://localhost:3001/questions/", data);
     };
     const titlefocus = () => {
@@ -224,6 +269,18 @@ export default function AskPage() {
         setFocustitle(false);
         setFocusbody(false);
         setFocustags(true);
+    };
+    const removeTags = (indexToRemove) => {
+      const deletetags = tags.filter(item => item !== tags[indexToRemove])
+      setTags(deletetags)
+    };
+  
+    const addTags = (e) => {
+      if (e.target.value.length !== 0 && e.key === 'Enter' && !tags.includes(e.target.value)) {
+        let updatedTagList = [...tags, e.target.value]
+        setTags(updatedTagList)
+        e.target.value = '';
+      }
     };
 
     return (
@@ -315,7 +372,18 @@ export default function AskPage() {
                             Add up to 5 tags to describe what your question is about. Start typing to see suggestions.
                         </Subtitle>
                         <TagsInputContainer>
-                            <Input type="text" onFocus={(e) => tagsfocus()} placeholder="Tags" />
+                          <ul>
+                              {tags.map((tag, index) => (
+                                <li key={index} className="tag">
+                                  <span>{tag}</span>
+                                  <span onClick={() => removeTags(index)}>&nbsp;<b>X</b>
+                                  </span>
+                                </li>
+                              ))}
+                          </ul>
+                          <Input type="text" onFocus={(e) => tagsfocus()} placeholder="Tags" onKeyUp={(e) => {
+                              return e.key === 'Enter'? addTags(e) : null
+                            }}/>
                         </TagsInputContainer>
                     </QuestionContainer>
                 </Containerbox>
