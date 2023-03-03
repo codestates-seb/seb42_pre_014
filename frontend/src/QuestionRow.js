@@ -1,48 +1,59 @@
 import styled from "styled-components";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { Link } from "react-router-dom";
+import { fetchPatch } from "./json-server/api";
+import Tag from "./Tag";
+dayjs.extend(relativeTime);
+dayjs.locale("ko");
 
+const StyledQuestionRow = styled.div`
+    background-color: #2d2d2d;
+    padding: 15px 15px 20px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    /* grid-template-rows: repeat(3, 20px); */
+    grid-template-rows: 1fr;
+    border-top: 1px solid #3b3d3f;
+`;
+
+const QuestionStat_container = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+`;
 const QuestionStat = styled.div`
-    text-align: center;
+    height: auto;
+    width: 55px;
+    text-align: end;
     display: inline-block;
-    font-size: 1.2rem;
-    color: #aaa;
-    margin-top: 7px;
-    span{
-        font-size: .7rem;
-        display: block;
+    font-size: 0.8rem;
+    color: ${(props) => (props.answers ? "#89ca9f" : props.votes ? "#fff" : "#aaa")};
+    border: ${(props) => (props.answers ? "1px solid #3a8251" : "")};
+    border-radius: 5%;
+    border-width: 10%;
+    padding: 3px 0;
+
+    span {
+        font-size: 0.7rem;
         font-weight: 300;
-        margin-top: 4px;
     }
 `;
 const QuestionTitleArea = styled.div`
-    padding: 0 30px;
+    padding: 0 10px;
 `;
-const Tag = styled.span`
-    display: inline-block;
-    margin-right: 5px;
-    background-color: #3e4a52;
-    color: #9cc3db;
-    padding: 7px;
-    border-radius: 4px;
-    font-size: .9rem;
-`;
-const QuestionLink = styled.a`
+const QuestionLink = styled(Link)`
     text-decoration: none;
     color: #3ca4ff;
-    font-size: 1.1rem;
+    font-size: 1rem;
     display: block;
     margin-bottom: 5px;
 `;
-const StyledQuestionRow = styled.div`
-    background-color: rgba(255, 255, 255, .05);
-    padding: 15px 15px 10px;
-    display: grid;
-    grid-template-columns: repeat(3, 50px) 1fr;
-    border-top: 1px solid #555;
-`;
+
 const WhoAndWhen = styled.div`
-    display: inline-block;
+    /* display: inline-block; */
     color: #aaa;
-    font-size: .8rem;
+    font-size: 0.75rem;
     float: right;
     padding: 10px 0;
 `;
@@ -50,21 +61,40 @@ const UserLink = styled.a`
     color: #3ca4ff;
 `;
 
-function QuestionRow() {
+function QuestionRow({ db }) {
+    const timeString = dayjs(db.createdAt).fromNow();
+
+    // const viewsUp = () => {
+    //     const views = { views: db.views + 1 };
+    //     fetchPatch("http://localhost:3001/questions/", db.id, views);
+    // };
+
     return (
         <StyledQuestionRow>
-            <QuestionStat>0<span>votes</span></QuestionStat>
-            <QuestionStat>1<span>answers</span></QuestionStat>
-            <QuestionStat>6<span>views</span></QuestionStat>
+            <QuestionStat_container>
+                <QuestionStat votes>
+                    {db.voteCount}
+                    <span> {db.voteCount === 1 ? "vote" : "votes"}</span>
+                </QuestionStat>
+                <QuestionStat answers={db.answers}>
+                    {db.answerCount}
+                    <span> {db.answerCount === 1 ? "answer" : "answers"}</span>
+                </QuestionStat>
+                <QuestionStat>
+                    {/* {db.views} */}
+                    {/* <span> {db.views === 1 ? "view" : "views"}</span> */}1<span>view</span>
+                </QuestionStat>
+            </QuestionStat_container>
+            {/* <QuestionTitleArea onClick={viewsUp}> */}
             <QuestionTitleArea>
-                <QuestionLink>Getting string in quotes in javascript</QuestionLink>
-                <Tag>javascript</Tag>
+                <QuestionLink to={`./${db.id}`}>{db.title}</QuestionLink>
                 <WhoAndWhen>
-                    asked 2mins ago <UserLink></UserLink>
+                    {db.answerCount ? `${db.answerer} answered` : `${db.member.name} asked`} {timeString}{" "}
+                    <UserLink></UserLink>
                 </WhoAndWhen>
-                <Tag>parsing</Tag>
-                <Tag>quetes</Tag>
-                <Tag>literals</Tag>
+                {db.tag.map((el) => {
+                    return <Tag>{el}</Tag>;
+                })}
             </QuestionTitleArea>
         </StyledQuestionRow>
     );
