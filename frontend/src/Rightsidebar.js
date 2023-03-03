@@ -4,8 +4,10 @@ import styled from "styled-components";
 import HideRightSidebar from "./HideRightSidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStackOverflow } from "@fortawesome/free-brands-svg-icons";
-import { ReactComponent as Search } from "../src/icons/MobileSearch.svg";
-const FaStackOverFlow = <FontAwesomeIcon icon={faStackOverflow} size="0.5x" />;
+import { ReactComponent as Search } from "./icons/Search.svg";
+import { ReactComponent as Pencil } from "./icons/Pencil.svg";
+import { ReactComponent as Comments } from "./icons/Comment.svg";
+import { ReactComponent as LogoGray } from "./icons/LogoGraysm.svg";
 
 const SB_container = styled.div`
     box-sizing: border-box;
@@ -51,6 +53,7 @@ const SB_Item = styled.li`
     background-color: ${(props) =>
         props.title ? "#524c38" : props.title2 ? "#393939" : props.orange ? "#464337" : ""};
     margin: auto;
+    text-align: ${(props) => (props.center ? "center" : "")};
 `;
 const SB_Itemlink = styled.a`
     font-size: ${(props) => (props.eleven ? "11px" : "13px")};
@@ -78,8 +81,12 @@ const SB_Link = styled(Link)`
     display: block;
     margin-bottom: 5px;
 `;
-const SB_Img_container = styled.div``;
-const SB_Img = styled.img``;
+const SB_Img_container = styled.div`
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    margin-right: 7px;
+`;
 
 function RightSidebar() {
     if (HideRightSidebar()) return null;
@@ -89,29 +96,50 @@ function RightSidebar() {
                 <SB_item_list home yellow>
                     <SB_Item title>The Overflow Blog</SB_Item>
                     <SB_Item orange>
+                        <SB_Img_container>
+                            <Pencil width="14" height="14" />
+                        </SB_Img_container>
                         <SB_Itemlink>
                             Shorten the distance between production data and insight (Ep. 541) sponsored post
                         </SB_Itemlink>
                     </SB_Item>
                     <SB_Item orange>
+                        <SB_Img_container>
+                            <Pencil width="14" height="14" />
+                        </SB_Img_container>
                         <SB_Itemlink>How edge functions move your back end close to your front end</SB_Itemlink>
                     </SB_Item>
                     <SB_Item title>Featured on Meta</SB_Item>
                     <SB_Item orange>
+                        <SB_Img_container>
+                            <Comments width="13" height="13" />
+                        </SB_Img_container>
                         <SB_Itemlink>Ticket smash for [status-review] tag: Part Deux</SB_Itemlink>
                     </SB_Item>
                     <SB_Item orange>
+                        <SB_Img_container>
+                            <Comments width="13" height="13" />
+                        </SB_Img_container>
                         <SB_Itemlink>
                             We've added a "Necessary cookies only" option to the cookie consent popup
                         </SB_Itemlink>
                     </SB_Item>
                     <SB_Item orange>
+                        <SB_Img_container>
+                            <LogoGray width="14" height="14" />
+                        </SB_Img_container>
                         <SB_Itemlink>The [amazon] tag is being burninated</SB_Itemlink>
                     </SB_Item>
                     <SB_Item orange>
+                        <SB_Img_container>
+                            <LogoGray width="14" height="14" />
+                        </SB_Img_container>
                         <SB_Itemlink>Microsoft Azure Collective launch and proposed tag changes</SB_Itemlink>
                     </SB_Item>
                     <SB_Item orange>
+                        <SB_Img_container>
+                            <LogoGray width="14" height="14" />
+                        </SB_Img_container>
                         <SB_Itemlink>Temporary policy: ChatGPT is banned</SB_Itemlink>
                     </SB_Item>
                     <SB_Item title>Hot Meta Posts</SB_Item>
@@ -129,11 +157,9 @@ function RightSidebar() {
                     <SB_Item title2>Watched Tags</SB_Item>
                     <SB_Item column>
                         <SB_Img_container>
-                            {/* <SB_Img width="48" height="48"> */}
-                            {/* <Search /> */}
-                            {/* </SB_Img> */}
+                            <Search width="50" height="50" />
                         </SB_Img_container>
-                        <SB_Item>Watch Tags to curate your list of questions.</SB_Item>
+                        <SB_Item center>Watch Tags to curate your list of questions.</SB_Item>
                         <SB_Button>Watch a tag</SB_Button>
                     </SB_Item>
                 </SB_item_list>

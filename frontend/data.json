@@ -6,7 +6,11 @@
       "answerer": "minsangjung",
       "votes": 5,
       "answers": 1,
+<<<<<<< HEAD
+      "views": 53,
+=======
       "views": 34,
+>>>>>>> aa65a4eaddd2ed6c0aa623a9166bf9a9863bb487
       "tags": [
         "c++",
         "dictionary",

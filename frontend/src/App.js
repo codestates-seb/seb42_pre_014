@@ -30,31 +30,12 @@ function App() {
     const location = useLocation();
     const className = `page-${location.pathname === "/ask" ? "Askpage" : "Main"}`;
 
-    function checkAuth() {
-        return new Promise((resolve, reject) => {
-            axios
-                .get("http://localhost:4000/profile", { withCredentials: true })
-                .then((response) => {
-                    setUser({ email: response.data });
-                    resolve(response.data);
-                })
-                .catch(() => {
-                    setUser(null);
-                    reject(null);
-                });
-        });
-    }
-
-    useEffect(() => {
-        checkAuth();
-    }, []);
-
     return (
         <div id="App">
             <Reset />
             <GlobalStyles />
             {error && <div>{error}</div>}
-            <UserContext.Provider value={{ user, checkAuth }}>
+            <UserContext.Provider value={{ user }}>
                 <Header />
                 <div className={className}>
                     <LS_container>
